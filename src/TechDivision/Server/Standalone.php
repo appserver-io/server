@@ -96,6 +96,7 @@ class Standalone
     /**
      * Starts the server in standalone mode
      *
+     * @return void
      * @throws \Exception
      */
     public function start()
