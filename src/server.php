@@ -52,7 +52,7 @@ chdir(SERVER_BASEDIR);
 if (isset($argv[1])) {
     define('SERVER_CONFIGFILE', $argv[1]);
 } else {
-    define('SERVER_CONFIGFILE', SERVER_BASEDIR . 'etc' . DIRECTORY_SEPARATOR . 'phpwebserver.xml');
+    die("Please provide configuration filepath." . PHP_EOL);
 }
 
 // check which config format should be used based on file extension
