@@ -1,7 +1,7 @@
 {
     "name": "techdivision/server",
     "description": "Multithreaded server daemon framework",
-    "homepage": "https://github.com/techdivision/TechDivision_WebServer",
+    "homepage": "https://github.com/techdivision/TechDivision_Server",
     "keywords": ["php", "server", "socket", "framework", "multithreading"],
     "license": ["OSL-3.0"],
     "minimum-stability": "dev",
