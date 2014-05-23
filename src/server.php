@@ -41,12 +41,19 @@ if (!extension_loaded('pthreads')) {
 }
 
 define('SERVER_BASEDIR', __DIR__ . DIRECTORY_SEPARATOR);
-define('SERVER_AUTOLOADER', SERVER_BASEDIR . '..' . DIRECTORY_SEPARATOR . 'vendor' . DIRECTORY_SEPARATOR . 'autoload.php');
+define(
+    'SERVER_AUTOLOADER',
+    SERVER_BASEDIR .
+    '..' . DIRECTORY_SEPARATOR .
+    '..' . DIRECTORY_SEPARATOR .
+    '..' . DIRECTORY_SEPARATOR .
+    'autoload.php'
+);
 
 require SERVER_AUTOLOADER;
 
 // set current dir to base dir for relative dirs
-chdir(SERVER_BASEDIR);
+chdir(SERVER_BASEDIR . '../../../../src/');
 
 // check if user defined configuration is passed via argv
 if (isset($argv[1])) {
