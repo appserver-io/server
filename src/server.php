@@ -41,18 +41,25 @@ if (!extension_loaded('pthreads')) {
 }
 
 define('SERVER_BASEDIR', __DIR__ . DIRECTORY_SEPARATOR);
-define('SERVER_AUTOLOADER', SERVER_BASEDIR . '..' . DIRECTORY_SEPARATOR . 'vendor' . DIRECTORY_SEPARATOR . 'autoload.php');
+define(
+    'SERVER_AUTOLOADER',
+    SERVER_BASEDIR .
+    '..' . DIRECTORY_SEPARATOR .
+    '..' . DIRECTORY_SEPARATOR .
+    '..' . DIRECTORY_SEPARATOR .
+    'autoload.php'
+);
 
 require SERVER_AUTOLOADER;
 
 // set current dir to base dir for relative dirs
-chdir(SERVER_BASEDIR);
+chdir(SERVER_BASEDIR . '../../../../src/');
 
 // check if user defined configuration is passed via argv
 if (isset($argv[1])) {
     define('SERVER_CONFIGFILE', $argv[1]);
 } else {
-    define('SERVER_CONFIGFILE', SERVER_BASEDIR . 'etc' . DIRECTORY_SEPARATOR . 'phpwebserver.xml');
+    die("Please provide configuration filepath." . PHP_EOL);
 }
 
 // check which config format should be used based on file extension

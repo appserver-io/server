@@ -49,6 +49,13 @@ class ServerContext implements ServerContextInterface
 {
 
     /**
+     * Defines the handler to use as default
+     *
+     * @var string
+     */
+    const SERVER_HANDLER_DEFAULT = 'core';
+
+    /**
      * Optionally hold's an container implementation of third party environment.
      * So every mod depending on his environment can use this as a container to transfer environment specific stuff.
      *
@@ -313,7 +320,7 @@ class ServerContext implements ServerContextInterface
             ServerVars::SERVER_SOFTWARE => $serverSoftware,
             ServerVars::SERVER_SIGNATURE =>
                 "<address>$serverSoftware Server at $serverAddress Port $serverPort</address>\r\n",
-            ServerVars::SERVER_HANDLER => CoreModule::MODULE_NAME,
+            ServerVars::SERVER_HANDLER => self::SERVER_HANDLER_DEFAULT,
             ServerVars::SERVER_ERRORS_PAGE_TEMPLATE_PATH => $this->getServerConfig()->getErrorsPageTemplatePath(),
             ServerVars::PATH => getenv('PATH'),
             ServerVars::HTTPS => ServerVars::VALUE_HTTPS_OFF
