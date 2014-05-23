@@ -10,7 +10,7 @@
  *
  * PHP version 5
  *
- * @category   Webserver
+ * @category   Server
  * @package    TechDivision_Server
  * @subpackage Interfaces
  * @author     Johann Zelger <jz@techdivision.com>
@@ -29,7 +29,7 @@ use TechDivision\Server\Sockets\SocketInterface;
 /**
  * Interface ServerContextInterface
  *
- * @category   Webserver
+ * @category   Server
  * @package    TechDivision_Server
  * @subpackage Interfaces
  * @author     Johann Zelger <jz@techdivision.com>

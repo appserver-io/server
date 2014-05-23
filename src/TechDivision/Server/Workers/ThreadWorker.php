@@ -10,7 +10,7 @@
  *
  * PHP version 5
  *
- * @category   Webserver
+ * @category   Server
  * @package    TechDivision_Server
  * @subpackage Workers
  * @author     Johann Zelger <jz@techdivision.com>
@@ -35,7 +35,7 @@ use TechDivision\Server\RequestHandlerThread;
 /**
  * Class ThreadWorker
  *
- * @category   Webserver
+ * @category   Server
  * @package    TechDivision_Server
  * @subpackage Workers
  * @author     Johann Zelger <jz@techdivision.com>
@@ -130,9 +130,9 @@ class ThreadWorker extends \Thread implements WorkerInterface
     public function run()
     {
         // set current dir to base dir for relative dirs
-        chdir(WEBSERVER_BASEDIR);
+        chdir(SERVER_BASEDIR);
         // setup environment for worker
-        require WEBSERVER_AUTOLOADER;
+        require SERVER_AUTOLOADER;
         // register shutdown handler
         register_shutdown_function(array(&$this, "shutdown"));
         // do work

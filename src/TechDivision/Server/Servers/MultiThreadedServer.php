@@ -10,7 +10,7 @@
  *
  * PHP version 5
  *
- * @category   Webserver
+ * @category   Server
  * @package    TechDivision_Server
  * @subpackage Servers
  * @author     Johann Zelger <jz@techdivision.com>
@@ -33,7 +33,7 @@ use TechDivision\Server\Exceptions\ConnectionHandlerNotFoundException;
 /**
  * Class MultiThreadedServer
  *
- * @category   Webserver
+ * @category   Server
  * @package    TechDivision_Server
  * @subpackage Servers
  * @author     Johann Zelger <jz@techdivision.com>
@@ -86,10 +86,10 @@ class MultiThreadedServer extends \Thread implements ServerInterface
     public function run()
     {
         // set current dir to base dir for relative dirs
-        chdir(WEBSERVER_BASEDIR);
+        chdir(SERVER_BASEDIR);
 
         // setup autoloader
-        require WEBSERVER_AUTOLOADER;
+        require SERVER_AUTOLOADER;
 
         // init server context
         $serverContext = $this->getServerContext();
@@ -126,7 +126,7 @@ class MultiThreadedServer extends \Thread implements ServerInterface
                 $streamContext,
                 'ssl',
                 'local_cert',
-                WEBSERVER_BASEDIR . $serverConfig->getCertPath()
+                SERVER_BASEDIR . $serverConfig->getCertPath()
             );
             stream_context_set_option($streamContext, 'ssl', 'passphrase', $serverConfig->getPassphrase());
             stream_context_set_option($streamContext, 'ssl', 'allow_self_signed', true);

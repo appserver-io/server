@@ -10,7 +10,7 @@
  *
  * PHP version 5
  *
- * @category   Webserver
+ * @category   Server
  * @package    TechDivision_Server
  * @subpackage Interfaces
  * @author     Johann Zelger <jz@techdivision.com>
@@ -28,7 +28,7 @@ use TechDivision\Http\HttpResponseInterface;
 /**
  * Interface ModuleInterface
  *
- * @category   Webserver
+ * @category   Server
  * @package    TechDivision_Server
  * @subpackage Interfaces
  * @author     Johann Zelger <jz@techdivision.com>

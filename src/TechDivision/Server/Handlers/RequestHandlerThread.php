@@ -10,7 +10,7 @@
  *
  * PHP version 5
  *
- * @category   Webserver
+ * @category   Server
  * @package    TechDivision_Server
  * @subpackage Handlers
  * @author     Johann Zelger <jz@techdivision.com>
@@ -27,7 +27,7 @@ use TechDivision\Server\Interfaces\WorkerInterface;
 /**
  * This class is just for testing purpose, so please don't use it for this moment.
  *
- * @category   Webserver
+ * @category   Server
  * @package    TechDivision_Server
  * @subpackage Handlers
  * @author     Johann Zelger <jz@techdivision.com>
@@ -66,7 +66,7 @@ class RequestHandlerThread extends \Thread
     public function run()
     {
         // setup environment for handler
-        require WEBSERVER_AUTOLOADER;
+        require SERVER_AUTOLOADER;
 
         // set local var refs
         $serverContext = $this->serverContext;

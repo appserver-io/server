@@ -10,7 +10,7 @@
  *
  * PHP version 5
  *
- * @category   Webserver
+ * @category   Server
  * @package    TechDivision_Server
  * @subpackage Dictionaries
  * @author     Bernhard Wick <b.wick@techdivision.com>
@@ -25,7 +25,7 @@ namespace TechDivision\Server\Dictionaries;
  * Class ModuleVars which is used by different modules to communicate with each
  * other without knowing each other.
  *
- * @category   Webserver
+ * @category   Server
  * @package    TechDivision_Server
  * @subpackage Dictionaries
  * @author     Bernhard Wick <b.wick@techdivision.com>

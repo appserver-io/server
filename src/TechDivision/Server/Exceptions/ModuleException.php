@@ -10,7 +10,7 @@
  *
  * PHP version 5
  *
- * @category   Webserver
+ * @category   Server
  * @package    TechDivision_Server
  * @subpackage Exceptions
  * @author     Johann Zelger <jz@techdivision.com>
@@ -24,7 +24,7 @@ namespace TechDivision\Server\Exceptions;
 /**
  * Class ModuleException
  *
- * @category   Webserver
+ * @category   Server
  * @package    TechDivision_Server
  * @subpackage Exceptions
  * @author     Johann Zelger <jz@techdivision.com>
