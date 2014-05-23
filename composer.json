@@ -1,0 +1,32 @@
+{
+    "name": "techdivision/server",
+    "description": "Multithreaded server daemon framework",
+    "homepage": "https://github.com/techdivision/TechDivision_WebServer",
+    "keywords": ["php", "server", "socket", "framework", "multithreading"],
+    "license": ["OSL-3.0"],
+    "minimum-stability": "dev",
+    "authors": [
+        {
+            "name": "Johann Zelger",
+            "email": "jz@techdivision.com",
+            "homepage": "http://www.techdivision.com",
+            "role": "Developer"
+        },
+        {
+            "name": "Tim Wagner",
+            "email": "tw@techdivision.com",
+            "homepage": "http://www.techdivision.com",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "php": ">=5.4.0",
+        "monolog/monolog": "*",
+        "psr/log": "*"
+    },
+    "autoload": {
+        "psr-0": {
+            "TechDivision": [ "src/", "tests/" ]
+        }
+    }
+}
