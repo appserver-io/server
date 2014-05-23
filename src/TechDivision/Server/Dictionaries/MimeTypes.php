@@ -10,7 +10,7 @@
  *
  * PHP version 5
  *
- * @category   Webserver
+ * @category   Server
  * @package    TechDivision_Server
  * @subpackage Dictionaries
  * @author     Johann Zelger <jz@techdivision.com>
@@ -24,7 +24,7 @@ namespace TechDivision\Server\Dictionaries;
 /**
  * Class MimeTypes
  *
- * @category   Webserver
+ * @category   Server
  * @package    TechDivision_Server
  * @subpackage Dictionaries
  * @author     Johann Zelger <jz@techdivision.com>

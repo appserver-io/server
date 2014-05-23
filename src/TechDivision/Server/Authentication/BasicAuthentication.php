@@ -10,7 +10,7 @@
  *
  * PHP version 5
  *
- * @category   Webserver
+ * @category   Server
  * @package    TechDivision_Server
  * @subpackage Authentication
  * @author     Johann Zelger <jz@techdivision.com>
@@ -26,7 +26,7 @@ use TechDivision\Server\Interfaces\AuthenticationInterface;
 /**
  * Class BasicAuthentication
  *
- * @category   Webserver
+ * @category   Server
  * @package    TechDivision_Server
  * @subpackage Authentication
  * @author     Johann Zelger <jz@techdivision.com>

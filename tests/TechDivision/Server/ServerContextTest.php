@@ -10,7 +10,7 @@
  *
  * PHP version 5
  *
- * @category   Webserver
+ * @category   Server
  * @package    TechDivision_Server
  * @subpackage tests
  * @author     Johann Zelger <jz@techdivision.com>
@@ -26,7 +26,7 @@ use TechDivision\Server\Dictionaries\ServerVars;
 /**
  * Class ServerContextTest
  *
- * @category   Webserver
+ * @category   Server
  * @package    TechDivision_Server
  * @subpackage tests
  * @author     Johann Zelger <jz@techdivision.com>

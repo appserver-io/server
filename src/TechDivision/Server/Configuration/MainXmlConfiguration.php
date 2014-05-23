@@ -10,7 +10,7 @@
  *
  * PHP version 5
  *
- * @category   Webserver
+ * @category   Server
  * @package    TechDivision_Server
  * @subpackage Configuration
  * @author     Johann Zelger <jz@techdivision.com>
@@ -27,7 +27,7 @@ use TechDivision\Server\Configuration\ConfigXmlConfiguration;
 /**
  * Class MainXmlConfiguration
  *
- * @category   Webserver
+ * @category   Server
  * @package    TechDivision_Server
  * @subpackage Configuration
  * @author     Johann Zelger <jz@techdivision.com>

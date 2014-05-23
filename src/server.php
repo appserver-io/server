@@ -10,12 +10,12 @@
  *
  * PHP version 5
  *
- * @category  Webserver
- * @package   TechDivision_WebServer
+ * @category  Server
+ * @package   TechDivision_Server
  * @author    Johann Zelger <jz@techdivision.com>
  * @copyright 2014 TechDivision GmbH <info@techdivision.com>
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @link      https://github.com/techdivision/TechDivision_WebServer
+ * @link      https://github.com/techdivision/TechDivision_Server
  */
 
 /**
@@ -40,27 +40,27 @@ if (!extension_loaded('pthreads')) {
     die('Required php extension "appserver" not found. See https://github.com/krakjoe/pthreads' . PHP_EOL);
 }
 
-define('WEBSERVER_BASEDIR', __DIR__ . DIRECTORY_SEPARATOR);
-define('WEBSERVER_AUTOLOADER', WEBSERVER_BASEDIR . '..' . DIRECTORY_SEPARATOR . 'vendor' . DIRECTORY_SEPARATOR . 'autoload.php');
+define('SERVER_BASEDIR', __DIR__ . DIRECTORY_SEPARATOR);
+define('SERVER_AUTOLOADER', SERVER_BASEDIR . '..' . DIRECTORY_SEPARATOR . 'vendor' . DIRECTORY_SEPARATOR . 'autoload.php');
 
-require WEBSERVER_AUTOLOADER;
+require SERVER_AUTOLOADER;
 
 // set current dir to base dir for relative dirs
-chdir(WEBSERVER_BASEDIR);
+chdir(SERVER_BASEDIR);
 
 // check if user defined configuration is passed via argv
 if (isset($argv[1])) {
-    define('WEBSERVER_CONFIGFILE', $argv[1]);
+    define('SERVER_CONFIGFILE', $argv[1]);
 } else {
-    define('WEBSERVER_CONFIGFILE', WEBSERVER_BASEDIR . 'etc' . DIRECTORY_SEPARATOR . 'phpwebserver.xml');
+    define('SERVER_CONFIGFILE', SERVER_BASEDIR . 'etc' . DIRECTORY_SEPARATOR . 'phpwebserver.xml');
 }
 
 // check which config format should be used based on file extension
-if ($configType = str_replace('.', '', strrchr(WEBSERVER_CONFIGFILE, '.'))) {
+if ($configType = str_replace('.', '', strrchr(SERVER_CONFIGFILE, '.'))) {
     $mainConfigurationType = '\TechDivision\Server\Configuration\Main' . ucfirst($configType) . 'Configuration';
     // try to instantiate configuration type based on file
     if (class_exists($mainConfigurationType)) {
-        $mainConfiguration = new $mainConfigurationType(WEBSERVER_CONFIGFILE);
+        $mainConfiguration = new $mainConfigurationType(SERVER_CONFIGFILE);
     } else {
         die("Configuration file '$configType' is not valid or not found.". PHP_EOL);
     }

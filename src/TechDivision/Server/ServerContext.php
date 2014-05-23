@@ -10,7 +10,7 @@
  *
  * PHP version 5
  *
- * @category  Webserver
+ * @category  Server
  * @package   TechDivision_Server
  * @author    Johann Zelger <jz@techdivision.com>
  * @copyright 2014 TechDivision GmbH <info@techdivision.com>
@@ -38,7 +38,7 @@ use TechDivision\Server\Dictionaries\ServerVars;
 /**
  * Class ServerContext
  *
- * @category  Webserver
+ * @category  Server
  * @package   TechDivision_Server
  * @author    Johann Zelger <jz@techdivision.com>
  * @copyright 2014 TechDivision GmbH <info@techdivision.com>
@@ -137,7 +137,7 @@ class ServerContext implements ServerContextInterface
     }
 
     /**
-     * Injects the container for further use in specific webserver mods etc...
+     * Injects the container for further use in specific server mods etc...
      *
      * @param mixed $container An container instance for third party environment
      *
