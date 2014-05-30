@@ -149,7 +149,7 @@ class MimeTypes
         "dll" => "application/octet-stream",
         "deb" => "application/octet-stream",
         "dmg" => "application/octet-stream",
-        "eot" => "application/octet-stream",
+        "eot" => "application/vnd.ms-fontobject",
         "iso" => "application/octet-stream",
         "img" => "application/octet-stream",
         "msi" => "application/octet-stream",
@@ -182,6 +182,9 @@ class MimeTypes
         "asx" => "video/x-ms-asf",
         "asf" => "video/x-ms-asf",
         "wmv" => "video/x-ms-wmv",
-        "avi" => "video/x-msvideo"
+        "avi" => "video/x-msvideo",
+        "otf" => "application/font-sfnt",
+        "ttf" => "application/font-sfnt",
+        "woff" => "application/font-woff"
     );
 }

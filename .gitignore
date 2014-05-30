@@ -9,4 +9,4 @@ composer.lock
 /.buildpath
 /.project
 /.settings
-/.build.properties
+/build.properties
