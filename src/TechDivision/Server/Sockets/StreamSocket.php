@@ -208,7 +208,13 @@ class StreamSocket implements SocketInterface
             // set timeout for read data fom client
             @stream_set_timeout($this->getConnectionResource(), $receiveTimeout);
         }
+        // readin line from client
         $line = @fread($this->getConnectionResource(), $readLength);
+        // check if false is response
+        if (false === $line) {
+            // throw new socket exception
+            throw new SocketReadException();
+        }
         // check if timeout occured
         if (strlen($line) === 0) {
             throw new SocketReadTimeoutException();
