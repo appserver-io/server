@@ -59,7 +59,11 @@ interface ConnectionHandlerInterface
     public function handle(SocketInterface $connection, WorkerInterface $worker);
 
     /**
-     * Does shutdown logic for worker if something breaks in process
+     * Shutdown the connection with the connected client and the response handling in a proper way before
+     * an unwanted shutdown happens by either a php fatal error or exit/die was going on.
+     *
+     * IMPORTANT: Be sure that you are calling the workers shutdown within your shutdown function. This
+     * is needed because the worker has to flag itselfe to be restartet from the worker context.
      *
      * @return void
      */

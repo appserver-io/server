@@ -158,14 +158,16 @@ class MultiThreadedServer extends \Thread implements ServerInterface
                 throw new ModuleNotFoundException($moduleType);
             }
             // instantiate module type
-            $modules[$moduleType] = new $moduleType();
+            $module = new $moduleType();
+            $moduleName = $module->getModuleName();
+            $modules[$moduleName] = $module;
 
             $logger->debug(
                 sprintf("%s init %s module (%s)", $serverName, $moduleType::MODULE_NAME, $moduleType)
             );
 
             // init module with serverContext (this)
-            $modules[$moduleType]->init($serverContext);
+            $modules[$moduleName]->init($serverContext);
         }
 
         // init connection handler array
