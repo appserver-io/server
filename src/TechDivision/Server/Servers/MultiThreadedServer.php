@@ -198,11 +198,14 @@ class MultiThreadedServer extends \Thread implements ServerInterface
 
         // setup and start workers
         for ($i = 1; $i <= $serverConfig->getWorkerNumber(); ++$i) {
+
             $workers[$i] = new $workerType(
                 $serverConnection->getConnectionResource(),
                 $serverContext,
                 $connectionHandlers
             );
+
+            $logger->debug(sprintf("Successfully started worker %s", $workers[$i]->getThreadId()));
         }
 
         // todo: switch this to any controller that maintains an server thread
