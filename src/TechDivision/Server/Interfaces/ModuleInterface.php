@@ -74,4 +74,12 @@ interface ModuleInterface
      * @throws \TechDivision\Server\Exceptions\ModuleException
      */
     public function init(ServerContextInterface $serverContext);
+
+    /**
+     * Prepares the module for upcoming request in specific context
+     *
+     * @return bool
+     * @throws \TechDivision\Server\Exceptions\ModuleException
+     */
+    public function prepare();
 }

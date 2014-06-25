@@ -63,6 +63,14 @@ interface WorkerInterface
     public function work();
 
     /**
+     * Prepares the worker's in it's own context for upcoming work to do on things
+     * that can not be shared by using the init method in the parent's context.
+     *
+     * @return void
+     */
+    public function prepare();
+
+    /**
      * Does shutdown logic for worker if something breaks in process.
      *
      * This shutdown function will be called from specific connection handler if an error occurs, so the connection

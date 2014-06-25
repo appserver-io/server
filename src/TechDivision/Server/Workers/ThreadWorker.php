@@ -133,10 +133,32 @@ class ThreadWorker extends \Thread implements WorkerInterface
         chdir(SERVER_BASEDIR);
         // setup environment for worker
         require SERVER_AUTOLOADER;
+        // prepare worker for upcoming connections in specific context
+        $this->prepare();
         // register shutdown handler
         register_shutdown_function(array(&$this, "shutdown"));
         // do work
         $this->work();
+    }
+
+    /**
+     * Prepares the worker's in it's own context for upcoming work to do on things
+     * that can not be shared by using the init method in the parent's context.
+     *
+     * @return void
+     */
+    public function prepare()
+    {
+        // get local ref of connection handlers
+        $connectionHandlers = $this->getConnectionHandlers();
+        // iterate then and call prepare on the it's modules
+        foreach ($connectionHandlers as $connectionHandler) {
+            // iterate all modules of connection handler
+            foreach ($connectionHandler->getModules() as $name => $moduleInstance) {
+                // prepare things in worker context
+                $moduleInstance->prepare();
+            }
+        }
     }
 
     /**
