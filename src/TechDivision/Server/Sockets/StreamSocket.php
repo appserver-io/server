@@ -156,7 +156,7 @@ class StreamSocket implements SocketInterface
      * @return \TechDivision\Server\Sockets\StreamSocket|bool The Stream instance with the connection socket
      *                                                           accepted or bool false if timeout or error occurred.
      */
-    public function accept($acceptTimeout = 600, $receiveTimeout = 16)
+    public function accept($acceptTimeout = 600, $receiveTimeout = 60)
     {
         $connectionResource = @stream_socket_accept($this->getConnectionResource(), $acceptTimeout, $peername);
         // if timeout or error occurred return false as accept function does
