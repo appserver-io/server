@@ -245,6 +245,26 @@ class ServerJsonConfiguration implements ServerConfigurationInterface
     }
 
     /**
+     * Return's worker's accept min count
+     *
+     * @return int
+     */
+    public function getWorkerAcceptMin()
+    {
+        return (int)$this->data->workerAcceptMin;
+    }
+
+    /**
+     * Return's worker's accept min count
+     *
+     * @return int
+     */
+    public function getWorkerAcceptMax()
+    {
+        return (int)$this->data->workerAcceptMax;
+    }
+
+    /**
      * Return's context type
      *
      * @return string

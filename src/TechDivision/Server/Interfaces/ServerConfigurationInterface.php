@@ -84,6 +84,20 @@ interface ServerConfigurationInterface
     public function getWorkerNumber();
 
     /**
+     * Return's worker accept min count
+     *
+     * @return int
+     */
+    public function getWorkerAcceptMin();
+
+    /**
+     * Return's worker accept max count
+     *
+     * @return int
+     */
+    public function getWorkerAcceptMax();
+
+    /**
      * Return's software
      *
      * @return string

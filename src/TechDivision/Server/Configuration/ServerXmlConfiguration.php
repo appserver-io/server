@@ -77,6 +77,8 @@ class ServerXmlConfiguration implements ServerConfigurationInterface
         $this->port = (int)array_shift($node->xpath("./params/param[@name='port']"));
         $this->software = (string)array_shift($node->xpath("./params/param[@name='software']"));
         $this->workerNumber = (int)array_shift($node->xpath("./params/param[@name='workerNumber']"));
+        $this->workerAcceptMin = (int)array_shift($node->xpath("./params/param[@name='workerAcceptMin']"));
+        $this->workerAcceptMax = (int)array_shift($node->xpath("./params/param[@name='workerAcceptMax']"));
         $this->certPath = (string)array_shift($node->xpath("./params/param[@name='certPath']"));
         $this->passphrase = (string)array_shift($node->xpath("./params/param[@name='passphrase']"));
         $this->documentRoot = (string)array_shift($node->xpath("./params/param[@name='documentRoot']"));
@@ -471,6 +473,26 @@ class ServerXmlConfiguration implements ServerConfigurationInterface
     public function getWorkerNumber()
     {
         return (int)$this->workerNumber;
+    }
+
+    /**
+     * Return's worker's accept min count
+     *
+     * @return int
+     */
+    public function getWorkerAcceptMin()
+    {
+        return (int)$this->workerAcceptMin;
+    }
+
+    /**
+     * Return's worker's accept max count
+     *
+     * @return int
+     */
+    public function getWorkerAcceptMax()
+    {
+        return (int)$this->workerAcceptMax;
     }
 
     /**
