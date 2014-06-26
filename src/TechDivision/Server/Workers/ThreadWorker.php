@@ -45,6 +45,19 @@ use TechDivision\Server\RequestHandlerThread;
  */
 class ThreadWorker extends \Thread implements WorkerInterface
 {
+    /**
+     * Define's the default value for accept min count
+     *
+     * @var int
+     */
+    const DEFAULT_ACCEPT_MIN = 8;
+
+    /**
+     * Define's the default value for accept max count
+     *
+     * @var int
+     */
+    const DEFAULT_ACCEPT_MAX = 32;
 
     /**
      * Hold's the serer connection resource
@@ -68,6 +81,20 @@ class ThreadWorker extends \Thread implements WorkerInterface
     protected $connectionHandlers;
 
     /**
+     * Defines the minimum count of connections for the worker to accept
+     *
+     * @var int
+     */
+    protected $acceptMin;
+
+    /**
+     * Defines the maximum count of connections for the worker to accept
+     *
+     * @var int
+     */
+    protected $acceptMax;
+
+    /**
      * Flag if worker should be restarted by server
      *
      * @var bool
@@ -88,8 +115,24 @@ class ThreadWorker extends \Thread implements WorkerInterface
         $this->serverContext = $serverContext;
         // connection handler init
         $this->connectionHandlers = $connectionHandlers;
+        // init woker
+        $this->init();
         // autostart worker
         $this->start(PTHREADS_INHERIT_ALL | PTHREADS_ALLOW_HEADERS);
+    }
+
+    /**
+     * Init's the worker before it runs
+     *
+     * @return void
+     */
+    public function init()
+    {
+        // get server config to local ref
+        $serverConfig = $this->getServerContext()->getServerConfig();
+        // read min and max accept stuff out of config
+        $this->acceptMin = $serverConfig->getWorkerAcceptMin();
+        $this->acceptMax = $serverConfig->getWorkerAcceptMax();
     }
 
     /**
@@ -188,10 +231,10 @@ class ThreadWorker extends \Thread implements WorkerInterface
 
             // init connection count
             $connectionCount = 0;
-            $connectionLimit = rand(16, 64);
+            $connectionLimit = rand($this->getAcceptMin(), $this->getAcceptMax());
 
             // while worker not reached connection limit accept connections and process
-            while (++$connectionCount < $connectionLimit) {
+            while (++$connectionCount <= $connectionLimit) {
 
                 // accept connections and process working connection by handlers
                 if (($connection = $serverConnection->accept()) !== false) {
@@ -258,5 +301,31 @@ class ThreadWorker extends \Thread implements WorkerInterface
     public function shouldRestart()
     {
         return $this->shouldRestart;
+    }
+
+    /**
+     * Return's the max count for the worker to accept
+     *
+     * @return int
+     */
+    public function getAcceptMax()
+    {
+        if ($this->acceptMax) {
+            return $this->acceptMax;
+        }
+        return self::DEFAULT_ACCEPT_MAX;
+    }
+
+    /**
+     * Return's the min count for the worker to accept
+     *
+     * @return int
+     */
+    public function getAcceptMin()
+    {
+        if ($this->acceptMin) {
+            return $this->acceptMin;
+        }
+        return self::DEFAULT_ACCEPT_MIN;
     }
 }

@@ -49,6 +49,13 @@ interface WorkerInterface
     public function getServerContext();
 
     /**
+     * Init's the worker before it runs
+     *
+     * @return void
+     */
+    public function init();
+
+    /**
      * Start's the worker
      *
      * @return void
