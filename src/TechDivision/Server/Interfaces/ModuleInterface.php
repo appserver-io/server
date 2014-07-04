@@ -21,6 +21,8 @@
 
 namespace TechDivision\Server\Interfaces;
 
+use TechDivision\Connection\ConnectionRequestInterface;
+use TechDivision\Connection\ConnectionResponseInterface;
 use TechDivision\Server\Exceptions\ModuleException;
 
 /**
@@ -36,14 +38,13 @@ use TechDivision\Server\Exceptions\ModuleException;
  */
 interface ModuleInterface
 {
-
     /**
      * Implement's module logic for given hook
      *
-     * @param \TechDivision\Server\Interfaces\ConnectionRequestInterface  $request        A request object
-     * @param \TechDivision\Server\Interfaces\ConnectionResponseInterface $response       A response object
-     * @param \TechDivision\Server\Interfaces\RequestContextInterface     $requestContext A requests context instance
-     * @param int                                                         $hook           The current hook to process logic for
+     * @param \TechDivision\Connection\ConnectionRequestInterface     $request        A request object
+     * @param \TechDivision\Connection\ConnectionResponseInterface    $response       A response object
+     * @param \TechDivision\Server\Interfaces\RequestContextInterface $requestContext A requests context instance
+     * @param int                                                     $hook           The current hook to process logic for
      *
      * @return bool
      * @throws \TechDivision\Server\Exceptions\ModuleException

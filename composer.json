@@ -23,8 +23,8 @@
         "php": ">=5.4.0",
         "monolog/monolog": "*",
         "psr/log": "*",
-        "techdivision/storage": "*",
-        "techdivision/connection": "*"
+        "techdivision/storage": "dev-master",
+        "techdivision/connection": "dev-master"
     },
     "autoload": {
         "psr-0": {

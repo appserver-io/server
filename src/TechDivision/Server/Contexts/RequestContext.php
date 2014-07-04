@@ -214,16 +214,16 @@ class RequestContext extends GenericStackable implements RequestContextInterface
      */
     public function getLogger($loggerType = self::DEFAULT_LOGGER_TYPE)
     {
-        // build env key to search for
-        $envKey = 'LOGGER_' . strtoupper($loggerType);
         // check if there is information about this logger type in env vars
-        if ($this->hasEnvVar($envKey)) {
+        if ($this->hasEnvVar($loggerType)) {
             // get logger name from module vars by key
-            $loggerName = $this->getEnvVar($envKey);
+            $loggerName = $this->getEnvVar($loggerType);
             // get specific logger from system context
             return $this->getServerContext()->getLogger($loggerName);
         }
-        // throw exception
-        throw new ServerException("No logger type '$loggerName' found in env vars.", 500);
+        // log error to system logger
+        $this->getServerContext()->getLogger()->debug(
+            sprintf("No logger type '$loggerType' found in env vars.")
+        );
     }
 }
