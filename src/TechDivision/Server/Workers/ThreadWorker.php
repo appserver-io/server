@@ -21,16 +21,17 @@
 
 namespace TechDivision\Server\Workers;
 
-use TechDivision\Http\HttpConnectionHandler;
-use TechDivision\Http\HttpProtocol;
 use TechDivision\Server\Dictionaries\ServerVars;
 use TechDivision\Server\Interfaces\ConfigInterface;
+use TechDivision\Server\Interfaces\ConnectionHandlerInterface;
+use TechDivision\Server\Interfaces\RequestContextInterface;
 use TechDivision\Server\Interfaces\ServerContextInterface;
 use TechDivision\Server\Interfaces\ServerInterface;
 use TechDivision\Server\Interfaces\WorkerInterface;
 use TechDivision\Server\Exceptions\ModuleNotFoundException;
 use TechDivision\Server\Exceptions\ConnectionHandlerNotFoundException;
 use TechDivision\Server\RequestHandlerThread;
+use TechDivision\Server\Sockets\SocketInterface;
 
 /**
  * Class ThreadWorker
@@ -223,11 +224,28 @@ class ThreadWorker extends \Thread implements WorkerInterface
             // get server context
             $serverContext = $this->getServerContext();
 
-            // get server connection
-            $serverConnection = $serverContext->getConnectionInstance($this->serverConnectionResource);
+            // get request context type
+            $requestContextType = $serverContext->getServerConfig()->getRequestContextType();
+
+            /** @var RequestContextInterface $requestContext */
+            // instantiate and init request context
+            $requestContext = new $requestContextType();
+            $requestContext->init($serverContext);
+
+            // get socket type
+            $socketType = $serverContext->getServerConfig()->getSocketType();
+
+            /** @var SocketInterface $socketType */
+            // get connection instance by resource
+            $serverConnection = $socketType::getInstance($this->serverConnectionResource);
 
             // get connection handlers
             $connectionHandlers = $this->getConnectionHandlers();
+            // inject request context to connection handlers
+            foreach ($connectionHandlers as $connectionHandler) {
+                /** @var ConnectionHandlerInterface $connectionHandler */
+                $connectionHandler->injectRequestContext($requestContext);
+            }
 
             // init connection count
             $connectionCount = 0;
@@ -250,8 +268,7 @@ class ThreadWorker extends \Thread implements WorkerInterface
                         $connectionHandlers,
                         $serverContext,
                         $this
-                    );
-                    */
+                    ); */
 
                     // iterate all connection handlers to handle connection right
                     foreach ($connectionHandlers as $connectionHandler) {
@@ -263,7 +280,7 @@ class ThreadWorker extends \Thread implements WorkerInterface
 
                 }
                 // init context vars afterwards to avoid performance issues
-                $serverContext->initVars();
+                $requestContext->initVars();
             }
         } catch (\Exception $e) {
             // log error

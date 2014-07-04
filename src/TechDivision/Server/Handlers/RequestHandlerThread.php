@@ -23,6 +23,7 @@ namespace TechDivision\Server\Handlers;
 
 use TechDivision\Server\Interfaces\ServerContextInterface;
 use TechDivision\Server\Interfaces\WorkerInterface;
+use TechDivision\Server\Sockets\StreamSocket;
 
 /**
  * This class is just for testing purpose, so please don't use it for this moment.
@@ -72,8 +73,12 @@ class RequestHandlerThread extends \Thread
         $serverContext = $this->serverContext;
         $connectionHandlers = $this->connectionHandlers;
         $worker = $this->worker;
+
+        // get socket type
+        $socketType = $serverContext->getServerConfig()->getSocketType();
+
         // get connection instance by resource
-        $connection = $serverContext->getConnectionInstance($this->connectionResource);
+        $connection = $socketType::getInstance($this->connectionResource);
 
         // iterate all connection handlers to handle connection right
         foreach ($connectionHandlers as $connectionHandler) {

@@ -59,6 +59,20 @@ interface ConnectionHandlerInterface
     public function handle(SocketInterface $connection, WorkerInterface $worker);
 
     /**
+     * Injects the request context
+     *
+     * @param \TechDivision\Server\Interfaces\RequestContextInterface $requestContext The request's context instance
+     */
+    public function injectRequestContext(RequestContextInterface $requestContext);
+
+    /**
+     * Return's the request's context instance
+     *
+     * @return \TechDivision\Server\Interfaces\RequestContextInterface
+     */
+    public function getRequestContext();
+
+    /**
      * Shutdown the connection with the connected client and the response handling in a proper way before
      * an unwanted shutdown happens by either a php fatal error or exit/die was going on.
      *

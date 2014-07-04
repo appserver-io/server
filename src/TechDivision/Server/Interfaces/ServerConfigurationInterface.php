@@ -140,6 +140,13 @@ interface ServerConfigurationInterface
     public function getServerContextType();
 
     /**
+     * Return's request context type
+     *
+     * @return string
+     */
+    public function getRequestContextType();
+
+    /**
      * Return's socket type
      *
      * @return string
