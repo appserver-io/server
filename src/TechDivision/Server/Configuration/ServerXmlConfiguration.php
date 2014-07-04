@@ -36,7 +36,6 @@ use TechDivision\Server\Interfaces\ServerConfigurationInterface;
  */
 class ServerXmlConfiguration implements ServerConfigurationInterface
 {
-
     /**
      * The configured rewrite rules
      *
@@ -71,6 +70,7 @@ class ServerXmlConfiguration implements ServerConfigurationInterface
         $this->workerType = (string)$node->attributes()->worker;
         $this->socketType = (string)$node->attributes()->socket;
         $this->serverContextType = (string)$node->attributes()->serverContext;
+        $this->requestContextType = (string)$node->attributes()->requestContext;
         $this->loggerName = (string)$node->attributes()->loggerName;
         $this->transport = (string)array_shift($node->xpath("./params/param[@name='transport']"));
         $this->address = (string)array_shift($node->xpath("./params/param[@name='address']"));
@@ -503,6 +503,16 @@ class ServerXmlConfiguration implements ServerConfigurationInterface
     public function getServerContextType()
     {
         return $this->serverContextType;
+    }
+
+    /**
+     * Return's server context type
+     *
+     * @return string
+     */
+    public function getRequestContextType()
+    {
+        return $this->requestContextType;
     }
 
     /**

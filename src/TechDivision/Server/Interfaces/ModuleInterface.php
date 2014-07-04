@@ -21,9 +21,9 @@
 
 namespace TechDivision\Server\Interfaces;
 
+use TechDivision\Connection\ConnectionRequestInterface;
+use TechDivision\Connection\ConnectionResponseInterface;
 use TechDivision\Server\Exceptions\ModuleException;
-use TechDivision\Http\HttpRequestInterface;
-use TechDivision\Http\HttpResponseInterface;
 
 /**
  * Interface ModuleInterface
@@ -38,18 +38,23 @@ use TechDivision\Http\HttpResponseInterface;
  */
 interface ModuleInterface
 {
-
     /**
      * Implement's module logic for given hook
      *
-     * @param \TechDivision\Http\HttpRequestInterface  $request  The request object
-     * @param \TechDivision\Http\HttpResponseInterface $response The response object
-     * @param int                                      $hook     The current hook to process logic for
+     * @param \TechDivision\Connection\ConnectionRequestInterface     $request        A request object
+     * @param \TechDivision\Connection\ConnectionResponseInterface    $response       A response object
+     * @param \TechDivision\Server\Interfaces\RequestContextInterface $requestContext A requests context instance
+     * @param int                                                     $hook           The current hook to process logic for
      *
      * @return bool
      * @throws \TechDivision\Server\Exceptions\ModuleException
      */
-    public function process(HttpRequestInterface $request, HttpResponseInterface $response, $hook);
+    public function process(
+        ConnectionRequestInterface $request,
+        ConnectionResponseInterface $response,
+        RequestContextInterface $requestContext,
+        $hook
+    );
 
     /**
      * Return's an array of module names which should be executed first

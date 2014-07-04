@@ -39,6 +39,12 @@ use TechDivision\Server\Sockets\SocketInterface;
  */
 interface ServerContextInterface
 {
+    /**
+     * Defines the default logger type
+     *
+     * @var string
+     */
+    const DEFAULT_LOGGER_TYPE = 'System';
 
     /**
      * Initialises the server context
@@ -82,160 +88,5 @@ interface ServerContextInterface
      * @return \Psr\Log\LoggerInterface|null The logger instance
      * @throws \TechDivision\Server\Exceptions\ServerException
      */
-    public function getLogger($loggerType = EnvVars::LOGGER_SYSTEM);
-
-    /**
-     * Set's a value to specific server var
-     *
-     * @param string $serverVar The server var to set
-     * @param string $value     The value to server var
-     *
-     * @return void
-     */
-    public function setServerVar($serverVar, $value);
-
-    /**
-     * Return's a value for specific server var
-     *
-     * @param string $serverVar The server var to get value for
-     *
-     * @return string The value to given server var
-     */
-    public function getServerVar($serverVar);
-
-    /**
-     * Check's if value exists for given server var
-     *
-     * @param string $serverVar The server var to check
-     *
-     * @return bool Weather it has serverVar (true) or not (false)
-     */
-    public function hasServerVar($serverVar);
-
-    /**
-     * Return's all the server vars as array key value pair format
-     *
-     * @return array The server vars as array
-     */
-    public function getServerVars();
-
-    /**
-     * Init basic server vars
-     *
-     * @return void
-     */
-    public function initServerVars();
-
-    /**
-     * Set's a value to specific module var
-     *
-     * @param string $moduleVar The module var to set
-     * @param string $value     The value to module var
-     *
-     * @return void
-     */
-    public function setModuleVar($moduleVar, $value);
-
-    /**
-     * Return's a value for specific module var
-     *
-     * @param string $moduleVar The module var to get value for
-     *
-     * @throws \TechDivision\Server\Exceptions\ServerException
-     *
-     * @return mixed The value to given module var
-     */
-    public function getModuleVar($moduleVar);
-
-    /**
-     * Return's all the module vars as array key value pair format
-     *
-     * @return array The module vars as array
-     */
-    public function getModuleVars();
-
-    /**
-     * Check's if value exists for given module var
-     *
-     * @param string $moduleVar The module var to check
-     *
-     * @return boolean Weather it has moduleVar (true) or not (false)
-     */
-    public function hasModuleVar($moduleVar);
-
-    /**
-     * Will init the module vars, which means we will clean it completely
-     *
-     * @return void
-     */
-    public function initModuleVars();
-
-    /**
-     * Add's connection relevant informations to server vars
-     *
-     * @param \TechDivision\Server\Sockets\SocketInterface $connection The connection
-     *
-     * @return void
-     */
-    public function setConnectionServerVars(SocketInterface $connection);
-
-    /**
-     * Sets a value to specific env var
-     *
-     * @param string $envVar The env var to set
-     * @param string $value  The value to env var
-     *
-     * @return void
-     */
-    public function setEnvVar($envVar, $value);
-
-    /**
-     * Unsets a specific env var
-     *
-     * @param string $envVar The env var to unset
-     *
-     * @return void
-     */
-    public function unsetEnvVar($envVar);
-
-    /**
-     * Return's a value for specific env var
-     *
-     * @param string $envVar The env var to get value for
-     *
-     * @throws \TechDivision\Server\Exceptions\ServerException
-     *
-     * @return mixed The value to given env var
-     */
-    public function getEnvVar($envVar);
-
-    /**
-     * Return's all the env vars as array key value pair format
-     *
-     * @return array The env vars as array
-     */
-    public function getEnvVars();
-
-    /**
-     * Check's if value exists for given env var
-     *
-     * @param string $envVar The env var to check
-     *
-     * @return boolean Weather it has envVar (true) or not (false)
-     */
-    public function hasEnvVar($envVar);
-
-    /**
-     * Will init the env vars, which means we will clean it completely
-     *
-     * @return void
-     */
-    public function initEnvVars();
-
-    /**
-     * Resets all var used in server context
-     *
-     * @return void
-     */
-    public function initVars();
+    public function getLogger($loggerType = self::DEFAULT_LOGGER_TYPE);
 }

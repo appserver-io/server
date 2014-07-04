@@ -36,7 +36,6 @@ use TechDivision\Server\Interfaces\ServerConfigurationInterface;
  */
 class ServerJsonConfiguration implements ServerConfigurationInterface
 {
-
     /**
      * Hold's raw data instance
      *
@@ -272,6 +271,16 @@ class ServerJsonConfiguration implements ServerConfigurationInterface
     public function getServerContextType()
     {
         return $this->data->serverContext;
+    }
+
+    /**
+     * Return's request type
+     *
+     * @return string
+     */
+    public function getRequestContextType()
+    {
+        return $this->data->requestContext;
     }
 
     /**
