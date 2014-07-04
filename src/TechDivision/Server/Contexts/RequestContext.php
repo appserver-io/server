@@ -191,8 +191,10 @@ class RequestContext extends GenericStackable implements RequestContextInterface
         $this->setServerVar(ServerVars::SERVER_PORT, $serverPort);
         $this->setServerVar(ServerVars::GATEWAY_INTERFACE, "PHP/" . PHP_VERSION);
         $this->setServerVar(ServerVars::SERVER_SOFTWARE, $serverSoftware);
-        $this->setServerVar(ServerVars::SERVER_SIGNATURE,
-            "<address>$serverSoftware Server at $serverAddress Port $serverPort</address>\r\n");
+        $this->setServerVar(
+            ServerVars::SERVER_SIGNATURE,
+            "<address>$serverSoftware Server at $serverAddress Port $serverPort</address>\r\n"
+        );
         $this->setServerVar(ServerVars::SERVER_HANDLER, RequestContext::REQUEST_HANDLER_DEFAULT);
         $this->setServerVar(ServerVars::SERVER_ERRORS_PAGE_TEMPLATE_PATH, $serverContext->getServerConfig()->getErrorsPageTemplatePath());
         $this->setServerVar(ServerVars::PATH, getenv('PATH'));

@@ -62,6 +62,8 @@ interface ConnectionHandlerInterface
      * Injects the request context
      *
      * @param \TechDivision\Server\Interfaces\RequestContextInterface $requestContext The request's context instance
+     *
+     * @return void
      */
     public function injectRequestContext(RequestContextInterface $requestContext);
 
