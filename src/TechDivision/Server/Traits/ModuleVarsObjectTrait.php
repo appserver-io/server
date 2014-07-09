@@ -1,6 +1,6 @@
 <?php
 /**
- * \TechDivision\Server\Traits\ModuleVarsTrait
+ * \TechDivision\Server\Traits\ModuleVarsObjectTrait
  *
  * NOTICE OF LICENSE
  *
@@ -22,7 +22,7 @@
 namespace TechDivision\Server\Traits;
 
 /**
- * Trait ModuleVarsTrait
+ * Trait ModuleVarsObjectTrait
  *
  * @category   Server
  * @package    TechDivision_Server
@@ -32,7 +32,7 @@ namespace TechDivision\Server\Traits;
  * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link       https://github.com/techdivision/TechDivision_Server
  */
-trait ModuleVarsTrait
+trait ModuleVarsObjectTrait
 {
 
     /**
@@ -45,9 +45,7 @@ trait ModuleVarsTrait
      */
     public function setModuleVar($moduleVar, $value)
     {
-        if (!is_null($value)) {
-            $this->moduleVars[$moduleVar] = $value;
-        }
+        $this->moduleVars->add($moduleVar, $value);
     }
 
     /**
@@ -59,9 +57,7 @@ trait ModuleVarsTrait
      */
     public function unsetModuleVar($moduleVar)
     {
-        if (isset($this->moduleVars[$moduleVar])) {
-            unset($this->moduleVars[$moduleVar]);
-        }
+        $this->moduleVars->remove($moduleVar);
     }
 
     /**
@@ -75,13 +71,8 @@ trait ModuleVarsTrait
      */
     public function getModuleVar($moduleVar)
     {
-        // check if var is set
-        if (isset($this->moduleVars[$moduleVar])) {
-            // return vars value
-            return $this->moduleVars[$moduleVar];
-        }
-        // throw exception
-        throw new ServerException("Module var '$moduleVar'' does not exist.", 500);
+        // get from hash map
+        return $this->moduleVars->get($moduleVar);
     }
 
 
@@ -92,7 +83,7 @@ trait ModuleVarsTrait
      */
     public function getModuleVars()
     {
-        return $this->moduleVars;
+        return $this->moduleVars->toIndexedArray();
     }
 
     /**
@@ -105,11 +96,7 @@ trait ModuleVarsTrait
     public function hasModuleVar($moduleVar)
     {
         // check if var is set
-        if (!isset($this->moduleVars[$moduleVar])) {
-            return false;
-        }
-
-        return true;
+        return $this->moduleVars->exists($moduleVar);
     }
 
     /**
@@ -119,8 +106,6 @@ trait ModuleVarsTrait
      */
     public function clearModuleVars()
     {
-        foreach ($this->moduleVars as $key => $value) {
-            unset($this->moduleVars[$key]);
-        }
+        $this->moduleVars->clear();
     }
 }

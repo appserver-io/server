@@ -44,7 +44,7 @@ interface RequestContextInterface
      *
      * @var string
      */
-    const DEFAULT_LOGGER_TYPE = 'Access';
+    const DEFAULT_LOGGER_TYPE = 'System';
 
     /**
      * Initialises the request context by given server context

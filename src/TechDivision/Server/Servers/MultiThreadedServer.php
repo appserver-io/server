@@ -236,8 +236,8 @@ class MultiThreadedServer extends \Thread implements ServerInterface
                     );
                 }
             }
-            // sleep for 1 seconds to lower system load
-            sleep(1);
+            // sleep to lower system load
+            usleep(100000);
         }
     }
 }
