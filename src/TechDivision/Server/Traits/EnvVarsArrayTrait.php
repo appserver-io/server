@@ -1,6 +1,6 @@
 <?php
 /**
- * \TechDivision\Server\Traits\EnvVarsTrait
+ * \TechDivision\Server\Traits\EnvVarsArrayTrait
  *
  * NOTICE OF LICENSE
  *
@@ -22,7 +22,7 @@
 namespace TechDivision\Server\Traits;
 
 /**
- * Trait EnvVarsTrait
+ * Trait EnvVarsArrayTrait
  *
  * @category   Server
  * @package    TechDivision_Server
@@ -32,7 +32,7 @@ namespace TechDivision\Server\Traits;
  * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link       https://github.com/techdivision/TechDivision_Server
  */
-trait EnvVarsTrait
+trait EnvVarsArrayTrait
 {
     /**
      * Sets a value to specific env var

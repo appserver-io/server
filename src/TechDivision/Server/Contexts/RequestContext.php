@@ -27,9 +27,16 @@ use TechDivision\Server\Dictionaries\ServerVars;
 use TechDivision\Server\Exceptions\ServerException;
 use TechDivision\Server\Interfaces\RequestContextInterface;
 use TechDivision\Server\Interfaces\ServerContextInterface;
-use TechDivision\Server\Traits\EnvVarsTrait;
-use TechDivision\Server\Traits\ModuleVarsTrait;
-use TechDivision\Server\Traits\ServerVarsTrait;
+use TechDivision\Server\Traits\EnvVarsObjectTrait;
+use TechDivision\Server\Traits\EnvVarsStackableTrait;
+use TechDivision\Server\Traits\EnvVarsArrayTrait;
+use TechDivision\Server\Traits\ModuleVarsObjectTrait;
+use TechDivision\Server\Traits\ModuleVarsStackableTrait;
+use TechDivision\Server\Traits\ModuleVarsArrayTrait;
+use TechDivision\Server\Traits\ServerVarsObjectTrait;
+use TechDivision\Server\Traits\ServerVarsStackableTrait;
+use TechDivision\Server\Traits\ServerVarsArrayTrait;
+use TechDivision\Collections\HashMap;
 use TechDivision\Storage\GenericStackable;
 
 /**
@@ -43,9 +50,12 @@ use TechDivision\Storage\GenericStackable;
  * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link       https://github.com/techdivision/TechDivision_Server
  */
-class RequestContext extends GenericStackable implements RequestContextInterface
+class RequestContext implements RequestContextInterface
 {
-    use ServerVarsTrait, ModuleVarsTrait, EnvVarsTrait;
+    // use traits for server-, env- and module var functionality
+    use ServerVarsObjectTrait, ModuleVarsObjectTrait, EnvVarsObjectTrait;
+    // use ServerVarsStackableTrait, ModuleVarsStackableTrait, EnvVarsStackableTrait;
+    // use ServerVarsArrayTrait, ModuleVarsArrayTrait, EnvVarsArrayTrait;
 
     /**
      * Defines the handler to use as default
@@ -91,10 +101,20 @@ class RequestContext extends GenericStackable implements RequestContextInterface
      */
     public function __construct()
     {
-        // init data holders as generic stackable
-        $this->serverVars = new GenericStackable();
-        $this->envVars = new GenericStackable();
-        $this->moduleVars = new GenericStackable();
+        // init data holders as hash map objects ... user objects traits for that
+        $this->serverVars = new HashMap();
+        $this->envVars = new HashMap();
+        $this->moduleVars = new HashMap();
+
+        // you can use stackable trait when doing this to be synchronised with these hashtables
+        // $this->serverVars = new GenericStackable();
+        // $this->envVars = new GenericStackable();
+        // $this->moduleVars = new GenericStackable();
+
+        // or you just use normal internal arrays
+        // $this->serverVars = array();
+        // $this->envVars = array();
+        // $this->moduleVars = array();
     }
 
     /**

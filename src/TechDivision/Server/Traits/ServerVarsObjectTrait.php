@@ -1,6 +1,6 @@
 <?php
 /**
- * \TechDivision\Server\Traits\ServerVarsTrait
+ * \TechDivision\Server\Traits\ServerVarsObjectTrait
  *
  * NOTICE OF LICENSE
  *
@@ -22,7 +22,7 @@
 namespace TechDivision\Server\Traits;
 
 /**
- * Trait ServerVarsTrait
+ * Trait ServerVarsObjectTrait
  *
  * @category   Server
  * @package    TechDivision_Server
@@ -32,7 +32,7 @@ namespace TechDivision\Server\Traits;
  * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link       https://github.com/techdivision/TechDivision_Server
  */
-trait ServerVarsTrait
+trait ServerVarsObjectTrait
 {
     /**
      * Set's a value to specific server var
@@ -44,9 +44,7 @@ trait ServerVarsTrait
      */
     public function setServerVar($serverVar, $value)
     {
-        if (!is_null($value)) {
-            $this->serverVars[$serverVar] = $value;
-        }
+        $this->serverVars->add($serverVar, $value);
     }
 
     /**
@@ -58,9 +56,7 @@ trait ServerVarsTrait
      */
     public function unsetServerVar($serverVar)
     {
-        if (isset($this->serverVars[$serverVar])) {
-            unset($this->serverVars[$serverVar]);
-        }
+        $this->serverVars->remove($serverVar);
     }
 
     /**
@@ -74,13 +70,8 @@ trait ServerVarsTrait
      */
     public function getServerVar($serverVar)
     {
-        // check if server var is set
-        if (isset($this->serverVars[$serverVar])) {
-            // return server vars value
-            return $this->serverVars[$serverVar];
-        }
-        // throw exception
-        throw new ServerException("Server var '$serverVar'' does not exist.", 500);
+        // get from hash map
+        return $this->serverVars->get($serverVar);
     }
 
     /**
@@ -90,7 +81,7 @@ trait ServerVarsTrait
      */
     public function getServerVars()
     {
-        return $this->serverVars;
+        return $this->serverVars->toIndexedArray();
     }
 
     /**
@@ -103,11 +94,7 @@ trait ServerVarsTrait
     public function hasServerVar($serverVar)
     {
         // check if server var is set
-        if (!isset($this->serverVars[$serverVar])) {
-            return false;
-        }
-
-        return true;
+        return $this->serverVars->exists($serverVar);
     }
 
     /**
@@ -117,8 +104,6 @@ trait ServerVarsTrait
      */
     public function clearServerVars()
     {
-        foreach ($this->serverVars as $key => $value) {
-            unset($this->serverVars[$key]);
-        }
+        $this->serverVars->clear();
     }
 }

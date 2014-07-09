@@ -21,6 +21,7 @@
 namespace TechDivision\Server\Contexts;
 
 use Psr\Log\LoggerInterface;
+use TechDivision\Collections\HashMap;
 use TechDivision\Server\Dictionaries\EnvVars;
 use TechDivision\Server\Exceptions\ConnectionHandlerNotFoundException;
 use TechDivision\Server\Exceptions\ModuleNotFoundException;
@@ -41,7 +42,7 @@ use TechDivision\Storage\GenericStackable;
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      https://github.com/techdivision/TechDivision_Server
  */
-class ServerContext extends GenericStackable implements ServerContextInterface
+class ServerContext implements ServerContextInterface
 {
     /**
      * Optionally hold's an container implementation of third party environment.
@@ -55,7 +56,7 @@ class ServerContext extends GenericStackable implements ServerContextInterface
      * All logger instances will be hold here.
      * Every logger instance has to be a PSR compatible
      *
-     * @var LoggerInterface[]
+     * @var \TechDivision\Collections\HashMap
      */
     protected $loggers;
 
@@ -78,7 +79,7 @@ class ServerContext extends GenericStackable implements ServerContextInterface
         // set configuration
         $this->serverConfig = $serverConfig;
         // init logger storage as stackable
-        $this->loggers = new GenericStackable();
+        $this->loggers = array();// new GenericStackable();
     }
 
     /**
@@ -122,9 +123,9 @@ class ServerContext extends GenericStackable implements ServerContextInterface
      */
     public function injectLoggers(array $loggers)
     {
-        // iterate loggers to storage
+        // iterate loggers to collection hashmap
         foreach ($loggers as $loggerName => $loggerInstance) {
-            $this->loggers["$loggerName"] = $loggerInstance;
+            $this->loggers[$loggerName] = $loggerInstance;
         }
     }
 

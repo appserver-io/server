@@ -23,6 +23,7 @@
         "php": ">=5.4.0",
         "monolog/monolog": "*",
         "psr/log": "*",
+        "techdivision/collections": "dev-master",
         "techdivision/storage": "dev-master",
         "techdivision/connection": "dev-master"
     },
