@@ -120,7 +120,7 @@ class ThreadWorker extends \Thread implements WorkerInterface
         // init woker
         $this->init();
         // autostart worker
-        $this->start();
+        $this->start(PTHREADS_INHERIT_ALL | PTHREADS_ALLOW_HEADERS);
     }
 
     /**
