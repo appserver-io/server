@@ -32,6 +32,7 @@ use TechDivision\Server\Exceptions\ModuleNotFoundException;
 use TechDivision\Server\Exceptions\ConnectionHandlerNotFoundException;
 use TechDivision\Server\RequestHandlerThread;
 use TechDivision\Server\Sockets\SocketInterface;
+use TechDivision\Server\Sockets\StreamSocket;
 
 /**
  * Class ThreadWorker
@@ -215,37 +216,21 @@ class ThreadWorker extends \Thread implements WorkerInterface
      */
     public function work()
     {
+        // get server context
+        $serverContext = $this->getServerContext();
+        // get connection handlers
+        $connectionHandlers = $this->getConnectionHandlers();
+
+        // set should restart initial flag
+        $this->shouldRestart = false;
 
         try {
-
-            // set should restart initial flag
-            $this->shouldRestart = false;
-
-            // get server context
-            $serverContext = $this->getServerContext();
-
-            // get request context type
-            $requestContextType = $serverContext->getServerConfig()->getRequestContextType();
-
-            /** @var RequestContextInterface $requestContext */
-            // instantiate and init request context
-            $requestContext = new $requestContextType();
-            $requestContext->init($serverContext);
-
             // get socket type
             $socketType = $serverContext->getServerConfig()->getSocketType();
 
             /** @var SocketInterface $socketType */
-            // get connection instance by resource
+            // build connection instance by resource
             $serverConnection = $socketType::getInstance($this->serverConnectionResource);
-
-            // get connection handlers
-            $connectionHandlers = $this->getConnectionHandlers();
-            // inject request context to connection handlers
-            foreach ($connectionHandlers as $connectionHandler) {
-                /** @var ConnectionHandlerInterface $connectionHandler */
-                $connectionHandler->injectRequestContext($requestContext);
-            }
 
             // init connection count
             $connectionCount = 0;
@@ -277,10 +262,7 @@ class ThreadWorker extends \Thread implements WorkerInterface
                             break;
                         }
                     }
-
                 }
-                // init context vars afterwards to avoid performance issues
-                $requestContext->initVars();
             }
         } catch (\Exception $e) {
             // log error
