@@ -181,7 +181,7 @@ class ThreadWorker extends \Thread implements WorkerInterface
         // prepare worker for upcoming connections in specific context
         $this->prepare();
         // register shutdown handler
-        // register_shutdown_function(array(&$this, "shutdown"));
+        register_shutdown_function(array(&$this, "shutdown"));
         // do work
         $this->work();
     }
@@ -194,51 +194,6 @@ class ThreadWorker extends \Thread implements WorkerInterface
      */
     public function prepare()
     {
-        /*
-        require '/home/zelgerj/Repositories/TechDivision_Server/src/TechDivision/Server/Interfaces/RequestContextInterface.php';
-
-        require '/home/zelgerj/Repositories/TechDivision_Http/src/TechDivision/Http/HttpResponseStates.php';
-
-        require '/home/zelgerj/Repositories/TechDivision_Server/src/TechDivision/Server/Traits/ServerVarsObjectTrait.php';
-        require '/home/zelgerj/Repositories/TechDivision_Server/src/TechDivision/Server/Traits/ModuleVarsObjectTrait.php';
-        require '/home/zelgerj/Repositories/TechDivision_Server/src/TechDivision/Server/Traits/EnvVarsObjectTrait.php';
-        require '/home/zelgerj/Repositories/TechDivision_Server/src/TechDivision/Server/Traits/ServerVarsArrayTrait.php';
-        require '/home/zelgerj/Repositories/TechDivision_Server/src/TechDivision/Server/Traits/ModuleVarsArrayTrait.php';
-        require '/home/zelgerj/Repositories/TechDivision_Server/src/TechDivision/Server/Traits/EnvVarsArrayTrait.php';
-
-        require '/home/zelgerj/Repositories/TechDivision_Server/src/TechDivision/Server/Contexts/RequestContext.php';
-
-        require '/home/zelgerj/Repositories/TechDivision_Lang/src/TechDivision/Lang/Object.php';
-        require '/home/zelgerj/Repositories/TechDivision_Collections/src/TechDivision/Collections/Collection.php';
-        require '/home/zelgerj/Repositories/TechDivision_Collections/src/TechDivision/Collections/Map.php';
-        require '/home/zelgerj/Repositories/TechDivision_Collections/src/TechDivision/Collections/AbstractCollection.php';
-        require '/home/zelgerj/Repositories/TechDivision_Collections/src/TechDivision/Collections/AbstractMap.php';
-        require '/home/zelgerj/Repositories/TechDivision_Collections/src/TechDivision/Collections/HashMap.php';
-
-        require '/home/zelgerj/Repositories/TechDivision_Server/src/TechDivision/Server/Dictionaries/ServerVars.php';
-        require '/home/zelgerj/Repositories/TechDivision_Server/src/TechDivision/Server/Dictionaries/ModuleVars.php';
-        require '/home/zelgerj/Repositories/TechDivision_Server/src/TechDivision/Server/Dictionaries/ModuleHooks.php';
-        require '/home/zelgerj/Repositories/TechDivision_Server/src/TechDivision/Server/Dictionaries/EnvVars.php';
-        */
-
-        /*
-        require '/home/zelgerj/Repositories/TechDivision_Server/src/TechDivision/Server/Interfaces/ConnectionHandlerInterface.php';
-        require '/home/zelgerj/Repositories/TechDivision_Server/src/TechDivision/Server/Interfaces/ModuleInterface.php';
-        require '/home/zelgerj/Repositories/TechDivision_Server/src/TechDivision/Server/Interfaces/ServerContextInterface.php';
-
-        require '/home/zelgerj/Repositories/TechDivision_Server/src/TechDivision/Server/Interfaces/ServerConfigurationInterface.php';
-        require '/home/zelgerj/Repositories/TechDivision_Server/src/TechDivision/Server/Sockets/SocketInterface.php';
-        require '/home/zelgerj/Repositories/TechDivision_WebServer/vendor/psr/log/Psr/Log/LoggerInterface.php';
-
-        require '/home/zelgerj/Repositories/TechDivision_Server/src/TechDivision/Server/Sockets/StreamSocket.php';
-        require '/home/zelgerj/Repositories/TechDivision_Server/src/TechDivision/Server/Configuration/ServerXmlConfiguration.php';
-        require '/home/zelgerj/Repositories/TechDivision_WebServer/src/TechDivision/WebServer/ConnectionHandlers/HttpConnectionHandler.php';
-        require '/home/zelgerj/Repositories/TechDivision_WebServer/src/TechDivision/WebServer/Modules/CoreModule.php';
-
-        require '/home/zelgerj/Repositories/TechDivision_Server/src/TechDivision/Server/Contexts/ServerContext.php';
-        require '/home/zelgerj/Repositories/TechDivision_WebServer/vendor/monolog/monolog/src/Monolog/Logger.php';
-        */
-/*
         // get local ref of connection handlers
         $connectionHandlers = $this->getConnectionHandlers();
         // iterate then and call prepare on the it's modules
@@ -249,7 +204,6 @@ class ThreadWorker extends \Thread implements WorkerInterface
                 $moduleInstance->prepare();
             }
         }
-*/
     }
 
     /**
@@ -262,24 +216,21 @@ class ThreadWorker extends \Thread implements WorkerInterface
      */
     public function work()
     {
+        // get server context
+        $serverContext = $this->getServerContext();
+        // get connection handlers
+        $connectionHandlers = $this->getConnectionHandlers();
+
+        // set should restart initial flag
+        $this->shouldRestart = false;
 
         try {
-
-            // set should restart initial flag
-            $this->shouldRestart = false;
-
-            // get server context
-            $serverContext = $this->getServerContext();
-
             // get socket type
             $socketType = $serverContext->getServerConfig()->getSocketType();
 
             /** @var SocketInterface $socketType */
             // build connection instance by resource
-            $serverConnection = StreamSocket::getInstance($this->serverConnectionResource);
-
-            // get connection handlers
-            $connectionHandlers = $this->getConnectionHandlers();
+            $serverConnection = $socketType::getInstance($this->serverConnectionResource);
 
             // init connection count
             $connectionCount = 0;
