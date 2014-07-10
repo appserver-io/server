@@ -81,7 +81,6 @@ trait ServerVarsArrayTrait
             // return server vars value
             return $this->serverVars[$serverVar];
         }
-        error_log("Server var '$serverVar'' does not exist.");
         // throw exception
         throw new ServerException("Server var '$serverVar'' does not exist.", 500);
     }
