@@ -20,6 +20,7 @@
  */
 
 namespace TechDivision\Server\Traits;
+use TechDivision\Server\Exceptions\ServerException;
 
 /**
  * Trait ModuleVarsArrayTrait

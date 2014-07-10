@@ -40,20 +40,13 @@ use TechDivision\Server\Sockets\SocketInterface;
 interface RequestContextInterface
 {
     /**
-     * Defines the default logger type
+     * Initialises the request context by given server config
      *
-     * @var string
-     */
-    const DEFAULT_LOGGER_TYPE = 'System';
-
-    /**
-     * Initialises the request context by given server context
-     *
-     * @param \TechDivision\Server\Interfaces\ServerContextInterface $serverContext The servers context instance
+     * @param \TechDivision\Server\Interfaces\ServerConfigurationInterface $serverConfig The servers config
      *
      * @return void
      */
-    public function init(ServerContextInterface $serverContext);
+    public function init(ServerConfigurationInterface $serverConfig);
 
     /**
      * Set's a value to specific server var
@@ -198,14 +191,4 @@ interface RequestContextInterface
      * @return void
      */
     public function initVars();
-
-    /**
-     * Return's a logger instance defined in env vars dynamically or static via config
-     *
-     * @param string $loggerType the logger's type to get
-     *
-     * @return \Psr\Log\LoggerInterface|null The logger instance
-     * @throws \TechDivision\Server\Exceptions\ServerException
-     */
-    public function getLogger($loggerType = self::DEFAULT_LOGGER_TYPE);
 }

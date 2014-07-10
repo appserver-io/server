@@ -26,6 +26,7 @@ use TechDivision\Server\Dictionaries\ModuleVars;
 use TechDivision\Server\Dictionaries\ServerVars;
 use TechDivision\Server\Exceptions\ServerException;
 use TechDivision\Server\Interfaces\RequestContextInterface;
+use TechDivision\Server\Interfaces\ServerConfigurationInterface;
 use TechDivision\Server\Interfaces\ServerContextInterface;
 use TechDivision\Server\Traits\EnvVarsObjectTrait;
 use TechDivision\Server\Traits\EnvVarsStackableTrait;
@@ -36,8 +37,6 @@ use TechDivision\Server\Traits\ModuleVarsArrayTrait;
 use TechDivision\Server\Traits\ServerVarsObjectTrait;
 use TechDivision\Server\Traits\ServerVarsStackableTrait;
 use TechDivision\Server\Traits\ServerVarsArrayTrait;
-use TechDivision\Collections\HashMap;
-use TechDivision\Storage\GenericStackable;
 
 /**
  * Class ServerContext
@@ -53,9 +52,9 @@ use TechDivision\Storage\GenericStackable;
 class RequestContext implements RequestContextInterface
 {
     // use traits for server-, env- and module var functionality
-    use ServerVarsObjectTrait, ModuleVarsObjectTrait, EnvVarsObjectTrait;
+    // use ServerVarsObjectTrait, ModuleVarsObjectTrait, EnvVarsObjectTrait;
     // use ServerVarsStackableTrait, ModuleVarsStackableTrait, EnvVarsStackableTrait;
-    // use ServerVarsArrayTrait, ModuleVarsArrayTrait, EnvVarsArrayTrait;
+    use ServerVarsArrayTrait, ModuleVarsArrayTrait, EnvVarsArrayTrait;
 
     /**
      * Defines the handler to use as default
@@ -102,9 +101,9 @@ class RequestContext implements RequestContextInterface
     public function __construct()
     {
         // init data holders as hash map objects ... user objects traits for that
-        $this->serverVars = new HashMap();
-        $this->envVars = new HashMap();
-        $this->moduleVars = new HashMap();
+        // $this->serverVars = new HashMap();
+        // $this->envVars = new HashMap();
+        // $this->moduleVars = new HashMap();
 
         // you can use stackable trait when doing this to be synchronised with these hashtables
         // $this->serverVars = new GenericStackable();
@@ -112,34 +111,34 @@ class RequestContext implements RequestContextInterface
         // $this->moduleVars = new GenericStackable();
 
         // or you just use normal internal arrays
-        // $this->serverVars = array();
-        // $this->envVars = array();
-        // $this->moduleVars = array();
+        $this->serverVars = array();
+        $this->envVars = array();
+        $this->moduleVars = array();
     }
 
     /**
-     * Initialises the request context by given server context
+     * Initialises the request context by given server config
      *
-     * @param \TechDivision\Server\Interfaces\ServerContextInterface $serverContext The servers context instance
+     * @param \TechDivision\Server\Interfaces\ServerConfigurationInterface $serverConfig The servers config
      *
      * @return void
      */
-    public function init(ServerContextInterface $serverContext)
+    public function init(ServerConfigurationInterface $serverConfig)
     {
         // set server context ref
-        $this->serverContext = $serverContext;
+        $this->serverConfig = $serverConfig;
         // init all vars
         $this->initVars();
     }
 
     /**
-     * Return's the server context instance
+     * Return's the server config instance
      *
-     * @return \TechDivision\Server\Interfaces\ServerContextInterface
+     * @return \TechDivision\Server\Interfaces\ServerConfigurationInterface
      */
-    public function getServerContext()
+    public function getServerConfig()
     {
-        return $this->serverContext;
+        return $this->serverConfig;
     }
 
     /**
@@ -174,7 +173,7 @@ class RequestContext implements RequestContextInterface
     {
         // init env vars array
         $this->clearEnvVars();
-        $this->setEnvVar(EnvVars::LOGGER_SYSTEM, $this->getServerContext()->getServerConfig()->getLoggerName());
+        $this->setEnvVar(EnvVars::LOGGER_SYSTEM, $this->getServerConfig()->getLoggerName());
     }
 
     /**
@@ -185,18 +184,18 @@ class RequestContext implements RequestContextInterface
     public function initServerVars()
     {
         // get local refs
-        $serverContext = $this->getServerContext();
+        $serverConfig = $this->getServerConfig();
 
         // clear server var storage
         $this->clearServerVars();
 
         // set server vars to local var to shorter usage
-        $serverSoftware = $serverContext->getServerConfig()->getSoftware() . ' (PHP ' . PHP_VERSION . ')';
-        $serverAddress = $serverContext->getServerConfig()->getAddress();
-        $serverPort = $serverContext->getServerConfig()->getPort();
+        $serverSoftware = $serverConfig->getSoftware() . ' (PHP ' . PHP_VERSION . ')';
+        $serverAddress = $serverConfig->getAddress();
+        $serverPort = $serverConfig->getPort();
 
         // set document root
-        $documentRoot = $serverContext->getServerConfig()->getDocumentRoot();
+        $documentRoot = $serverConfig->getDocumentRoot();
 
         // check if relative path is given and make is absolute by using getcwd() as prefix
         if (!preg_match("/^([a-zA-Z]:|\/)/", $documentRoot)) {
@@ -205,7 +204,7 @@ class RequestContext implements RequestContextInterface
 
         // build initial server vars
         $this->setServerVar(ServerVars::DOCUMENT_ROOT, $documentRoot);
-        $this->setServerVar(ServerVars::SERVER_ADMIN, $serverContext->getServerConfig()->getAdmin());
+        $this->setServerVar(ServerVars::SERVER_ADMIN, $serverConfig->getAdmin());
         $this->setServerVar(ServerVars::SERVER_NAME, $serverAddress);
         $this->setServerVar(ServerVars::SERVER_ADDR, $serverAddress);
         $this->setServerVar(ServerVars::SERVER_PORT, $serverPort);
@@ -216,36 +215,13 @@ class RequestContext implements RequestContextInterface
             "<address>$serverSoftware Server at $serverAddress Port $serverPort</address>\r\n"
         );
         $this->setServerVar(ServerVars::SERVER_HANDLER, RequestContext::REQUEST_HANDLER_DEFAULT);
-        $this->setServerVar(ServerVars::SERVER_ERRORS_PAGE_TEMPLATE_PATH, $serverContext->getServerConfig()->getErrorsPageTemplatePath());
+        $this->setServerVar(ServerVars::SERVER_ERRORS_PAGE_TEMPLATE_PATH, $serverConfig->getErrorsPageTemplatePath());
         $this->setServerVar(ServerVars::PATH, getenv('PATH'));
         $this->setServerVar(ServerVars::HTTPS, ServerVars::VALUE_HTTPS_OFF);
 
         // check if ssl is going on and set server var for it like apache does
-        if ($serverContext->getServerConfig()->getTransport() === 'ssl') {
+        if ($serverConfig->getTransport() === 'ssl') {
             $this->setServerVar(ServerVars::HTTPS, ServerVars::VALUE_HTTPS_ON);
         }
-    }
-
-    /**
-     * Return's the logger instance
-     *
-     * @param string $loggerType the logger's type to get
-     *
-     * @return \Psr\Log\LoggerInterface|null The logger instance
-     * @throws \TechDivision\Server\Exceptions\ServerException
-     */
-    public function getLogger($loggerType = self::DEFAULT_LOGGER_TYPE)
-    {
-        // check if there is information about this logger type in env vars
-        if ($this->hasEnvVar($loggerType)) {
-            // get logger name from module vars by key
-            $loggerName = $this->getEnvVar($loggerType);
-            // get specific logger from system context
-            return $this->getServerContext()->getLogger($loggerName);
-        }
-        // log error to system logger
-        $this->getServerContext()->getLogger()->debug(
-            sprintf("No logger type '$loggerType' found in env vars.")
-        );
     }
 }
