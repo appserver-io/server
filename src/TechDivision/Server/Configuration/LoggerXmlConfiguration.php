@@ -38,6 +38,36 @@ class LoggerXmlConfiguration implements LoggerConfigurationInterface
 {
 
     /**
+     * Hold's the name of the logger
+     * @var string
+     */
+    protected $name;
+
+    /**
+     * Hold's the type of the logger
+     * @var string
+     */
+    protected $type;
+
+    /**
+     * 'Hold's the loggers channel name
+     * @var string
+     */
+    protected $channel;
+
+    /**
+     * Hold's all handlers defined for logger
+     * @var array
+     */
+    protected $handlers;
+
+    /**
+     * Hold's all processors defined for logger
+     * @var array
+     */
+    protected $processors;
+
+    /**
      * Constructs config
      *
      * @param \SimpleXMLElement $node The simple xml element used to build config
@@ -121,7 +151,7 @@ class LoggerXmlConfiguration implements LoggerConfigurationInterface
             foreach ($node->handlers->handler as $handlerNode) {
                 // build up params
                 $params = array();
-                $formatterData = array();
+
                 foreach ($handlerNode->params->param as $paramNode) {
                     $paramName = (string)$paramNode->attributes()->name;
                     $params[$paramName] = (string)array_shift($handlerNode->xpath(".//param[@name='$paramName']"));
@@ -132,7 +162,8 @@ class LoggerXmlConfiguration implements LoggerConfigurationInterface
                     $formatterParams = array();
                     foreach ($handlerNode->formatter->params->param as $paramNode) {
                         $paramName = (string)$paramNode->attributes()->name;
-                        $formatterParams[$paramName] = (string)array_shift($handlerNode->xpath(".//param[@name='$paramName']"));
+                        $paramsNameArray = $handlerNode->xpath(".//param[@name='$paramName']");
+                        $formatterParams[$paramName] = (string)array_shift($paramsNameArray);
                     }
                     // setup formatter info
                     $handlers[(string)$handlerNode->attributes()->type]['formatter'] = array(
