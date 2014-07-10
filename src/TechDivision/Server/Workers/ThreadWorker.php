@@ -280,7 +280,6 @@ class ThreadWorker extends \Thread implements WorkerInterface
 
             // get connection handlers
             $connectionHandlers = $this->getConnectionHandlers();
-            $connectionHandler = array_shift($connectionHandlers);
 
             // init connection count
             $connectionCount = 0;
@@ -291,8 +290,6 @@ class ThreadWorker extends \Thread implements WorkerInterface
 
                 // accept connections and process working connection by handlers
                 if (($connection = $serverConnection->accept()) !== false) {
-
-                    $connectionHandler->handle($connection, $this);
 
                     /**
                      * This is for testing async request processing only.
@@ -307,22 +304,14 @@ class ThreadWorker extends \Thread implements WorkerInterface
                         $this
                     ); */
 
-                    /*
                     // iterate all connection handlers to handle connection right
                     foreach ($connectionHandlers as $connectionHandler) {
                         // if connectionHandler handled connection than break out of foreach
-                        error_log(__METHOD__ . ':' . __LINE__);
                         if ($connectionHandler->handle($connection, $this)) {
-                            error_log(__METHOD__ . ':' . __LINE__);
                             break;
                         }
                     }
-                    */
                 }
-
-
-                // init context vars afterwards to avoid performance issues
-                // $requestContext->initVars();
             }
         } catch (\Exception $e) {
             // log error
