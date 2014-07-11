@@ -4,7 +4,6 @@
     "homepage": "https://github.com/techdivision/TechDivision_Server",
     "keywords": ["php", "server", "socket", "framework", "multithreading"],
     "license": ["OSL-3.0"],
-    "minimum-stability": "dev",
     "authors": [
         {
             "name": "Johann Zelger",
@@ -21,15 +20,15 @@
     ],
     "require": {
         "php": ">=5.4.0",
-        "monolog/monolog": "*",
+        "monolog/monolog": "1.10.*",
         "psr/log": "*",
-        "techdivision/collections": "dev-master",
-        "techdivision/storage": "dev-master",
-        "techdivision/connection": "dev-master"
+        "techdivision/collections": "0.1.*",
+        "techdivision/storage": "0.5.*",
+        "techdivision/connection": "0.1.*"
     },
     "autoload": {
         "psr-0": {
-            "TechDivision": [ "src/", "tests/" ]
+            "TechDivision\\Server": [ "src/", "tests/" ]
         }
     },
     "config":{
