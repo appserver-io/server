@@ -1,6 +1,6 @@
 <?php
 /**
- * \TechDivision\Server\ServerContextTest
+ * \TechDivision\Server\RequestContextTest
  *
  * NOTICE OF LICENSE
  *
@@ -14,6 +14,7 @@
  * @package    TechDivision_Server
  * @subpackage Tests
  * @author     Johann Zelger <jz@techdivision.com>
+ * @author     Bernhard Wick <b.wick@techdivision.com>
  * @copyright  2014 TechDivision GmbH <info@techdivision.com>
  * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link       https://github.com/techdivision/TechDivision_Http
@@ -22,25 +23,29 @@
 namespace TechDivision\Server;
 
 use TechDivision\Server\Dictionaries\ServerVars;
+use TechDivision\Server\Contexts\RequestContext;
 
 /**
- * Class ServerContextTest
+ * Class RequestContextTest
  *
  * @category   Server
  * @package    TechDivision_Server
  * @subpackage Tests
  * @author     Johann Zelger <jz@techdivision.com>
+ * @author     Bernhard Wick <b.wick@techdivision.com>
  * @copyright  2014 TechDivision GmbH <info@techdivision.com>
  * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link       https://github.com/techdivision/TechDivision_Http
  */
-class ServerContextTest extends \PHPUnit_Framework_TestCase
+class RequestContextTest extends \PHPUnit_Framework_TestCase
 {
 
     /**
-     * @var \TechDivision\Server\ServerContext
+     * The request context used for our tests
+     *
+     * @var \TechDivision\Server\Contexts\RequestContext
      */
-    public $serverContext;
+    public $requestContext;
 
     /**
      * Initializes server context object to test.
@@ -49,24 +54,22 @@ class ServerContextTest extends \PHPUnit_Framework_TestCase
      */
     public function setUp()
     {
-        $this->serverContext = new ServerContext();
+        $this->requestContext = new RequestContext();
     }
 
     /**
-     * Test set server var functionality on response object.
+     * Test set server var functionality on RequestContext object.
      *
      * @return void
      */
-    public function testSetServerVarToServerContextObject()
+    public function testSetServerVarToRequestContextObject()
     {
-        $serverPort = rand(8080, 9090);
+        $this->requestContext->setServerVar(ServerVars::HTTP_HOST, 'unittest.local:9080');
+        $this->requestContext->setServerVar(ServerVars::HTTP_CONNECTION, 'keep-alive');
+        $this->requestContext->setServerVar(ServerVars::HTTP_ACCEPT_ENCODING, 'gzip, deflate');
 
-        $this->serverContext->setServerVar(ServerVars::SERVER_PORT, $serverPort);
-        $this->serverContext->setServerVar(ServerVars::SERVER_ADDR, '10.20.30.40');
-        $this->serverContext->setServerVar(ServerVars::SERVER_ADMIN, 'admin@phpunit.de');
-
-        $this->assertSame($serverPort, $this->serverContext->getServerVar(ServerVars::SERVER_PORT));
-        $this->assertSame('10.20.30.40', $this->serverContext->getServerVar(ServerVars::SERVER_ADDR));
-        $this->assertSame('admin@phpunit.de', $this->serverContext->getServerVar(ServerVars::SERVER_ADMIN));
+        $this->assertSame('unittest.local:9080', $this->requestContext->getServerVar(ServerVars::HTTP_HOST));
+        $this->assertSame('keep-alive', $this->requestContext->getServerVar(ServerVars::HTTP_CONNECTION));
+        $this->assertSame('gzip, deflate', $this->requestContext->getServerVar(ServerVars::HTTP_ACCEPT_ENCODING));
     }
 }
