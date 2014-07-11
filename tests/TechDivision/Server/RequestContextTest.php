@@ -41,6 +41,8 @@ class RequestContextTest extends \PHPUnit_Framework_TestCase
 {
 
     /**
+     * The request context used for our tests
+     *
      * @var \TechDivision\Server\Contexts\RequestContext
      */
     public $requestContext;
