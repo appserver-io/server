@@ -56,5 +56,32 @@
         <antcall target="composer-install"/>
         <antcall target="composer-update"/>
     </target>
+    
+    <!-- ==================================================================== -->
+    <!-- Deletes the directory with the generated artefacts                   -->
+    <!-- ==================================================================== -->
+    <target name="clean" description="Deletes the directory with the generated artefacts.">
+        <delete dir="${php-target.dir}" includeemptydirs="true" quiet="false" verbose="true" failonerror="true"/>
+    </target>
+    
+    <!-- ==================================================================== -->
+    <!-- Prepares the directory to temporarily store generated artefacts      -->
+    <!-- ==================================================================== -->
+    <target name="prepare" depends="clean" description="Prepares the directory to temporarily store generated artefacts.">
+        <mkdir dir="${php-target.dir}" />
+        <mkdir dir="${php-target.dir}/reports" />
+    </target>
+    
+    <!-- ==================================================================== -->
+    <!-- Builds the library. This is only temporary because we've to resolve  -->
+    <!-- PHPMD errors in server.php/Standalone.php!!!                         -->
+    <!-- ==================================================================== -->
+    <target name="build" depends="prepare" description="Builds the library.">
+        <antcall target="phpcs" />
+        <antcall target="run-tests" />
+        <antcall target="phpmd" />
+        <antcall target="phploc" />
+        <antcall target="pdepend" />
+    </target>
 
 </project>

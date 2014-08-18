@@ -1,3 +1,13 @@
+# Version 0.1.3
+
+## Bugfixes
+
+* None
+
+## Features
+
+* Replace local $serverUp variable with a member variable that holds the server state
+
 # Version 0.1.2
 
 ## Bugfixes
