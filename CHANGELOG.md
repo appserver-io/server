@@ -1,3 +1,13 @@
+# Version 0.1.4
+
+## Bugfixes
+
+* Replace UNIX directory separators with OS specific directory separators when loading SSL certificate
+
+## Features
+
+* None
+
 # Version 0.1.3
 
 ## Bugfixes

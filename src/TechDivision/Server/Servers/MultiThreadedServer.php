@@ -135,7 +135,7 @@ class MultiThreadedServer extends \Thread implements ServerInterface
                 $streamContext,
                 'ssl',
                 'local_cert',
-                SERVER_BASEDIR . $serverConfig->getCertPath()
+                SERVER_BASEDIR . str_replace('/', DIRECTORY_SEPARATOR, $serverConfig->getCertPath())
             );
             stream_context_set_option($streamContext, 'ssl', 'passphrase', $serverConfig->getPassphrase());
             stream_context_set_option($streamContext, 'ssl', 'allow_self_signed', true);
