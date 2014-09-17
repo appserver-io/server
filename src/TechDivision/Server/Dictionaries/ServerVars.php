@@ -120,6 +120,8 @@ class ServerVars
     const REQUEST_FILENAME = 'REQUEST_FILENAME';
     const IS_SUBREQ = 'IS_SUBREQ';
     const HTTPS = 'HTTPS';
+    // scheme part of a requested URL e.g. http or https
+    const REQUEST_SCHEME = 'REQUEST_SCHEME';
 
     /**
      * Defines special value consts
