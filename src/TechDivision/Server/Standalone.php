@@ -74,7 +74,7 @@ class Standalone
             die('Required php extension "appserver" not found. See https://github.com/techdivision/php-ext-appserver' . PHP_EOL);
         }
         if (!extension_loaded('pthreads')) {
-            die('Required php extension "appserver" not found. See https://github.com/krakjoe/pthreads' . PHP_EOL);
+            die('Required php extension "pthreads" not found. See https://github.com/krakjoe/pthreads' . PHP_EOL);
         }
         if (!is_file(SERVER_CONFIGFILE)) {
             die('Configuration file not exists "' . SERVER_CONFIGFILE . '"'. PHP_EOL);
