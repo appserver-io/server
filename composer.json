@@ -48,8 +48,8 @@
 		}
 	},
 	"support" : {
-		"email" : "t.wagner@techdivision.com",
-		"issues" : "https://github.com/techdivision/TechDivision_Server/issues",
-		"source" : "https://github.com/techdivision/TechDivision_Server"
-	}
+        "email" : "j.zelger@techdivision.com",
+        "issues" : "https://github.com/techdivision/TechDivision_Server/issues",
+        "source" : "https://github.com/techdivision/TechDivision_Server"
+    }
 }
