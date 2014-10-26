@@ -26,6 +26,9 @@
         "techdivision/storage": "0.5.*",
         "techdivision/connection": "0.1.*"
     },
+    "require-dev" : {
+        "appserver-io/build" : ">=0.1"
+    },
     "autoload": {
         "psr-0": {
             "TechDivision\\Server": [ "src/", "tests/" ]
@@ -35,5 +38,10 @@
         "github-oauth":{
             "github.com":"604a3b5943228e434a5b52c2ba3cf72286d30db9"
         }
+    },
+    "support" : {
+        "email" : "j.zelger@techdivision.com",
+        "issues" : "https://github.com/techdivision/TechDivision_Server/issues",
+        "source" : "https://github.com/techdivision/TechDivision_Server"
     }
 }
