@@ -1,3 +1,22 @@
+# Version 0.1.6
+
+## Bugfixes
+
+* Removed deprecated server.php script
+* Refactored ZTS check
+
+## Features
+
+# Version 0.1.5
+
+## Bugfixes
+
+* None
+
+## Features
+
+* Added server states
+
 # Version 0.1.4
 
 ## Bugfixes

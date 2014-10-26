@@ -1,16 +1,16 @@
 <phpunit>
     <testsuites>
-	    <testsuite name="techdivision/server PHPUnit testsuite">
-	        <directory suffix="Test.php">tests</directory>
-	    </testsuite>
-	</testsuites>
+        <testsuite name="techdivision/server PHPUnit testsuite">
+            <directory suffix="Test.php">tests</directory>
+        </testsuite>
+    </testsuites>
     <filter>
         <whitelist>
             <directory suffix=".php">src</directory>
-		    <exclude>
-		        <directory prefix="Mock">src</directory>
-		        <directory suffix="Test.php">src</directory>
-		    </exclude>
+            <exclude>
+                <directory prefix="Mock">src</directory>
+                <directory suffix="Test.php">src</directory>
+            </exclude>
         </whitelist>
     </filter>
     <!-- Code coverage report, optional -->

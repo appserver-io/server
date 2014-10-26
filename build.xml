@@ -1,22 +1,22 @@
 <?xml version="1.0"?>
 <!DOCTYPE project>
 <project name="techdivision/server" default="composer-init" basedir=".">
-    
+
     <!-- initialize ENV variable -->
     <property environment="env" />
-    
+
     <!-- initialize file based properties -->
     <property file="${basedir}/build.properties"/>
     <property file="${basedir}/build.default.properties"/>
     <property file="${basedir}/build.${os.family}.properties"/>
-    
+
     <!-- initialize the library specific properties -->
     <property name="codepool" value="vendor"/>
-    
+
     <!-- initialize the directory where we can find the real build files -->
     <property name="vendor.dir" value ="${basedir}/${codepool}" />
     <property name="build.dir" value="${vendor.dir}/appserver-io/build" />
-    
+
     <!-- ==================================================================== -->
     <!-- Import the common build configuration file                           -->
     <!-- ==================================================================== -->
@@ -30,7 +30,7 @@
             <available file="${build.dir}" type="dir"/>
         </condition>
     </target>
-    
+
     <!-- ==================================================================== -->
     <!-- Installs all dependencies defined in composer.json                   -->
     <!-- ==================================================================== -->
@@ -55,33 +55,6 @@
     <target name="composer-init">
         <antcall target="composer-install"/>
         <antcall target="composer-update"/>
-    </target>
-    
-    <!-- ==================================================================== -->
-    <!-- Deletes the directory with the generated artefacts                   -->
-    <!-- ==================================================================== -->
-    <target name="clean" description="Deletes the directory with the generated artefacts.">
-        <delete dir="${php-target.dir}" includeemptydirs="true" quiet="false" verbose="true" failonerror="true"/>
-    </target>
-    
-    <!-- ==================================================================== -->
-    <!-- Prepares the directory to temporarily store generated artefacts      -->
-    <!-- ==================================================================== -->
-    <target name="prepare" depends="clean" description="Prepares the directory to temporarily store generated artefacts.">
-        <mkdir dir="${php-target.dir}" />
-        <mkdir dir="${php-target.dir}/reports" />
-    </target>
-    
-    <!-- ==================================================================== -->
-    <!-- Builds the library. This is only temporary because we've to resolve  -->
-    <!-- PHPMD errors in server.php/Standalone.php!!!                         -->
-    <!-- ==================================================================== -->
-    <target name="build" depends="prepare" description="Builds the library.">
-        <antcall target="phpcs" />
-        <antcall target="run-tests" />
-        <antcall target="phpmd" />
-        <antcall target="phploc" />
-        <antcall target="pdepend" />
     </target>
 
 </project>
