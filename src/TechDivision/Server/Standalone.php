@@ -79,7 +79,7 @@ class Standalone
      */
     public function checkEnvironment()
     {
-        if (!$this->isThreadSafe()) {
+        if (!PHP_ZTS) {
             die('This php build is not thread safe. Please recompile with option --enable-maintainer-zts' . PHP_EOL);
         }
         if (!extension_loaded('appserver')) {
