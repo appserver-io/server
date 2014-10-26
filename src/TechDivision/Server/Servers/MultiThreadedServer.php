@@ -26,9 +26,9 @@ use TechDivision\Server\Dictionaries\ServerVars;
 use TechDivision\Server\Interfaces\ServerConfigurationInterface;
 use TechDivision\Server\Interfaces\ServerContextInterface;
 use TechDivision\Server\Interfaces\ServerInterface;
-use TechDivision\Server\Interfaces\ConfigInterface;
 use TechDivision\Server\Exceptions\ModuleNotFoundException;
 use TechDivision\Server\Exceptions\ConnectionHandlerNotFoundException;
+use TechDivision\Server\Dictionaries\ServerStateKeys;
 
 /**
  * Class MultiThreadedServer
@@ -53,12 +53,21 @@ class MultiThreadedServer extends \Thread implements ServerInterface
     protected $serverContext;
 
     /**
+     * TRUE if the server has been started successfully, else FALSE.
+     *
+     * @var \TechDivision\Server\Dictionaries\ServerStateKeys
+     */
+    protected $serverState;
+
+    /**
      * Constructs the server instance
      *
      * @param \TechDivision\Server\Interfaces\ServerContextInterface $serverContext The server context instance
      */
     public function __construct(ServerContextInterface $serverContext)
     {
+        // initialize the server state
+        $this->serverState = ServerStateKeys::get(ServerStateKeys::WAITING_FOR_INITIALIZATION);
         // set context
         $this->serverContext = $serverContext;
         // start server thread
@@ -126,12 +135,15 @@ class MultiThreadedServer extends \Thread implements ServerInterface
                 $streamContext,
                 'ssl',
                 'local_cert',
-                SERVER_BASEDIR . $serverConfig->getCertPath()
+                SERVER_BASEDIR . str_replace('/', DIRECTORY_SEPARATOR, $serverConfig->getCertPath())
             );
             stream_context_set_option($streamContext, 'ssl', 'passphrase', $serverConfig->getPassphrase());
             stream_context_set_option($streamContext, 'ssl', 'allow_self_signed', true);
             stream_context_set_option($streamContext, 'ssl', 'verify_peer', false);
         }
+
+        // initialization has been successful
+        $this->serverState = ServerStateKeys::get(ServerStateKeys::INITIALIZATION_SUCCESSFUL);
 
         // setup server bound on local adress
         $serverConnection = $socketType::getServerInstance(
@@ -140,13 +152,8 @@ class MultiThreadedServer extends \Thread implements ServerInterface
             $streamContext
         );
 
-        // We have to notify the logical parent thread, the server script or containing container, as they have to
-        // know the port has been opened
-        $this->synchronized(
-            function () {
-                $this->notify();
-            }
-        );
+        // sockets has been started
+        $this->serverState = ServerStateKeys::get(ServerStateKeys::SERVER_SOCKET_STARTED);
 
         // init modules array
         $modules = array();
@@ -170,6 +177,9 @@ class MultiThreadedServer extends \Thread implements ServerInterface
             $modules[$moduleName]->init($serverContext);
         }
 
+        // modules has been initialized successfully
+        $this->serverState = ServerStateKeys::get(ServerStateKeys::MODULES_INITIALIZED);
+
         // init connection handler array
         $connectionHandlers = array();
         // initiate server connection handlers
@@ -192,11 +202,15 @@ class MultiThreadedServer extends \Thread implements ServerInterface
             $connectionHandlers[$connectionHandlerType]->injectModules($modules);
         }
 
+        // connection handlers has been initialized successfully
+        $this->serverState = ServerStateKeys::get(ServerStateKeys::CONNECTION_HANDLERS_INITIALIZED);
+
         $logger->debug(
             sprintf("%s starting %s workers (%s)", $serverName, $serverConfig->getWorkerNumber(), $workerType)
         );
 
         // setup and start workers
+        $workers = array();
         for ($i = 1; $i <= $serverConfig->getWorkerNumber(); ++$i) {
 
             $workers[$i] = new $workerType(
@@ -208,17 +222,19 @@ class MultiThreadedServer extends \Thread implements ServerInterface
             $logger->debug(sprintf("Successfully started worker %s", $workers[$i]->getThreadId()));
         }
 
-        // todo: switch this to any controller that maintains an server thread
-        $serverUp = true;
+        // connection handlers has been initialized successfully
+        $this->serverState = ServerStateKeys::get(ServerStateKeys::WORKERS_INITIALIZED);
 
         $logger->info(
             sprintf("%s listing on %s:%s...", $serverName, $serverConfig->getAddress(), $serverConfig->getPort())
         );
 
         // watch dog for all workers to restart if it's needed while server is up
-        while ($serverUp === true) {
+        while ($this->serverState->equals(ServerStateKeys::get(ServerStateKeys::WORKERS_INITIALIZED))) {
+
             // iterate all workers
             for ($i = 1; $i <= $serverConfig->getWorkerNumber(); ++$i) {
+
                 // check if worker should be restarted
                 if ($workers[$i]->shouldRestart()) {
 
@@ -236,6 +252,7 @@ class MultiThreadedServer extends \Thread implements ServerInterface
                     );
                 }
             }
+
             // sleep to lower system load
             usleep(100000);
         }

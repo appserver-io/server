@@ -1,42 +1,50 @@
 {
-    "name": "techdivision/server",
-    "description": "Multithreaded server daemon framework",
-    "homepage": "https://github.com/techdivision/TechDivision_Server",
-    "keywords": ["php", "server", "socket", "framework", "multithreading"],
-    "license": ["OSL-3.0"],
-    "authors": [
-        {
-            "name": "Johann Zelger",
-            "email": "jz@techdivision.com",
-            "homepage": "http://www.techdivision.com",
-            "role": "Developer"
-        },
-        {
-            "name": "Tim Wagner",
-            "email": "tw@techdivision.com",
-            "homepage": "http://www.techdivision.com",
-            "role": "Developer"
-        }
+    "name" : "techdivision/server",
+    "description" : "Multithreaded server daemon framework",
+    "homepage" : "https://github.com/techdivision/TechDivision_Server",
+    "license" : "OSL-3.0",
+    "keywords" : [
+        "php",
+        "server",
+        "socket",
+        "framework",
+        "multithreading"
     ],
-    "require": {
-        "php": ">=5.4.0",
-        "monolog/monolog": "1.10.*",
-        "psr/log": "*",
-        "techdivision/collections": "0.1.*",
-        "techdivision/storage": "0.5.*",
-        "techdivision/connection": "0.1.*"
+    "authors" : [{
+        "name" : "Johann Zelger",
+        "email" : "jz@techdivision.com",
+        "homepage" : "http://www.techdivision.com",
+        "role" : "Developer"
+    }, {
+        "name" : "Tim Wagner",
+        "email" : "tw@techdivision.com",
+        "homepage" : "http://www.techdivision.com",
+        "role" : "Developer"
+    }
+    ],
+    "require" : {
+        "php" : ">=5.4.0",
+        "monolog/monolog" : "1.10.*",
+        "psr/log" : "*",
+        "techdivision/collections" : "0.1.*",
+        "techdivision/storage" : "0.5.*",
+        "techdivision/connection" : "0.1.*"
     },
     "require-dev" : {
-        "appserver-io/build" : ">=0.1"
+        "phpunit/phpunit" : "3.7.*",
+        "appserver-io/build" : "0.1.*"
     },
-    "autoload": {
-        "psr-0": {
-            "TechDivision\\Server": [ "src/", "tests/" ]
+    "autoload" : {
+        "psr-0" : {
+            "TechDivision\\Server" : [
+                "src/",
+                "tests/"
+            ]
         }
     },
-    "config":{
-        "github-oauth":{
-            "github.com":"604a3b5943228e434a5b52c2ba3cf72286d30db9"
+    "config" : {
+        "github-oauth" : {
+            "github.com" : "604a3b5943228e434a5b52c2ba3cf72286d30db9"
         }
     },
     "support" : {
