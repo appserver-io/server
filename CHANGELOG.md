@@ -1,3 +1,13 @@
+# Version 0.1.7
+
+## Bugfixes
+
+* None
+
+## Features
+
+* Added dummy loggers
+
 # Version 0.1.6
 
 ## Bugfixes
@@ -6,6 +16,8 @@
 * Refactored ZTS check
 
 ## Features
+
+* None
 
 # Version 0.1.5
 
