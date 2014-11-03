@@ -10,9 +10,9 @@ Have a look at [TechDivision_WebServer](<https://github.com/techdivision/TechDiv
 
 ## Installation
 
-If you want to use the framework to build your onw daemon/server you can install it by adding
+If you want to use the framework to build your onw daemon/server you can add ...
 
-```sh
+```javascript
 {
     "require": {
         "techdivision/server": "dev-master"
