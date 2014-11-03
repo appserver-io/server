@@ -2,6 +2,16 @@
 
 ## Bugfixes
 
+* Removed enum like server state usage to simple consts due to incompatibility with pthreads v1.0.2
+
+## Features
+
+* None
+
+# Version 0.1.7
+
+## Bugfixes
+
 * None
 
 ## Features
