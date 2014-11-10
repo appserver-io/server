@@ -129,6 +129,18 @@ class ServerContext implements ServerContextInterface
     }
 
     /**
+     * Queries if the requested logger type is registered or not.
+     *
+     * @param string $loggerType The logger type we want to query
+     *
+     * @return boolean TRUE if the logger is registered, else FALSE
+     */
+    public function hasLogger($loggerType)
+    {
+        return isset($this->loggers[$loggerType]);
+    }
+
+    /**
      * Return's the logger instance
      *
      * @param string $loggerType the logger's type to get
@@ -139,7 +151,7 @@ class ServerContext implements ServerContextInterface
     public function getLogger($loggerType = self::DEFAULT_LOGGER_TYPE)
     {
         // check if logger is set
-        if (isset($this->loggers[$loggerType])) {
+        if ($this->hasLogger($loggerType)) {
             // return logger
             return $this->loggers[$loggerType];
         }

@@ -101,9 +101,6 @@ class MultiThreadedServer extends \Thread implements ServerInterface
         // setup autoloader
         require SERVER_AUTOLOADER;
 
-        // initialize the server state
-        $this->serverState = ServerStateKeys::get(ServerStateKeys::WAITING_FOR_INITIALIZATION);
-
         // init server context
         $serverContext = $this->getServerContext();
 
@@ -114,7 +111,8 @@ class MultiThreadedServer extends \Thread implements ServerInterface
         $serverName = $serverConfig->getName();
 
         // initialize the profile logger and the thread context
-        if ($profileLogger = $serverContext->getLogger(LoggerUtils::PROFILE)) {
+        if ($serverContext->hasLogger(LoggerUtils::PROFILE)) {
+            $profileLogger = $serverContext->getLogger(LoggerUtils::PROFILE);
             $profileLogger->appendThreadContext($serverName);
         }
 
