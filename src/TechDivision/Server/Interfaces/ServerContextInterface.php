@@ -81,6 +81,15 @@ interface ServerContextInterface
     public function getServerConfig();
 
     /**
+     * Queries if the requested logger type is registered or not.
+     *
+     * @param string $loggerType The logger type we want to query
+     *
+     * @return boolean TRUE if the logger is registered, else FALSE
+     */
+    public function hasLogger($loggerType);
+
+    /**
      * Return's the logger instance
      *
      * @param string $loggerType the logger's type to get

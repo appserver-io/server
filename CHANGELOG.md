@@ -1,3 +1,13 @@
+# Version 0.1.10
+
+## Bugfixes
+
+* Bugfix for ServerException in MultiThreadedServer::run() method if no Profile logger has been registered
+
+## Features
+
+* Add ServerContextInterface::hasLogger() method to querie whether a logger has been registered or not
+
 # Version 0.1.9
 
 ## Bugfixes
