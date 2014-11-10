@@ -1,3 +1,14 @@
+# Version 0.1.9
+
+## Bugfixes
+
+* None
+
+## Features
+
+* Add dependency to appserver-io/logger
+* Add monitoring and profiling logger to MultiThreadedServer
+
 # Version 0.1.8
 
 ## Bugfixes
