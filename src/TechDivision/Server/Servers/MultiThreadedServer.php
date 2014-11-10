@@ -111,6 +111,7 @@ class MultiThreadedServer extends \Thread implements ServerInterface
         $serverName = $serverConfig->getName();
 
         // initialize the profile logger and the thread context
+        $profileLogger = null;
         if ($serverContext->hasLogger(LoggerUtils::PROFILE)) {
             $profileLogger = $serverContext->getLogger(LoggerUtils::PROFILE);
             $profileLogger->appendThreadContext($serverName);
