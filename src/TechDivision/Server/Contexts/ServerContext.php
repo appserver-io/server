@@ -21,7 +21,6 @@
 namespace TechDivision\Server\Contexts;
 
 use Psr\Log\LoggerInterface;
-use TechDivision\Collections\HashMap;
 use TechDivision\Server\Dictionaries\EnvVars;
 use TechDivision\Server\Exceptions\ConnectionHandlerNotFoundException;
 use TechDivision\Server\Exceptions\ModuleNotFoundException;
@@ -56,7 +55,7 @@ class ServerContext implements ServerContextInterface
      * All logger instances will be hold here.
      * Every logger instance has to be a PSR compatible
      *
-     * @var \TechDivision\Collections\HashMap
+     * @var array
      */
     protected $loggers;
 
@@ -79,7 +78,7 @@ class ServerContext implements ServerContextInterface
         // set configuration
         $this->serverConfig = $serverConfig;
         // init logger storage as stackable
-        $this->loggers = array();// new GenericStackable();
+        $this->loggers = array();
     }
 
     /**

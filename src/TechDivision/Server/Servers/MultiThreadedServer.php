@@ -21,6 +21,7 @@
 
 namespace TechDivision\Server\Servers;
 
+use AppserverIo\Logger\LoggerUtils;
 use TechDivision\Server\Dictionaries\ModuleVars;
 use TechDivision\Server\Dictionaries\ServerVars;
 use TechDivision\Server\Interfaces\ServerConfigurationInterface;
@@ -66,10 +67,10 @@ class MultiThreadedServer extends \Thread implements ServerInterface
      */
     public function __construct(ServerContextInterface $serverContext)
     {
-        // initialize the server state
-        $this->serverState = ServerStateKeys::get(ServerStateKeys::WAITING_FOR_INITIALIZATION);
+
         // set context
         $this->serverContext = $serverContext;
+
         // start server thread
         $this->start();
     }
@@ -100,6 +101,9 @@ class MultiThreadedServer extends \Thread implements ServerInterface
         // setup autoloader
         require SERVER_AUTOLOADER;
 
+        // initialize the server state
+        $this->serverState = ServerStateKeys::get(ServerStateKeys::WAITING_FOR_INITIALIZATION);
+
         // init server context
         $serverContext = $this->getServerContext();
 
@@ -109,9 +113,13 @@ class MultiThreadedServer extends \Thread implements ServerInterface
         // init server name
         $serverName = $serverConfig->getName();
 
+        // initialize the profile logger and the thread context
+        if ($profileLogger = $serverContext->getLogger(LoggerUtils::PROFILE)) {
+            $profileLogger->appendThreadContext($serverName);
+        }
+
         // init logger
         $logger = $serverContext->getLogger();
-
         $logger->debug(
             sprintf("starting %s (%s)", $serverName, __CLASS__)
         );
@@ -253,8 +261,12 @@ class MultiThreadedServer extends \Thread implements ServerInterface
                 }
             }
 
-            // sleep to lower system load
-            usleep(100000);
+            if ($profileLogger) { // profile the worker shutdown beeing processed
+                $profileLogger->debug(sprintf('Server %s waiting for shutdown', $serverName));
+            }
+
+            // sleep for 1 second to lower system load
+            usleep(1000000);
         }
     }
 }

@@ -1,6 +1,6 @@
 <?php
 /**
- * \TechDivision\WebServer\Loggers\ErrorLogLogger
+ * \TechDivision\WebServer\Loggers\CustomFileLogger
  *
  * NOTICE OF LICENSE
  *
@@ -25,7 +25,7 @@ use Psr\Log\LogLevel;
 use Psr\Log\LoggerInterface;
 
 /**
- * Logger implementation that uses the PHP 'error_log' function.
+ * Logger implementation that uses the PHP 'error_log' function to log to a custom file.
  *
  * @category   Webserver
  * @package    TechDivision_WebServer
@@ -35,8 +35,41 @@ use Psr\Log\LoggerInterface;
  * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link       https://github.com/techdivision/TechDivision_WebServer
  */
-class ErrorLogLogger extends DummyLogger
+class CustomFileLogger extends DummyLogger
 {
+
+    /**
+     * The file we want to log to.
+     *
+     * @var string
+     */
+    protected $logFile;
+
+    /**
+     * Initializes the logger instance with the log level.
+     *
+     * @param integer $logLevel The log level we want to use
+     * @param string  $logFile  The file we want to log to
+     */
+    public function __construct($channelName, array $handlers = array(), array $processors = array(), $logLevel = LogLevel::INFO, $logFile = null)
+    {
+
+        // pass arguments to parent constructor
+        parent::__construct($channelName, $handlers, $processors, $logLevel);
+
+        // set the file we want to log to
+        $this->logFile = $logFile;
+    }
+
+    /**
+     * Returns the relative path to the file we want to log to.
+     *
+     * @return string The file we want to log to
+     */
+    protected function getLogFile()
+    {
+        return $this->logFile;
+    }
 
     /**
      * Logs with an arbitrary level.
@@ -54,10 +87,10 @@ class ErrorLogLogger extends DummyLogger
         if ($this->shouldLog($level)) {
 
             // prepare the log message
-            $logMessage = sprintf('[%s] - %s (%s): %s %s', date('Y-m-d H:i:s'), gethostname(), $level, $message, json_encode($context));
+            $logMessage = sprintf('[%s] - %s (%s): %s %s' . PHP_EOL, date('Y-m-d H:i:s'), gethostname(), $level, $message, json_encode($context));
 
             // write the log message
-            error_log($logMessage);
+            error_log($logMessage, 3, $this->getLogFile());
         }
     }
 }

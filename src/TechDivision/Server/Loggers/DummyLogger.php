@@ -21,6 +21,7 @@
 
 namespace TechDivision\Server\Loggers;
 
+use Psr\Log\LogLevel;
 use Psr\Log\LoggerInterface;
 
 /**
@@ -36,6 +37,47 @@ use Psr\Log\LoggerInterface;
  */
 class DummyLogger implements LoggerInterface
 {
+
+    protected $channelName;
+
+    protected $handlers;
+
+    protected $processors;
+
+    /**
+     * The log level we want to use.
+     *
+     * @var integer
+     */
+    protected $logLevel;
+
+    protected $logLevels = array(
+        LogLevel::DEBUG     => 100, // Detailed debug information.
+        LogLevel::INFO      => 200, // Interesting events. Examples: User logs in, SQL logs.
+        LogLevel::NOTICE    => 250, // Normal but significant events.
+        LogLevel::WARNING   => 300, // Exceptional occurrences that are not errors. Examples: Use of deprecated APIs, poor use of an API, undesirable things that are not necessarily wrong.
+        LogLevel::ERROR     => 400, // Runtime errors that do not require immediate action but should typically be logged and monitored.
+        LogLevel::CRITICAL  => 500, // Critical conditions. Example: Application component unavailable, unexpected exception.
+        LogLevel::ALERT     => 550, // Action must be taken immediately. Example: Entire website down, database unavailable, etc. This should trigger the SMS alerts and wake you up.
+        LogLevel::EMERGENCY => 600, // Emergency: system is unusable.
+    );
+
+    /**
+     * Initializes the logger instance with the log level.
+     *
+     * @param string  $channelName
+     * @param array   $handlers
+     * @param array   $processors
+     * @param integer $logLevel    The log level we want to use
+     */
+    public function __construct($channelName, array $handlers = array(), array $processors = array(), $logLevel = LogLevel::INFO)
+    {
+        $this->channelName = $channelName;
+        $this->handlers = $handlers;
+        $this->processors = $processors;
+        $this->logLevel = $logLevel;
+    }
+
     /**
      * System is unusable.
      *
@@ -46,7 +88,7 @@ class DummyLogger implements LoggerInterface
      */
     public function emergency($message, array $context = array())
     {
-        // dummy
+        $this->log($message, $context);
     }
 
     /**
@@ -62,7 +104,7 @@ class DummyLogger implements LoggerInterface
      */
     public function alert($message, array $context = array())
     {
-        // dummy
+        $this->log($message, $context);
     }
 
     /**
@@ -77,7 +119,7 @@ class DummyLogger implements LoggerInterface
      */
     public function critical($message, array $context = array())
     {
-        // dummy
+        $this->log($message, $context);
     }
 
     /**
@@ -91,7 +133,7 @@ class DummyLogger implements LoggerInterface
      */
     public function error($message, array $context = array())
     {
-        // dummy
+        $this->log($message, $context);
     }
 
     /**
@@ -107,7 +149,7 @@ class DummyLogger implements LoggerInterface
      */
     public function warning($message, array $context = array())
     {
-        // dummy
+        $this->log($message, $context);
     }
 
     /**
@@ -120,7 +162,7 @@ class DummyLogger implements LoggerInterface
      */
     public function notice($message, array $context = array())
     {
-        // dummy
+        $this->log($message, $context);
     }
 
     /**
@@ -135,7 +177,7 @@ class DummyLogger implements LoggerInterface
      */
     public function info($message, array $context = array())
     {
-        // dummy
+        $this->log($message, $context);
     }
 
     /**
@@ -148,7 +190,7 @@ class DummyLogger implements LoggerInterface
      */
     public function debug($message, array $context = array())
     {
-        // dummy
+        $this->log($message, $context);
     }
 
     /**
@@ -162,6 +204,28 @@ class DummyLogger implements LoggerInterface
      */
     public function log($level, $message, array $context = array())
     {
-        // dummy
+        // this is a dummy logger
+    }
+
+    /**
+     * Returns the log level we want to use.
+     *
+     * @return integer The log level
+     */
+    protected function getLogLevel()
+    {
+        return $this->logLevel;
+    }
+
+    /**
+     * Checks if the message should be logged, depending on the log level.
+     *
+     * @param string $logLevel The log level to match against
+     *
+     * @return boolean TRUE if the message should be logged, else FALSE
+     */
+    protected function shouldLog($logLevel)
+    {
+        return $this->logLevels[$level] >= $this->logLevels[$this->getLogLevel()];
     }
 }
