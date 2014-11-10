@@ -101,9 +101,6 @@ class MultiThreadedServer extends \Thread implements ServerInterface
         // setup autoloader
         require SERVER_AUTOLOADER;
 
-        // initialize the server state
-        $this->serverState = ServerStateKeys::get(ServerStateKeys::WAITING_FOR_INITIALIZATION);
-
         // init server context
         $serverContext = $this->getServerContext();
 
