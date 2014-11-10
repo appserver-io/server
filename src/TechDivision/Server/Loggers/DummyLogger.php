@@ -38,10 +38,25 @@ use Psr\Log\LoggerInterface;
 class DummyLogger implements LoggerInterface
 {
 
+    /**
+     * The channel name we log to.
+     *
+     * @var string
+     */
     protected $channelName;
 
+    /**
+     * Array with the handlers.
+     *
+     * @var array
+     */
     protected $handlers;
 
+    /**
+     * Array with the processors.
+     *
+     * @var array
+     */
     protected $processors;
 
     /**
@@ -51,6 +66,11 @@ class DummyLogger implements LoggerInterface
      */
     protected $logLevel;
 
+    /**
+     * The available log levels.
+     *
+     * @var array
+     */
     protected $logLevels = array(
         LogLevel::DEBUG     => 100, // Detailed debug information.
         LogLevel::INFO      => 200, // Interesting events. Examples: User logs in, SQL logs.
@@ -65,9 +85,9 @@ class DummyLogger implements LoggerInterface
     /**
      * Initializes the logger instance with the log level.
      *
-     * @param string  $channelName
-     * @param array   $handlers
-     * @param array   $processors
+     * @param string  $channelName The channel name
+     * @param array   $handlers    The array with the handlers
+     * @param array   $processors  The array with the processors
      * @param integer $logLevel    The log level we want to use
      */
     public function __construct($channelName, array $handlers = array(), array $processors = array(), $logLevel = LogLevel::INFO)
@@ -226,6 +246,6 @@ class DummyLogger implements LoggerInterface
      */
     protected function shouldLog($logLevel)
     {
-        return $this->logLevels[$level] >= $this->logLevels[$this->getLogLevel()];
+        return $this->logLevels[$logLevel] >= $this->logLevels[$this->getLogLevel()];
     }
 }

@@ -48,8 +48,11 @@ class CustomFileLogger extends DummyLogger
     /**
      * Initializes the logger instance with the log level.
      *
-     * @param integer $logLevel The log level we want to use
-     * @param string  $logFile  The file we want to log to
+     * @param string  $channelName The channel name
+     * @param array   $handlers    The array with the handlers
+     * @param array   $processors  The array with the processors
+     * @param integer $logLevel    The log level we want to use
+     * @param string  $logFile     The file we want to log to
      */
     public function __construct($channelName, array $handlers = array(), array $processors = array(), $logLevel = LogLevel::INFO, $logFile = null)
     {
