@@ -21,10 +21,10 @@
  * @link       https://github.com/techdivision/TechDivision_Http
  */
 
-namespace TechDivision\Server;
+namespace AppserverIo\Server;
 
-use TechDivision\Server\Dictionaries\ServerVars;
-use TechDivision\Server\Contexts\RequestContext;
+use AppserverIo\Server\Dictionaries\ServerVars;
+use AppserverIo\Server\Contexts\RequestContext;
 
 /**
  * Class RequestContextTest

@@ -21,7 +21,7 @@
  * @link       https://github.com/techdivision/TechDivision_Http
  */
 
-namespace TechDivision\Server\Dictionaries;
+namespace AppserverIo\Server\Dictionaries;
 
 /**
  * Test implementation for the MimeTypes class.
