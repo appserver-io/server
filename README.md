@@ -1,6 +1,6 @@
-# TechDivision_Server
+# Server
 
-[![Latest Stable Version](https://poser.pugx.org/techdivision/server/v/stable.png)](https://packagist.org/packages/techdivision/server) [![Total Downloads](https://poser.pugx.org/techdivision/server/downloads.png)](https://packagist.org/packages/techdivision/server) [![Latest Unstable Version](https://poser.pugx.org/techdivision/server/v/unstable.png)](https://packagist.org/packages/techdivision/server) [![License](https://poser.pugx.org/techdivision/server/license.png)](https://packagist.org/packages/techdivision/server) [![Build Status](https://travis-ci.org/techdivision/TechDivision_Server.png)](https://travis-ci.org/techdivision/TechDivision_Server)[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/techdivision/TechDivision_Server/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/techdivision/TechDivision_Server/?branch=master)[![Code Coverage](https://scrutinizer-ci.com/g/techdivision/TechDivision_Server/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/techdivision/TechDivision_Server/?branch=master)
+[![Latest Stable Version](https://poser.pugx.org/appserver-io-psr/server/v/stable.png)](https://packagist.org/packages/appserver-io-psr/server) [![Total Downloads](https://poser.pugx.org/appserver-io-psr/server/downloads.png)](https://packagist.org/packages/appserver-io-psr/server) [![Latest Unstable Version](https://poser.pugx.org/appserver-io-psr/server/v/unstable.png)](https://packagist.org/packages/appserver-io-psr/server) [![License](https://poser.pugx.org/appserver-io-psr/server/license.png)](https://packagist.org/packages/appserver-io-psr/server) [![Build Status](https://travis-ci.org/appserver-io/server.png)](https://travis-ci.org/appserver-io/server)[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/appserver-io/server/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/appserver-io/server/?branch=master)[![Code Coverage](https://scrutinizer-ci.com/g/appserver-io/server/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/appserver-io/server/?branch=master)
 
 ## Introduction
 
@@ -15,7 +15,7 @@ If you want to use the framework to build your onw daemon/server you can add ...
 ```javascript
 {
     "require": {
-        "techdivision/server": "dev-master"
+        "appserver-io-psr/server": "dev-master"
     },
 }
 ```
