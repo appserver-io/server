@@ -30,13 +30,10 @@ use AppserverIo\Server\Interfaces\RequestContextInterface;
 use AppserverIo\Server\Interfaces\ServerConfigurationInterface;
 use AppserverIo\Server\Interfaces\ServerContextInterface;
 use AppserverIo\Server\Traits\EnvVarsObjectTrait;
-use AppserverIo\Server\Traits\EnvVarsStackableTrait;
 use AppserverIo\Server\Traits\EnvVarsArrayTrait;
 use AppserverIo\Server\Traits\ModuleVarsObjectTrait;
-use AppserverIo\Server\Traits\ModuleVarsStackableTrait;
 use AppserverIo\Server\Traits\ModuleVarsArrayTrait;
 use AppserverIo\Server\Traits\ServerVarsObjectTrait;
-use AppserverIo\Server\Traits\ServerVarsStackableTrait;
 use AppserverIo\Server\Traits\ServerVarsArrayTrait;
 
 /**
