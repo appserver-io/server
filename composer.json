@@ -1,5 +1,5 @@
 {
-	"name" : "appserver-io-psr/server",
+	"name" : "appserver-io/server",
 	"description" : "Multithreaded server daemon framework",
 	"homepage" : "https://github.com/appserver-io/server",
 	"license" : "OSL-3.0",
@@ -17,7 +17,7 @@
 			"role" : "Developer"
 		}, {
 			"name" : "Tim Wagner",
-			"email" : "tw@techdivision.com",
+			"email" : "tw@appserver.io",
 			"homepage" : "http://www.appserver.io",
 			"role" : "Developer"
 		}
