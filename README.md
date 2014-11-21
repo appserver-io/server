@@ -6,7 +6,7 @@
 
 A multithreaded server daemon framework.
 
-Have a look at [TechDivision_WebServer](<https://github.com/techdivision/TechDivision_WebServer>) for a reference implementation of a webserver using the server framework.
+Have a look at [appserver-io/webserver](<https://github.com/appserver-io/webserver>) for a reference implementation of a webserver using the server framework.
 
 ## Installation
 
