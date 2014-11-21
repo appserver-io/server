@@ -22,8 +22,6 @@
 
 namespace AppserverIo\Server\Interfaces;
 
-use TechDivision\Connection\ConnectionRequestInterface;
-use TechDivision\Connection\ConnectionResponseInterface;
 use AppserverIo\Server\Exceptions\ModuleException;
 
 /**
@@ -39,23 +37,6 @@ use AppserverIo\Server\Exceptions\ModuleException;
  */
 interface ModuleInterface
 {
-    /**
-     * Implement's module logic for given hook
-     *
-     * @param \TechDivision\Connection\ConnectionRequestInterface     $request        A request object
-     * @param \TechDivision\Connection\ConnectionResponseInterface    $response       A response object
-     * @param \AppserverIo\Server\Interfaces\RequestContextInterface $requestContext A requests context instance
-     * @param int                                                     $hook           The current hook to process logic for
-     *
-     * @return bool
-     * @throws \AppserverIo\Server\Exceptions\ModuleException
-     */
-    public function process(
-        ConnectionRequestInterface $request,
-        ConnectionResponseInterface $response,
-        RequestContextInterface $requestContext,
-        $hook
-    );
 
     /**
      * Return's an array of module names which should be executed first
