@@ -37,6 +37,17 @@ namespace AppserverIo\Server\Dictionaries;
 class EnvVars
 {
     /**
+     * Returns all entries of that dictionary
+     *
+     * @return array
+     */
+    public static function all()
+    {
+        $refl = new \ReflectionClass(__CLASS__);
+        return $refl->getConstants();
+    }
+
+    /**
      * Defines constant for HTTPS usage
      *
      * @var string
