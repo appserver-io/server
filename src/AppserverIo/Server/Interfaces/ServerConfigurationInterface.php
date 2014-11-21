@@ -11,7 +11,7 @@
  *
  * PHP version 5
  *
- * @package    Library
+ * @category   Library
  * @package    Server
  * @subpackage Interfaces
  * @author     Johann Zelger <jz@appserver.io>
@@ -25,7 +25,7 @@ namespace AppserverIo\Server\Interfaces;
 /**
  * Interface ServerConfigurationInterface
  *
- * @package    Library
+ * @category   Library
  * @package    Server
  * @subpackage Interfaces
  * @author     Johann Zelger <jz@appserver.io>

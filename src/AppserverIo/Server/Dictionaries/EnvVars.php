@@ -11,7 +11,7 @@
  *
  * PHP version 5
  *
- * @package    Library
+ * @category   Library
  * @package    Server
  * @subpackage Dictionaries
  * @author     Bernhard Wick <bw@appserver.io>
@@ -25,7 +25,7 @@ namespace AppserverIo\Server\Dictionaries;
 /**
  * Class EnvVars
  *
- * @package    Library
+ * @category   Library
  * @package    Server
  * @subpackage Dictionaries
  * @author     Bernhard Wick <bw@appserver.io>

@@ -11,7 +11,7 @@
  *
  * PHP version 5
  *
- * @package    Library
+ * @category   Library
  * @package    Server
  * @subpackage Interfaces
  * @author     Johann Zelger <jz@appserver.io>
@@ -29,7 +29,7 @@ use AppserverIo\Server\Dictionaries\EnvVars;
 /**
  * Interface ServerContextInterface
  *
- * @package    Library
+ * @category   Library
  * @package    Server
  * @subpackage Interfaces
  * @author     Johann Zelger <jz@appserver.io>

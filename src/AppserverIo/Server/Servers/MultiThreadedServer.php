@@ -11,7 +11,7 @@
  *
  * PHP version 5
  *
- * @package    Library
+ * @category   Library
  * @package    Server
  * @subpackage Servers
  * @author     Johann Zelger <jz@appserver.io>
@@ -35,7 +35,7 @@ use AppserverIo\Server\Dictionaries\ServerStateKeys;
 /**
  * Class MultiThreadedServer
  *
- * @package    Library
+ * @category   Library
  * @package    Server
  * @subpackage Servers
  * @author     Johann Zelger <jz@appserver.io>

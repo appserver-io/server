@@ -11,7 +11,7 @@
  *
  * PHP version 5
  *
- * @package    Library
+ * @category   Library
  * @package    Server
  * @subpackage Handlers
  * @author     Johann Zelger <jz@appserver.io>
@@ -28,7 +28,7 @@ use AppserverIo\Server\Interfaces\WorkerInterface;
 /**
  * This class is just for testing purpose, so please don't use it for this moment.
  *
- * @package    Library
+ * @category   Library
  * @package    Server
  * @subpackage Handlers
  * @author     Johann Zelger <jz@appserver.io>
@@ -41,8 +41,8 @@ class RequestHandlerThread extends \Thread
     /**
      * Constructs the request handler thread and start's it
      *
-     * @param resource                                               $connectionResource The connection resource
-     * @param array                                                  $connectionHandlers An array of connection handlers
+     * @param resource                                              $connectionResource The connection resource
+     * @param array                                                 $connectionHandlers An array of connection handlers
      * @param \AppserverIo\Server\Interfaces\ServerContextInterface $serverContext      The server's context
      * @param \AppserverIo\Server\Interfaces\WorkerInterface        $worker             The worker instance
      */

@@ -11,7 +11,7 @@
  *
  * PHP version 5
  *
- * @package    Library
+ * @category   Library
  * @package    Server
  * @subpackage Tests
  * @author     Johann Zelger <jz@appserver.io>
@@ -26,7 +26,7 @@ namespace AppserverIo\Server\Dictionaries;
 /**
  * Test implementation for the MimeTypes class.
  *
- * @package    Library
+ * @category   Library
  * @package    Server
  * @subpackage Tests
  * @author     Johann Zelger <jz@appserver.io>

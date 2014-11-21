@@ -11,7 +11,7 @@
  *
  * PHP version 5
  *
- * @package    Library
+ * @category   Library
  * @package    Server
  * @subpackage Exceptions
  * @author     Tim Wagner <tw@appserver.io>
@@ -25,7 +25,7 @@ namespace AppserverIo\Server\Exceptions;
 /**
  * Exception that will be thrown if the container state is not available or invalid.
  *
- * @package    Library
+ * @category   Library
  * @package    Server
  * @subpackage Exceptions
  * @author     Tim Wagner <tw@appserver.io>

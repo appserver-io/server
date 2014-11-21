@@ -38,7 +38,7 @@ use AppserverIo\Server\Sockets\StreamSocket;
 /**
  * Class ThreadWorker
  *
- * @package    Library
+ * @category   Library
  * @package    Server
  * @subpackage Workers
  * @author     Johann Zelger <jz@appserver.io>
@@ -107,9 +107,9 @@ class ThreadWorker extends \Thread implements WorkerInterface
     /**
      * Constructs the worker by setting the server context
      *
-     * @param resource                                               $serverConnectionResource The server's file descriptor resource
+     * @param resource                                              $serverConnectionResource The server's file descriptor resource
      * @param \AppserverIo\Server\Interfaces\ServerContextInterface $serverContext            The server's context
-     * @param array                                                  $connectionHandlers       An array of connection handlers to use
+     * @param array                                                 $connectionHandlers       An array of connection handlers to use
      */
     public function __construct($serverConnectionResource, ServerContextInterface $serverContext, array $connectionHandlers)
     {

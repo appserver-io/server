@@ -42,7 +42,7 @@ interface ConnectionHandlerInterface
      * Inits the connection handler by given context and params
      *
      * @param \AppserverIo\Server\Interfaces\ServerContextInterface $serverContext The server's context
-     * @param array                                                  $params        The params for connection handler
+     * @param array                                                 $params        The params for connection handler
      *
      * @return void
      */

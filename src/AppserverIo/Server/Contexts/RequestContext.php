@@ -11,7 +11,7 @@
  *
  * PHP version 5
  *
- * @package    Library
+ * @category   Library
  * @package    Server
  * @subpackage Contexts
  * @author     Johann Zelger <jz@appserver.io>
@@ -39,7 +39,7 @@ use AppserverIo\Server\Traits\ServerVarsArrayTrait;
 /**
  * Class ServerContext
  *
- * @package    Library
+ * @category   Library
  * @package    Server
  * @subpackage Contexts
  * @author     Johann Zelger <jz@appserver.io>

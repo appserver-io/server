@@ -11,7 +11,7 @@
  *
  * PHP version 5
  *
- * @package    Library
+ * @category   Library
  * @package    Server
  * @subpackage Configuration
  * @author     Johann Zelger <jz@appserver.io>
@@ -27,7 +27,7 @@ use AppserverIo\Server\Interfaces\LoggerConfigurationInterface;
 /**
  * Class LoggerJsonConfiguration
  *
- * @package    Library
+ * @category   Library
  * @package    Server
  * @subpackage Configuration
  * @author     Johann Zelger <jz@appserver.io>

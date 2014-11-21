@@ -11,7 +11,7 @@
  *
  * PHP version 5
  *
- * @package    Library
+ * @category   Library
  * @package    Server
  * @subpackage Dictionaries
  * @author     Bernhard Wick <bw@appserver.io>
@@ -26,7 +26,7 @@ namespace AppserverIo\Server\Dictionaries;
  * Class ModuleVars which is used by different modules to communicate with each
  * other without knowing each other.
  *
- * @package    Library
+ * @category   Library
  * @package    Server
  * @subpackage Dictionaries
  * @author     Bernhard Wick <bw@appserver.io>

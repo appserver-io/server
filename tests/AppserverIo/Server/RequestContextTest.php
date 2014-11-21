@@ -11,7 +11,7 @@
  *
  * PHP version 5
  *
- * @package    Library
+ * @category   Library
  * @package    Server
  * @subpackage Tests
  * @author     Johann Zelger <jz@appserver.io>
@@ -29,7 +29,7 @@ use AppserverIo\Server\Contexts\RequestContext;
 /**
  * Class RequestContextTest
  *
- * @package    Library
+ * @category   Library
  * @package    Server
  * @subpackage Tests
  * @author     Johann Zelger <jz@appserver.io>

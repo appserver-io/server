@@ -11,7 +11,7 @@
  *
  * PHP version 5
  *
- * @package   Library
+ * @category  Library
  * @package   Server
  * @author    Johann Zelger <jz@appserver.io>
  * @copyright 2014 TechDivision GmbH <info@appserver.io>

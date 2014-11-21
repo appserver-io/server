@@ -11,7 +11,7 @@
  *
  * PHP version 5
  *
- * @package    Library
+ * @category   Library
  * @package    Server
  * @subpackage Traits
  * @author     Tim Wagner <tw@appserver.io>
@@ -27,7 +27,7 @@ use AppserverIo\Server\Exceptions\InvalidServerStateException;
 /**
  * Utility class that contains the server state keys.
  *
- * @package    Library
+ * @category   Library
  * @package    Server
  * @subpackage Traits
  * @author     Tim Wagner <tw@appserver.io>
