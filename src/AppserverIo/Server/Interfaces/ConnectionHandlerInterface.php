@@ -22,7 +22,7 @@
 
 namespace AppserverIo\Server\Interfaces;
 
-use AppserverIo\Server\Sockets\SocketInterface;
+use AppserverIo\Psr\Socket\SocketInterface;
 
 /**
  * Class ConnectionHandlerInterface
@@ -52,7 +52,7 @@ interface ConnectionHandlerInterface
      * Handles the connection with the connected client in a proper way the given
      * protocol type and version expects for example.
      *
-     * @param \AppserverIo\Server\Sockets\SocketInterface    $connection The connection to handle
+     * @param \AppserverIo\Psr\Socket\SocketInterface        $connection The connection to handle
      * @param \AppserverIo\Server\Interfaces\WorkerInterface $worker     The worker how started this handle
      *
      * @return bool Weather it was responsible to handle the firstLine or not.

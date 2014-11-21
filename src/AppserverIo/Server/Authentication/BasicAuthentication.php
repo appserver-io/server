@@ -22,8 +22,6 @@
 
 namespace AppserverIo\Server\Authentication;
 
-use AppserverIo\Server\Interfaces\AuthenticationInterface;
-
 /**
  * Class BasicAuthentication
  *
@@ -35,7 +33,7 @@ use AppserverIo\Server\Interfaces\AuthenticationInterface;
  * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link       https://github.com/appserver-io/server
  */
-class BasicAuthentication implements AuthenticationInterface
+class BasicAuthentication
 {
     /**
      * Defines the auth type which should match the client request type definition

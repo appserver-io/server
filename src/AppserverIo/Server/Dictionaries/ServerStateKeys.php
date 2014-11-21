@@ -155,7 +155,7 @@ class ServerStateKeys
     /**
      * Returns TRUE if the server state is greater than the passed one, else FALSE.
      *
-     * @param \TechDivision\ApplicationServer\Dictionaries\ServerStateKeys $serverState The server state to be greater than
+     * @param \AppserverIo\Server\Dictionaries\ServerStateKeys $serverState The server state to be greater than
      *
      * @return boolean TRUE if equal, else FALSE
      */
@@ -167,7 +167,7 @@ class ServerStateKeys
     /**
      * Returns TRUE if the passed server state equals the actual one, else FALSE.
      *
-     * @param \TechDivision\ApplicationServer\Dictionaries\ServerStateKeys $serverState The server state to check
+     * @param \AppserverIo\Server\Dictionaries\ServerStateKeys $serverState The server state to check
      *
      * @return boolean TRUE if equal, else FALSE
      */

@@ -22,6 +22,10 @@
 
 namespace AppserverIo\Server\Sockets;
 
+use AppserverIo\Psr\Socket\SocketInterface;
+use AppserverIo\Psr\Socket\SocketReadTimeoutException;
+use AppserverIo\Psr\Socket\SocketServerException;
+
 /**
  * Class StreamSocket
  *
@@ -178,7 +182,7 @@ class StreamSocket implements SocketInterface
      * @param int $receiveTimeout The max time to wait for read the next line
      *
      * @return string
-     * @throws \AppserverIo\Server\Sockets\SocketReadTimeoutException
+     * @throws \AppserverIo\Psr\Socket\SocketReadTimeoutException
      */
     public function readLine($readLength = 1024, $receiveTimeout = null)
     {
@@ -201,7 +205,7 @@ class StreamSocket implements SocketInterface
      * @param int $receiveTimeout The max time to wait for read the next line
      *
      * @return string
-     * @throws \AppserverIo\Server\Sockets\SocketReadTimeoutException
+     * @throws \AppserverIo\Psr\Socket\SocketReadTimeoutException
      */
     public function read($readLength = 1024, $receiveTimeout = null)
     {

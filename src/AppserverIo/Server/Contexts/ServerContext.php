@@ -28,7 +28,7 @@ use AppserverIo\Server\Exceptions\ModuleNotFoundException;
 use AppserverIo\Server\Exceptions\ServerException;
 use AppserverIo\Server\Interfaces\ServerConfigurationInterface;
 use AppserverIo\Server\Interfaces\ServerContextInterface;
-use AppserverIo\Server\Sockets\SocketInterface;
+use AppserverIo\Psr\Socket\SocketInterface;
 use AppserverIo\Server\Dictionaries\ServerVars;
 
 /**

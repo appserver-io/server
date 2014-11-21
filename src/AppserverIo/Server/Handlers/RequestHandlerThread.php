@@ -24,7 +24,6 @@ namespace AppserverIo\Server\Handlers;
 
 use AppserverIo\Server\Interfaces\ServerContextInterface;
 use AppserverIo\Server\Interfaces\WorkerInterface;
-use AppserverIo\Server\Sockets\StreamSocket;
 
 /**
  * This class is just for testing purpose, so please don't use it for this moment.

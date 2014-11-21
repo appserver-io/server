@@ -25,7 +25,6 @@ namespace AppserverIo\Server\Interfaces;
 use Psr\Log\LoggerInterface;
 use AppserverIo\Server\Interfaces\ServerConfigurationInterface;
 use AppserverIo\Server\Dictionaries\EnvVars;
-use AppserverIo\Server\Sockets\SocketInterface;
 
 /**
  * Interface RequestContextInterface
