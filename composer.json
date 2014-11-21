@@ -33,7 +33,7 @@
 	},
 	"autoload" : {
 		"psr-0" : {
-			"TechDivision\\Server" : [
+			"AppserverIo\\Server" : [
 				"src/",
 				"tests/"
 			]
