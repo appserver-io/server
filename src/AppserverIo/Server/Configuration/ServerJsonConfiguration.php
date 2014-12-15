@@ -38,42 +38,42 @@ use AppserverIo\Server\Interfaces\ServerConfigurationInterface;
 class ServerJsonConfiguration implements ServerConfigurationInterface
 {
     /**
-     * Hold's raw data instance
+     * Holds raw data instance
      *
      * @var \stdClass
      */
     protected $data;
 
     /**
-     * Hold's the modules to be used
+     * Holds the modules to be used
      *
      * @var array
      */
     protected $modules;
 
     /**
-     * Hold's the handlers array
+     * Holds the handlers array
      *
      * @var array
      */
     protected $handlers;
 
     /**
-     * Hold's the virtual hosts array
+     * Holds the virtual hosts array
      *
      * @var array
      */
     protected $virtualHosts;
 
     /**
-     * Hold's the authentications array
+     * Holds the authentications array
      *
      * @var array
      */
     protected $authentications;
 
     /**
-     * Hold's the rewrites array
+     * Holds the rewrites array
      *
      * @var array
      */
@@ -87,19 +87,26 @@ class ServerJsonConfiguration implements ServerConfigurationInterface
     protected $environmentVariables;
 
     /**
-     * Hold's the connection handlers array
+     * Holds the connection handlers array
      *
      * @var array
      */
     protected $connectionHandlers;
 
     /**
-     * Hold's the accesses array
+     * Holds the accesses array
      *
      * @var array
      */
     protected $accesses;
 
+    /**
+     * Holds the accesses array
+     *
+     * @var array
+     */
+    protected $analytics;
+    
     /**
      * The configured locations.
      *
@@ -125,7 +132,7 @@ class ServerJsonConfiguration implements ServerConfigurationInterface
     }
 
     /**
-     * Return's name
+     * Returns name
      *
      * @return string
      */
@@ -135,7 +142,7 @@ class ServerJsonConfiguration implements ServerConfigurationInterface
     }
 
     /**
-     * Return's logger name
+     * Returns logger name
      *
      * @return string
      */
@@ -145,7 +152,7 @@ class ServerJsonConfiguration implements ServerConfigurationInterface
     }
 
     /**
-     * Return's type
+     * Returns type
      *
      * @return string
      */
@@ -155,7 +162,7 @@ class ServerJsonConfiguration implements ServerConfigurationInterface
     }
 
     /**
-     * Return's transport
+     * Returns transport
      *
      * @return string
      */
@@ -165,7 +172,7 @@ class ServerJsonConfiguration implements ServerConfigurationInterface
     }
 
     /**
-     * Return's address
+     * Returns address
      *
      * @return string
      */
@@ -175,7 +182,7 @@ class ServerJsonConfiguration implements ServerConfigurationInterface
     }
 
     /**
-     * Return's port
+     * Returns port
      *
      * @return int
      */
@@ -185,7 +192,7 @@ class ServerJsonConfiguration implements ServerConfigurationInterface
     }
 
     /**
-     * Return's software
+     * Returns software
      *
      * @return string
      */
@@ -195,7 +202,7 @@ class ServerJsonConfiguration implements ServerConfigurationInterface
     }
 
     /**
-     * Return's admin
+     * Returns admin
      *
      * @return string
      */
@@ -205,7 +212,7 @@ class ServerJsonConfiguration implements ServerConfigurationInterface
     }
 
     /**
-     * Return's keep-alive max connection
+     * Returns keep-alive max connection
      *
      * @return int
      */
@@ -215,7 +222,7 @@ class ServerJsonConfiguration implements ServerConfigurationInterface
     }
 
     /**
-     * Return's keep-alive timeout
+     * Returns keep-alive timeout
      *
      * @return int
      */
@@ -225,7 +232,7 @@ class ServerJsonConfiguration implements ServerConfigurationInterface
     }
 
     /**
-     * Return's admin
+     * Returns admin
      *
      * @return string
      */
@@ -235,7 +242,7 @@ class ServerJsonConfiguration implements ServerConfigurationInterface
     }
 
     /**
-     * Return's worker number
+     * Returns worker number
      *
      * @return int
      */
@@ -245,7 +252,7 @@ class ServerJsonConfiguration implements ServerConfigurationInterface
     }
 
     /**
-     * Return's worker's accept min count
+     * Returns worker's accept min count
      *
      * @return int
      */
@@ -255,7 +262,7 @@ class ServerJsonConfiguration implements ServerConfigurationInterface
     }
 
     /**
-     * Return's worker's accept min count
+     * Returns worker's accept min count
      *
      * @return int
      */
@@ -265,7 +272,7 @@ class ServerJsonConfiguration implements ServerConfigurationInterface
     }
 
     /**
-     * Return's context type
+     * Returns context type
      *
      * @return string
      */
@@ -275,7 +282,7 @@ class ServerJsonConfiguration implements ServerConfigurationInterface
     }
 
     /**
-     * Return's request type
+     * Returns request type
      *
      * @return string
      */
@@ -285,7 +292,7 @@ class ServerJsonConfiguration implements ServerConfigurationInterface
     }
 
     /**
-     * Return's socket type
+     * Returns socket type
      *
      * @return string
      */
@@ -295,7 +302,7 @@ class ServerJsonConfiguration implements ServerConfigurationInterface
     }
 
     /**
-     * Return's worker type
+     * Returns worker type
      *
      * @return string
      */
@@ -305,7 +312,7 @@ class ServerJsonConfiguration implements ServerConfigurationInterface
     }
 
     /**
-     * Return's document root
+     * Returns document root
      *
      * @return string
      */
@@ -315,7 +322,7 @@ class ServerJsonConfiguration implements ServerConfigurationInterface
     }
 
     /**
-     * Return's directory index definition
+     * Returns directory index definition
      *
      * @return string
      */
@@ -325,7 +332,7 @@ class ServerJsonConfiguration implements ServerConfigurationInterface
     }
 
     /**
-     * Return's connection handlers
+     * Returns connection handlers
      *
      * @return array
      */
@@ -338,7 +345,7 @@ class ServerJsonConfiguration implements ServerConfigurationInterface
     }
 
     /**
-     * Return's the virtual hosts
+     * Returns the virtual hosts
      *
      * @return array
      */
@@ -351,7 +358,7 @@ class ServerJsonConfiguration implements ServerConfigurationInterface
     }
 
     /**
-     * Return's the authentications
+     * Returns the authentications
      *
      * @return array
      */
@@ -364,7 +371,7 @@ class ServerJsonConfiguration implements ServerConfigurationInterface
     }
 
     /**
-     * Return's modules
+     * Returns modules
      *
      * @return array
      */
@@ -377,7 +384,7 @@ class ServerJsonConfiguration implements ServerConfigurationInterface
     }
 
     /**
-     * Return's handlers
+     * Returns handlers
      *
      * @return array
      */
@@ -390,7 +397,7 @@ class ServerJsonConfiguration implements ServerConfigurationInterface
     }
 
     /**
-     * Return's cert path
+     * Returns cert path
      *
      * @return string
      */
@@ -400,7 +407,7 @@ class ServerJsonConfiguration implements ServerConfigurationInterface
     }
 
     /**
-     * Return's passphrase
+     * Returns passphrase
      *
      * @return string
      */
@@ -440,7 +447,7 @@ class ServerJsonConfiguration implements ServerConfigurationInterface
     }
 
     /**
-     * Return's the authentications
+     * Returns the accesses
      *
      * @return array
      */
@@ -452,6 +459,19 @@ class ServerJsonConfiguration implements ServerConfigurationInterface
         return $this->accesses;
     }
 
+    /**
+     * Returns the analytics
+     *
+     * @return array
+     */
+    public function getAnalytics()
+    {
+        if (!$this->analytics) {
+            $this->analytics = $this->prepareAnalytics($this->data);
+        }
+        return $this->analytics;
+    }
+    
     /**
      * Returns the locations.
      *
@@ -566,7 +586,8 @@ class ServerJsonConfiguration implements ServerConfigurationInterface
                         'locations' => $this->prepareLocations($virtualHost),
                         'environmentVariables' => $this->prepareEnvironmentVariables($virtualHost),
                         'authentication' => $this->prepareAuthentications($virtualHost),
-                        'accesses' => $this->prepareAccesses($virtualHost)
+                        'accesses' => $this->prepareAccesses($virtualHost),
+                        'analytics' => $this->prepareAnalytics($virtualHost)
                     );
                 }
             }
@@ -668,6 +689,41 @@ class ServerJsonConfiguration implements ServerConfigurationInterface
             }
         }
         return $accesses;
+    }
+
+    /**
+     * Prepares the analytics array based on a data object
+     *
+     * @param \stdClass $data The data object
+     *
+     * @return array
+     */
+    public function prepareAnalytics(\stdClass $data)
+    {
+        $analytics = array();
+        if (isset($data->analytics)) {
+            foreach ($data->analytics as $analytic) {
+                $connectors = array();
+                foreach ($analytic->connectors as $connector) {
+
+                    // get all params
+                    $params = get_object_vars($connector->params);
+                    // build up the connectors entry
+                    $connectors[] = array(
+                        'name' => $connector->name,
+                        'type' => $connector->type,
+                        'params' => $params
+                    );
+                }
+
+                // build up the analytics entry
+                $analytics[] = array(
+                    'uri' => $analytic->uri,
+                    'connectors' => $connectors
+                );
+            }
+        }
+        return $analytics;
     }
 
     /**
