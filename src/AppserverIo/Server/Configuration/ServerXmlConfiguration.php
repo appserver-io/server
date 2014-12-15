@@ -89,6 +89,8 @@ class ServerXmlConfiguration implements ServerConfigurationInterface
         $this->keepAliveTimeout = (string)array_shift($node->xpath("./params/param[@name='keepAliveTimeout']"));
         $this->errorsPageTemplatePath = (string)array_shift($node->xpath("./params/param[@name='errorsPageTemplatePath']"));
 
+        // prepare analytics
+        $this->analytics = $this->prepareAnalytics($node);
         // prepare modules
         $this->modules = $this->prepareModules($node);
         // prepare connection handlers
@@ -112,7 +114,7 @@ class ServerXmlConfiguration implements ServerConfigurationInterface
     }
 
     /**
-     * Prepares the modules array based on a simple xml elemend node
+     * Prepares the modules array based on a simple xml element node
      *
      * @param \SimpleXMLElement $node The xml node
      *
@@ -130,7 +132,7 @@ class ServerXmlConfiguration implements ServerConfigurationInterface
     }
 
     /**
-     * Prepares the connectionHandlers array based on a simple xml elemend node
+     * Prepares the connectionHandlers array based on a simple xml element node
      *
      * @param \SimpleXMLElement $node The xml node
      *
@@ -149,7 +151,7 @@ class ServerXmlConfiguration implements ServerConfigurationInterface
     }
 
     /**
-     * Prepares the handlers array based on a simple xml elemend node
+     * Prepares the handlers array based on a simple xml element node
      *
      * @param \SimpleXMLElement $node The xml node
      *
@@ -177,7 +179,7 @@ class ServerXmlConfiguration implements ServerConfigurationInterface
     }
 
     /**
-     * Prepares the virtual hosts array based on a simple xml elemend node
+     * Prepares the virtual hosts array based on a simple xml element node
      *
      * @param \SimpleXMLElement $node The xml node
      *
@@ -203,7 +205,8 @@ class ServerXmlConfiguration implements ServerConfigurationInterface
                         'locations' => $this->prepareLocations($virtualHostNode),
                         'environmentVariables' => $this->prepareEnvironmentVariables($virtualHostNode),
                         'authentications' => $this->prepareAuthentications($virtualHostNode),
-                        'accesses' => $this->prepareAccesses($virtualHostNode)
+                        'accesses' => $this->prepareAccesses($virtualHostNode),
+                        'analytics' => $this->prepareAnalytics($virtualHostNode)
                     );
                 }
             }
@@ -212,7 +215,7 @@ class ServerXmlConfiguration implements ServerConfigurationInterface
     }
 
     /**
-     * Prepares the rewrite maps based on a simple xml elemend node
+     * Prepares the rewrite maps based on a simple xml element node
      *
      * @param \SimpleXMLElement $node The xml node
      *
@@ -236,7 +239,7 @@ class ServerXmlConfiguration implements ServerConfigurationInterface
     }
 
     /**
-     * Prepares the rewrites array based on a simple xml elemend node
+     * Prepares the rewrites array based on a simple xml element node
      *
      * @param \SimpleXMLElement $node The xml node
      *
@@ -256,7 +259,7 @@ class ServerXmlConfiguration implements ServerConfigurationInterface
     }
 
     /**
-     * Prepares the locations array based on a simple xml elemend node
+     * Prepares the locations array based on a simple xml element node
      *
      * @param \SimpleXMLElement $node The xml node
      *
@@ -279,7 +282,7 @@ class ServerXmlConfiguration implements ServerConfigurationInterface
     }
 
     /**
-     * Prepares the environmentVariables array based on a simple xml elemend node
+     * Prepares the environmentVariables array based on a simple xml element node
      *
      * @param \SimpleXMLElement $node The xml node
      *
@@ -300,7 +303,7 @@ class ServerXmlConfiguration implements ServerConfigurationInterface
     }
 
     /**
-     * Prepares the authentications array based on a simple xml elemend node
+     * Prepares the authentications array based on a simple xml element node
      *
      * @param \SimpleXMLElement $node The xml node
      *
@@ -323,7 +326,7 @@ class ServerXmlConfiguration implements ServerConfigurationInterface
     }
 
     /**
-     * Prepares the access array based on a simple xml elemend node
+     * Prepares the access array based on a simple xml element node
      *
      * @param \SimpleXMLElement $node The xml node
      *
@@ -345,6 +348,49 @@ class ServerXmlConfiguration implements ServerConfigurationInterface
         }
         return $accesses;
     }
+
+    /**
+     * Prepares the analytics array based on a simple XML element node
+     *
+     * @param \SimpleXMLElement $node The XML node
+     *
+     * @return array
+     */
+    public function prepareAnalytics(\SimpleXMLElement $node)
+    {
+        $analytics = array();
+        if ($node->analytics) {
+            foreach ($node->analytics->analytic as $analyticNode) {
+                $connectors = array();
+                foreach ($analyticNode->connectors->connector as $connectorNode) {
+
+                    // connectors might have params
+                    $params = array();
+                    if ($connectorNode->params) {
+                        foreach ($connectorNode->params->param as $paramNode) {
+                            $paramName = (string)$paramNode->attributes()->name;
+                            $params[$paramName] = (string)array_shift($connectorNode->xpath(".//param[@name='$paramName']"));
+                        }
+                    }
+
+                    // build up the connectors entry
+                    $connectors[] = array(
+                        'name' => (string)$connectorNode->attributes()->name,
+                        'type' => (string)$connectorNode->attributes()->type,
+                        'params' => $params
+                    );
+                }
+
+                // build up the analytics entry
+                $analytics[] = array(
+                    'uri' => (string)$analyticNode->attributes()->uri,
+                    'connectors' => $connectors
+                );
+            }
+        }
+        return $analytics;
+    }
+
 
     /**
      * Return's name
@@ -434,6 +480,16 @@ class ServerXmlConfiguration implements ServerConfigurationInterface
     public function getAdmin()
     {
         return $this->admin;
+    }
+
+    /**
+     * Return's analytics
+     *
+     * @return string
+     */
+    public function getAnalytics()
+    {
+        return $this->analytics;
     }
 
     /**
