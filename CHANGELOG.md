@@ -1,3 +1,14 @@
+# Version 0.2.1
+
+## Bugfixes
+
+* Wrong vendor within the biuld.xml project name
+
+## Features
+
+* Added module variable for volatile analytics configuration
+* Added an optional deploy path ANT property
+
 # Version 0.2.0
 
 ## Bugfixes
