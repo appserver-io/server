@@ -11,13 +11,11 @@
  *
  * PHP version 5
  *
- * @category   Library
- * @package    Server
- * @subpackage Workers
- * @author     Johann Zelger <jz@appserver.io>
- * @copyright  2014 TechDivision GmbH <info@appserver.io>
- * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @link       https://github.com/appserver-io/server
+ * @author    Johann Zelger <jz@appserver.io>
+ * @copyright 2015 TechDivision GmbH <info@appserver.io>
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @link      https://github.com/appserver-io/server
+ * @link      http://www.appserver.io
  */
 
 namespace AppserverIo\Server\Workers;
@@ -38,13 +36,11 @@ use AppserverIo\Server\Sockets\StreamSocket;
 /**
  * Class ThreadWorker
  *
- * @category   Library
- * @package    Server
- * @subpackage Workers
- * @author     Johann Zelger <jz@appserver.io>
- * @copyright  2014 TechDivision GmbH <info@appserver.io>
- * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @link       https://github.com/appserver-io/server
+ * @author    Johann Zelger <jz@appserver.io>
+ * @copyright 2015 TechDivision GmbH <info@appserver.io>
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @link      https://github.com/appserver-io/server
+ * @link      http://www.appserver.io
  */
 class ThreadWorker extends \Thread implements WorkerInterface
 {
@@ -239,10 +235,8 @@ class ThreadWorker extends \Thread implements WorkerInterface
 
             // while worker not reached connection limit accept connections and process
             while (++$connectionCount <= $connectionLimit) {
-
                 // accept connections and process working connection by handlers
                 if (($connection = $serverConnection->accept()) !== false) {
-
                     /**
                      * This is for testing async request processing only.
                      *

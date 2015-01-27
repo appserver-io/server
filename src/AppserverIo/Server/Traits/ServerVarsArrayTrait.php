@@ -11,13 +11,11 @@
  *
  * PHP version 5
  *
- * @category   Library
- * @package    Server
- * @subpackage Traits
- * @author     Johann Zelger <jz@appserver.io>
- * @copyright  2014 TechDivision GmbH <info@appserver.io>
- * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @link       https://github.com/appserver-io/server
+ * @author    Johann Zelger <jz@appserver.io>
+ * @copyright 2015 TechDivision GmbH <info@appserver.io>
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @link      https://github.com/appserver-io/server
+ * @link      http://www.appserver.io
  */
 
 namespace AppserverIo\Server\Traits;
@@ -27,18 +25,16 @@ use AppserverIo\Server\Exceptions\ServerException;
 /**
  * Trait ServerVarsArrayTrait
  *
- * @category   Library
- * @package    Server
- * @subpackage Traits
- * @author     Johann Zelger <jz@appserver.io>
- * @copyright  2014 TechDivision GmbH <info@appserver.io>
- * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @link       https://github.com/appserver-io/server
+ * @author    Johann Zelger <jz@appserver.io>
+ * @copyright 2015 TechDivision GmbH <info@appserver.io>
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @link      https://github.com/appserver-io/server
+ * @link      http://www.appserver.io
  */
 trait ServerVarsArrayTrait
 {
     /**
-     * Set's a value to specific server var
+     * Sets a value to specific server var
      *
      * @param string $serverVar The server var to set
      * @param string $value     The value to server var
@@ -67,7 +63,7 @@ trait ServerVarsArrayTrait
     }
 
     /**
-     * Return's a value for specific server var
+     * Returns a value for specific server var
      *
      * @param string $serverVar The server var to get value for
      *
@@ -87,7 +83,7 @@ trait ServerVarsArrayTrait
     }
 
     /**
-     * Return's all the server vars as array key value pair format
+     * Returns all the server vars as array key value pair format
      *
      * @return array The server vars as array
      */
@@ -97,7 +93,7 @@ trait ServerVarsArrayTrait
     }
 
     /**
-     * Check's if value exists for given server var
+     * Checks if value exists for given server var
      *
      * @param string $serverVar The server var to check
      *
@@ -114,7 +110,7 @@ trait ServerVarsArrayTrait
     }
 
     /**
-     * Clear's the server vars storage
+     * Clears the server vars storage
      *
      * @return void
      */

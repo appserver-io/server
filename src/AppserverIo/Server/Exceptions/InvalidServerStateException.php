@@ -11,13 +11,11 @@
  *
  * PHP version 5
  *
- * @category   Library
- * @package    Server
- * @subpackage Exceptions
- * @author     Tim Wagner <tw@appserver.io>
- * @copyright  2014 TechDivision GmbH <info@appserver.io>
- * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @link       https://github.com/appserver-io/server
+ * @author    Tim Wagner <tw@appserver.io>
+ * @copyright 2015 TechDivision GmbH <info@appserver.io>
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @link      https://github.com/appserver-io/server
+ * @link      http://www.appserver.io
  */
 
 namespace AppserverIo\Server\Exceptions;
@@ -25,13 +23,11 @@ namespace AppserverIo\Server\Exceptions;
 /**
  * Exception that will be thrown if the container state is not available or invalid.
  *
- * @category   Library
- * @package    Server
- * @subpackage Exceptions
- * @author     Tim Wagner <tw@appserver.io>
- * @copyright  2014 TechDivision GmbH <info@appserver.io>
- * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @link       https://github.com/appserver-io/server
+ * @author    Tim Wagner <tw@appserver.io>
+ * @copyright 2015 TechDivision GmbH <info@appserver.io>
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @link      https://github.com/appserver-io/server
+ * @link      http://www.appserver.io
  */
 class InvalidServerStateException extends \Exception
 {

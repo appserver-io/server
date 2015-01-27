@@ -11,47 +11,35 @@
  *
  * PHP version 5
  *
- * @category   Library
- * @package    Server
- * @subpackage Contexts
- * @author     Johann Zelger <jz@appserver.io>
- * @copyright  2014 TechDivision GmbH <info@appserver.io>
- * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @link       https://github.com/appserver-io/server
+ * @author    Johann Zelger <jz@appserver.io>
+ * @copyright 2015 TechDivision GmbH <info@appserver.io>
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @link      https://github.com/appserver-io/server
+ * @link      http://www.appserver.io
  */
 
 namespace AppserverIo\Server\Contexts;
 
 use AppserverIo\Server\Dictionaries\EnvVars;
-use AppserverIo\Server\Dictionaries\ModuleVars;
 use AppserverIo\Server\Dictionaries\ServerVars;
-use AppserverIo\Server\Exceptions\ServerException;
 use AppserverIo\Server\Interfaces\RequestContextInterface;
 use AppserverIo\Server\Interfaces\ServerConfigurationInterface;
-use AppserverIo\Server\Interfaces\ServerContextInterface;
-use AppserverIo\Server\Traits\EnvVarsObjectTrait;
 use AppserverIo\Server\Traits\EnvVarsArrayTrait;
-use AppserverIo\Server\Traits\ModuleVarsObjectTrait;
 use AppserverIo\Server\Traits\ModuleVarsArrayTrait;
-use AppserverIo\Server\Traits\ServerVarsObjectTrait;
 use AppserverIo\Server\Traits\ServerVarsArrayTrait;
 
 /**
  * Class ServerContext
  *
- * @category   Library
- * @package    Server
- * @subpackage Contexts
- * @author     Johann Zelger <jz@appserver.io>
- * @copyright  2014 TechDivision GmbH <info@appserver.io>
- * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @link       https://github.com/appserver-io/server
+ * @author    Johann Zelger <jz@appserver.io>
+ * @copyright 2015 TechDivision GmbH <info@appserver.io>
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @link      https://github.com/appserver-io/server
+ * @link      http://www.appserver.io
  */
 class RequestContext implements RequestContextInterface
 {
     // use traits for server-, env- and module var functionality
-    // use ServerVarsObjectTrait, ModuleVarsObjectTrait, EnvVarsObjectTrait;
-    // use ServerVarsStackableTrait, ModuleVarsStackableTrait, EnvVarsStackableTrait;
     use ServerVarsArrayTrait, ModuleVarsArrayTrait, EnvVarsArrayTrait;
 
     /**

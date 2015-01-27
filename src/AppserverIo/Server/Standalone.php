@@ -11,12 +11,11 @@
  *
  * PHP version 5
  *
- * @category  Library
- * @package   Server
  * @author    Johann Zelger <jz@appserver.io>
- * @copyright 2014 TechDivision GmbH <info@appserver.io>
+ * @copyright 2015 TechDivision GmbH <info@appserver.io>
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      https://github.com/appserver-io/server
+ * @link      http://www.appserver.io
  */
 
 namespace AppserverIo\Server;
@@ -26,12 +25,11 @@ namespace AppserverIo\Server;
  *
  * To use the a server implementation standalone
  *
- * @category  Library
- * @package   Server
  * @author    Johann Zelger <jz@appserver.io>
- * @copyright 2014 TechDivision GmbH <info@appserver.io>
+ * @copyright 2015 TechDivision GmbH <info@appserver.io>
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      https://github.com/appserver-io/server
+ * @link      http://www.appserver.io
  */
 class Standalone
 {
@@ -114,7 +112,6 @@ class Standalone
         // init loggers
         $loggers = array();
         foreach ($mainConfiguration->getLoggerConfigs() as $loggerConfig) {
-
             // init processors
             $processors = array();
             foreach ($loggerConfig->getProcessors() as $processorType) {
@@ -153,7 +150,6 @@ class Standalone
         // init servers
         $servers = array();
         foreach ($mainConfiguration->getServerConfigs() as $serverConfig) {
-
             // get type definitions
             $serverType = $serverConfig->getType();
             $serverContextType = $serverConfig->getServerContextType();

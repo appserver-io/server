@@ -11,13 +11,11 @@
  *
  * PHP version 5
  *
- * @category   Library
- * @package    Server
- * @subpackage Configuration
- * @author     Johann Zelger <jz@appserver.io>
- * @copyright  2014 TechDivision GmbH <info@appserver.io>
- * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @link       https://github.com/appserver-io/server
+ * @author    Johann Zelger <jz@appserver.io>
+ * @copyright 2015 TechDivision GmbH <info@appserver.io>
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @link      https://github.com/appserver-io/server
+ * @link      http://www.appserver.io
  */
 
 namespace AppserverIo\Server\Configuration;
@@ -27,43 +25,41 @@ use AppserverIo\Server\Interfaces\LoggerConfigurationInterface;
 /**
  * Class LoggerXmlConfiguration
  *
- * @category   Library
- * @package    Server
- * @subpackage Configuration
- * @author     Johann Zelger <jz@appserver.io>
- * @copyright  2014 TechDivision GmbH <info@appserver.io>
- * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @link       https://github.com/appserver-io/server
+ * @author    Johann Zelger <jz@appserver.io>
+ * @copyright 2015 TechDivision GmbH <info@appserver.io>
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @link      https://github.com/appserver-io/server
+ * @link      http://www.appserver.io
  */
 class LoggerXmlConfiguration implements LoggerConfigurationInterface
 {
 
     /**
-     * Hold's the name of the logger
+     * Holds the name of the logger
      * @var string
      */
     protected $name;
 
     /**
-     * Hold's the type of the logger
+     * Holds the type of the logger
      * @var string
      */
     protected $type;
 
     /**
-     * 'Hold's the loggers channel name
+     * 'Holds the loggers channel name
      * @var string
      */
     protected $channel;
 
     /**
-     * Hold's all handlers defined for logger
+     * Holds all handlers defined for logger
      * @var array
      */
     protected $handlers;
 
     /**
-     * Hold's all processors defined for logger
+     * Holds all processors defined for logger
      * @var array
      */
     protected $processors;
@@ -89,7 +85,7 @@ class LoggerXmlConfiguration implements LoggerConfigurationInterface
     }
 
     /**
-     * Return's name
+     * Returns name
      *
      * @return string
      */
@@ -99,7 +95,7 @@ class LoggerXmlConfiguration implements LoggerConfigurationInterface
     }
 
     /**
-     * Return's type
+     * Returns type
      *
      * @return string
      */
@@ -109,7 +105,7 @@ class LoggerXmlConfiguration implements LoggerConfigurationInterface
     }
 
     /**
-     * Return's channel
+     * Returns channel
      *
      * @return string
      */
@@ -119,7 +115,7 @@ class LoggerXmlConfiguration implements LoggerConfigurationInterface
     }
 
     /**
-     * Return's defined handlers for logger
+     * Returns defined handlers for logger
      *
      * @return array
      */
@@ -129,7 +125,7 @@ class LoggerXmlConfiguration implements LoggerConfigurationInterface
     }
 
     /**
-     * Return's defined processors for logger
+     * Returns defined processors for logger
      *
      * @return array
      */

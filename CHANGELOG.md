@@ -1,3 +1,13 @@
+# Version 0.2.2
+
+## Bugfixes
+
+* Missing use statement in case of StreamReadExceptions
+
+## Features
+
+* Applied new file name and comment conventions
+
 # Version 0.2.1
 
 ## Bugfixes

@@ -11,40 +11,32 @@
  *
  * PHP version 5
  *
- * @category  Library
- * @package   Server
  * @author    Johann Zelger <jz@appserver.io>
- * @copyright 2014 TechDivision GmbH <info@appserver.io>
+ * @copyright 2015 TechDivision GmbH <info@appserver.io>
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      https://github.com/appserver-io/server
+ * @link      http://www.appserver.io
  */
 
 namespace AppserverIo\Server\Contexts;
 
-use Psr\Log\LoggerInterface;
-use AppserverIo\Server\Dictionaries\EnvVars;
-use AppserverIo\Server\Exceptions\ConnectionHandlerNotFoundException;
-use AppserverIo\Server\Exceptions\ModuleNotFoundException;
 use AppserverIo\Server\Exceptions\ServerException;
 use AppserverIo\Server\Interfaces\ServerConfigurationInterface;
 use AppserverIo\Server\Interfaces\ServerContextInterface;
-use AppserverIo\Psr\Socket\SocketInterface;
-use AppserverIo\Server\Dictionaries\ServerVars;
 
 /**
  * Class ServerContext
  *
- * @category  Library
- * @package   Server
  * @author    Johann Zelger <jz@appserver.io>
- * @copyright 2014 TechDivision GmbH <info@appserver.io>
+ * @copyright 2015 TechDivision GmbH <info@appserver.io>
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      https://github.com/appserver-io/server
+ * @link      http://www.appserver.io
  */
 class ServerContext implements ServerContextInterface
 {
     /**
-     * Optionally hold's an container implementation of third party environment.
+     * Optionally Holds an container implementation of third party environment.
      * So every mod depending on his environment can use this as a container to transfer environment specific stuff.
      *
      * @var mixed
@@ -60,7 +52,7 @@ class ServerContext implements ServerContextInterface
     protected $loggers;
 
     /**
-     * Hold's the config instance
+     * Holds the config instance
      *
      * @var \AppserverIo\Server\Interfaces\ServerConfigurationInterface $serverConfig
      */
@@ -82,7 +74,7 @@ class ServerContext implements ServerContextInterface
     }
 
     /**
-     * Return's the server config instance
+     * Returns the server config instance
      *
      * @return \AppserverIo\Server\Interfaces\ServerConfigurationInterface The server config instance
      */
@@ -104,7 +96,7 @@ class ServerContext implements ServerContextInterface
     }
 
     /**
-     * Return's the container instance
+     * Returns the container instance
      *
      * @return mixed The container instance for third party environment
      */
@@ -141,7 +133,7 @@ class ServerContext implements ServerContextInterface
     }
 
     /**
-     * Return's the logger instance
+     * Returns the logger instance
      *
      * @param string $loggerType the logger's type to get
      *

@@ -11,13 +11,11 @@
  *
  * PHP version 5
  *
- * @category   Library
- * @package    Server
- * @subpackage Interfaces
- * @author     Johann Zelger <jz@appserver.io>
- * @copyright  2014 TechDivision GmbH <info@appserver.io>
- * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @link       https://github.com/appserver-io/server
+ * @author    Johann Zelger <jz@appserver.io>
+ * @copyright 2015 TechDivision GmbH <info@appserver.io>
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @link      https://github.com/appserver-io/server
+ * @link      http://www.appserver.io
  */
 
 namespace AppserverIo\Server\Interfaces;
@@ -25,200 +23,198 @@ namespace AppserverIo\Server\Interfaces;
 /**
  * Interface ServerConfigurationInterface
  *
- * @category   Library
- * @package    Server
- * @subpackage Interfaces
- * @author     Johann Zelger <jz@appserver.io>
- * @copyright  2014 TechDivision GmbH <info@appserver.io>
- * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @link       https://github.com/appserver-io/server
+ * @author    Johann Zelger <jz@appserver.io>
+ * @copyright 2015 TechDivision GmbH <info@appserver.io>
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @link      https://github.com/appserver-io/server
+ * @link      http://www.appserver.io
  */
 interface ServerConfigurationInterface
 {
     /**
-     * Return's name
+     * Returns name
      *
      * @return string
      */
     public function getName();
 
     /**
-     * Return's type
+     * Returns type
      *
      * @return string
      */
     public function getType();
 
     /**
-     * Return's transport
+     * Returns transport
      *
      * @return string
      */
     public function getTransport();
 
     /**
-     * Return's address
+     * Returns address
      *
      * @return string
      */
     public function getAddress();
 
     /**
-     * Return's port
+     * Returns port
      *
      * @return int
      */
     public function getPort();
 
     /**
-     * Return's logger name
+     * Returns logger name
      *
      * @return string
      */
     public function getLoggerName();
 
     /**
-     * Return's workerNumber
+     * Returns workerNumber
      *
      * @return int
      */
     public function getWorkerNumber();
 
     /**
-     * Return's worker accept min count
+     * Returns worker accept min count
      *
      * @return int
      */
     public function getWorkerAcceptMin();
 
     /**
-     * Return's worker accept max count
+     * Returns worker accept max count
      *
      * @return int
      */
     public function getWorkerAcceptMax();
 
     /**
-     * Return's software
+     * Returns software
      *
      * @return string
      */
     public function getSoftware();
 
     /**
-     * Return's admin
+     * Returns admin
      *
      * @return string
      */
     public function getAdmin();
 
     /**
-     * Return's keep-alive max connection
+     * Returns keep-alive max connection
      *
      * @return int
      */
     public function getKeepAliveMax();
 
     /**
-     * Return's keep-alive timeout
+     * Returns keep-alive timeout
      *
      * @return int
      */
     public function getKeepAliveTimeout();
 
     /**
-     * Return's template path for errors page
+     * Returns template path for errors page
      *
      * @return string
      */
     public function getErrorsPageTemplatePath();
 
     /**
-     * Return's server context type
+     * Returns server context type
      *
      * @return string
      */
     public function getServerContextType();
 
     /**
-     * Return's request context type
+     * Returns request context type
      *
      * @return string
      */
     public function getRequestContextType();
 
     /**
-     * Return's socket type
+     * Returns socket type
      *
      * @return string
      */
     public function getSocketType();
 
     /**
-     * Return's worker type
+     * Returns worker type
      *
      * @return string
      */
     public function getWorkerType();
 
     /**
-     * Return's document root
+     * Returns document root
      *
      * @return string
      */
     public function getDocumentRoot();
 
     /**
-     * Return's directory index definition
+     * Returns directory index definition
      *
      * @return string
      */
     public function getDirectoryIndex();
 
     /**
-     * Return's modules
+     * Returns modules
      *
      * @return array
      */
     public function getModules();
 
     /**
-     * Return's connection handlers
+     * Returns connection handlers
      *
      * @return array
      */
     public function getConnectionHandlers();
 
     /**
-     * Return's the virtual hosts
+     * Returns the virtual hosts
      *
      * @return array
      */
     public function getVirtualHosts();
 
     /**
-     * Return's the authentications
+     * Returns the authentications
      *
      * @return array
      */
     public function getAuthentications();
 
     /**
-     * Return's handlers
+     * Returns handlers
      *
      * @return array
      */
     public function getHandlers();
 
     /**
-     * Return's certPath
+     * Returns certPath
      *
      * @return string
      */
     public function getCertPath();
 
     /**
-     * Return's passphrase
+     * Returns passphrase
      *
      * @return string
      */
