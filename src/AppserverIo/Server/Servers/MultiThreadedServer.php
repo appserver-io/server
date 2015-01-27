@@ -11,13 +11,11 @@
  *
  * PHP version 5
  *
- * @category   Library
- * @package    Server
- * @subpackage Servers
- * @author     Johann Zelger <jz@appserver.io>
- * @copyright  2014 TechDivision GmbH <info@appserver.io>
- * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @link       https://github.com/appserver-io/server
+ * @author    Johann Zelger <jz@appserver.io>
+ * @copyright 2015 TechDivision GmbH <info@appserver.io>
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @link      https://github.com/appserver-io/server
+ * @link      http://www.appserver.io
  */
 
 namespace AppserverIo\Server\Servers;
@@ -35,20 +33,18 @@ use AppserverIo\Server\Dictionaries\ServerStateKeys;
 /**
  * Class MultiThreadedServer
  *
- * @category   Library
- * @package    Server
- * @subpackage Servers
- * @author     Johann Zelger <jz@appserver.io>
- * @copyright  2014 TechDivision GmbH <info@appserver.io>
- * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @link       https://github.com/appserver-io/server
+ * @author    Johann Zelger <jz@appserver.io>
+ * @copyright 2015 TechDivision GmbH <info@appserver.io>
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @link      https://github.com/appserver-io/server
+ * @link      http://www.appserver.io
  */
 
 class MultiThreadedServer extends \Thread implements ServerInterface
 {
 
     /**
-     * Hold's the server context instance
+     * Holds the server context instance
      *
      * @var \AppserverIo\Server\Interfaces\ServerContextInterface The server context instance
      */
@@ -77,7 +73,7 @@ class MultiThreadedServer extends \Thread implements ServerInterface
     }
 
     /**
-     * Return's the config instance
+     * Returns the config instance
      *
      * @return \AppserverIo\Server\Interfaces\ServerContextInterface
      */
@@ -87,7 +83,7 @@ class MultiThreadedServer extends \Thread implements ServerInterface
     }
 
     /**
-     * Start's the server's worker as defined in configuration
+     * Starts the server's worker as defined in configuration
      *
      * @return void
      *
@@ -220,7 +216,6 @@ class MultiThreadedServer extends \Thread implements ServerInterface
         // setup and start workers
         $workers = array();
         for ($i = 1; $i <= $serverConfig->getWorkerNumber(); ++$i) {
-
             $workers[$i] = new $workerType(
                 $serverConnection->getConnectionResource(),
                 $serverContext,
@@ -239,13 +234,10 @@ class MultiThreadedServer extends \Thread implements ServerInterface
 
         // watch dog for all workers to restart if it's needed while server is up
         while ($this->serverState === ServerStateKeys::WORKERS_INITIALIZED) {
-
             // iterate all workers
             for ($i = 1; $i <= $serverConfig->getWorkerNumber(); ++$i) {
-
                 // check if worker should be restarted
                 if ($workers[$i]->shouldRestart()) {
-
                     $logger->debug(
                         sprintf("%s restarting worker #%s (%s)", $serverName, $i, $workerType)
                     );
@@ -261,7 +253,8 @@ class MultiThreadedServer extends \Thread implements ServerInterface
                 }
             }
 
-            if ($profileLogger) { // profile the worker shutdown beeing processed
+            if ($profileLogger) {
+                // profile the worker shutdown beeing processed
                 $profileLogger->debug(sprintf('Server %s waiting for shutdown', $serverName));
             }
 

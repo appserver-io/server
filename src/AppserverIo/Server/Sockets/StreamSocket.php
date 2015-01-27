@@ -11,37 +11,34 @@
  *
  * PHP version 5
  *
- * @category   Library
- * @package    Server
- * @subpackage Sockets
- * @author     Johann Zelger <jz@appserver.io>
- * @copyright  2014 TechDivision GmbH <info@appserver.io>
- * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @link       https://github.com/appserver-io/server
+ * @author    Johann Zelger <jz@appserver.io>
+ * @copyright 2015 TechDivision GmbH <info@appserver.io>
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @link      https://github.com/appserver-io/server
+ * @link      http://www.appserver.io
  */
 
 namespace AppserverIo\Server\Sockets;
 
 use AppserverIo\Psr\Socket\SocketInterface;
+use AppserverIo\Psr\Socket\SocketReadException;
 use AppserverIo\Psr\Socket\SocketReadTimeoutException;
 use AppserverIo\Psr\Socket\SocketServerException;
 
 /**
  * Class StreamSocket
  *
- * @category   Library
- * @package    Server
- * @subpackage Sockets
- * @author     Johann Zelger <jz@appserver.io>
- * @copyright  2014 TechDivision GmbH <info@appserver.io>
- * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @link       https://github.com/appserver-io/server
+ * @author    Johann Zelger <jz@appserver.io>
+ * @copyright 2015 TechDivision GmbH <info@appserver.io>
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @link      https://github.com/appserver-io/server
+ * @link      http://www.appserver.io
  */
 class StreamSocket implements SocketInterface
 {
 
     /**
-     * Holds the connection resource it selfe.
+     * Holds the connection resource itself.
      *
      * @var resource
      */
@@ -55,7 +52,7 @@ class StreamSocket implements SocketInterface
     protected $connectionResourceId;
 
     /**
-     * Hold's the peername of the client who connected
+     * Holds the peer name of the client who connected
      *
      * @var string
      */
@@ -69,6 +66,8 @@ class StreamSocket implements SocketInterface
      * @param resource $context The context to be set on stream create
      *
      * @return \AppserverIo\Server\Sockets\StreamSocket The Stream instance with a server socket created.
+     *
+     * @throws \AppserverIo\Psr\Socket\SocketServerException
      */
     public static function getServerInstance($socket, $flags = null, $context = null)
     {
@@ -111,6 +110,8 @@ class StreamSocket implements SocketInterface
      * @param resource $context The context to be set on stream create
      *
      * @return \AppserverIo\Server\Sockets\StreamSocket The Stream instance with a client socket created.
+     *
+     * @throws \AppserverIo\Psr\Socket\SocketServerException
      */
     public static function getClientInstance($socket, $flags = null, $context = null)
     {
@@ -139,7 +140,7 @@ class StreamSocket implements SocketInterface
     }
 
     /**
-     * Return's an instance of Stream with preset resource in it.
+     * Returns an instance of Stream with preset resource in it.
      *
      * @param resource $connectionResource The resource to use
      *
@@ -176,7 +177,7 @@ class StreamSocket implements SocketInterface
     }
 
     /**
-     * Return's the line read from connection resource
+     * Returns the line read from connection resource
      *
      * @param int $readLength     The max length to read for a line.
      * @param int $receiveTimeout The max time to wait for read the next line
@@ -191,7 +192,7 @@ class StreamSocket implements SocketInterface
             @stream_set_timeout($this->getConnectionResource(), $receiveTimeout);
         }
         $line = @fgets($this->getConnectionResource(), $readLength);
-        // check if timeout occured
+        // check if timeout occurred
         if (strlen($line) === 0) {
             throw new SocketReadTimeoutException();
         }
@@ -199,13 +200,15 @@ class StreamSocket implements SocketInterface
     }
 
     /**
-     * Read's the given length from connection resource
+     * Reads the given length from connection resource
      *
      * @param int $readLength     The max length to read for a line.
      * @param int $receiveTimeout The max time to wait for read the next line
      *
      * @return string
+     *
      * @throws \AppserverIo\Psr\Socket\SocketReadTimeoutException
+     * @throws \AppserverIo\Psr\Socket\SocketReadException
      */
     public function read($readLength = 1024, $receiveTimeout = null)
     {
@@ -213,14 +216,14 @@ class StreamSocket implements SocketInterface
             // set timeout for read data fom client
             @stream_set_timeout($this->getConnectionResource(), $receiveTimeout);
         }
-        // readin line from client
+        // read in line from client
         $line = @fread($this->getConnectionResource(), $readLength);
         // check if false is response
         if (false === $line) {
             // throw new socket exception
             throw new SocketReadException();
         }
-        // check if timeout occured
+        // check if timeout occurred
         if (strlen($line) === 0) {
             throw new SocketReadTimeoutException();
         }
@@ -267,7 +270,7 @@ class StreamSocket implements SocketInterface
     }
 
     /**
-     * Set's the connection resource
+     * Sets the connection resource
      *
      * @param resource $connectionResource The resource to socket file descriptor
      *
@@ -280,7 +283,7 @@ class StreamSocket implements SocketInterface
     }
 
     /**
-     * Set's the peername
+     * Sets the peer name
      *
      * @param string $peername The peername in format ip:port
      *
@@ -292,7 +295,7 @@ class StreamSocket implements SocketInterface
     }
 
     /**
-     * Return's the peername in format ip:port (e.g. 10.20.30.40:57128)
+     * Returns the peer name in format ip:port (e.g. 10.20.30.40:57128)
      *
      * @return string
      */
@@ -302,7 +305,7 @@ class StreamSocket implements SocketInterface
     }
 
     /**
-     * Return's the address of connection
+     * Returns the address of connection
      *
      * @return string
      */
@@ -312,7 +315,7 @@ class StreamSocket implements SocketInterface
     }
 
     /**
-     * Return's the port of connection
+     * Returns the port of connection
      *
      * @return string
      */
@@ -322,7 +325,7 @@ class StreamSocket implements SocketInterface
     }
 
     /**
-     * Return's the connection resource
+     * Returns the connection resource
      *
      * @return mixed
      */
@@ -332,7 +335,7 @@ class StreamSocket implements SocketInterface
     }
 
     /**
-     * Return's connection resource id
+     * Returns connection resource id
      *
      * @return int
      */

@@ -11,13 +11,12 @@
  *
  * PHP version 5
  *
- * @category   Library
- * @package    Server
- * @subpackage Dictionaries
- * @author     Bernhard Wick <bw@appserver.io>
- * @copyright  2014 TechDivision GmbH <info@appserver.io>
- * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @link       https://github.com/appserver-io/server
+ * @author    Bernhard Wick <bw@appserver.io>
+ * @author    Johann Zelger <jz@appserver.io>
+ * @copyright 2015 TechDivision GmbH <info@appserver.io>
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @link      https://github.com/appserver-io/server
+ * @link      http://www.appserver.io
  */
 
 namespace AppserverIo\Server\Dictionaries;
@@ -26,14 +25,12 @@ namespace AppserverIo\Server\Dictionaries;
  * Class ModuleVars which is used by different modules to communicate with each
  * other without knowing each other.
  *
- * @category   Library
- * @package    Server
- * @subpackage Dictionaries
- * @author     Bernhard Wick <bw@appserver.io>
- * @author     Johann Zelger <jz@appserver.io>
- * @copyright  2014 TechDivision GmbH <info@appserver.io>
- * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @link       https://github.com/appserver-io/server
+ * @author    Bernhard Wick <bw@appserver.io>
+ * @author    Johann Zelger <jz@appserver.io>
+ * @copyright 2015 TechDivision GmbH <info@appserver.io>
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @link      https://github.com/appserver-io/server
+ * @link      http://www.appserver.io
  */
 class ModuleVars
 {

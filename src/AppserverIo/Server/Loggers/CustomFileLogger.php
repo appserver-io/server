@@ -11,30 +11,25 @@
  *
  * PHP version 5
  *
- * @category   Webserver
- * @package    TechDivision_WebServer
- * @subpackage Loggers
- * @author     Johann Zelger <jz@appserver.io>
- * @copyright  2014 TechDivision GmbH <info@appserver.io>
- * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @link       https://github.com/techdivision/TechDivision_WebServer
+ * @author    Johann Zelger <jz@appserver.io>
+ * @copyright 2015 TechDivision GmbH <info@appserver.io>
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @link      https://github.com/appserver-io/server
+ * @link      http://www.appserver.io
  */
 
 namespace AppserverIo\Server\Loggers;
 
 use Psr\Log\LogLevel;
-use Psr\Log\LoggerInterface;
 
 /**
  * Logger implementation that uses the PHP 'error_log' function to log to a custom file.
  *
- * @category   Webserver
- * @package    TechDivision_WebServer
- * @subpackage Loggers
- * @author     Johann Zelger <jz@appserver.io>
- * @copyright  2014 TechDivision GmbH <info@appserver.io>
- * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @link       https://github.com/techdivision/TechDivision_WebServer
+ * @author    Johann Zelger <jz@appserver.io>
+ * @copyright 2015 TechDivision GmbH <info@appserver.io>
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @link      https://github.com/appserver-io/server
+ * @link      http://www.appserver.io
  */
 class CustomFileLogger extends DummyLogger
 {
@@ -89,7 +84,6 @@ class CustomFileLogger extends DummyLogger
 
         // check the log level
         if ($this->shouldLog($level)) {
-
             // prepare the log message
             $logMessage = sprintf('[%s] - %s (%s): %s %s' . PHP_EOL, date('Y-m-d H:i:s'), gethostname(), $level, $message, json_encode($context));
 

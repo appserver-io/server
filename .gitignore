@@ -10,3 +10,4 @@ composer.lock
 /.project
 /.settings
 /build.properties
+jmeter.log

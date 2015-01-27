@@ -11,13 +11,11 @@
  *
  * PHP version 5
  *
- * @category   Library
- * @package    Server
- * @subpackage Traits
- * @author     Johann Zelger <jz@appserver.io>
- * @copyright  2014 TechDivision GmbH <info@appserver.io>
- * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @link       https://github.com/appserver-io/server
+ * @author    Johann Zelger <jz@appserver.io>
+ * @copyright 2015 TechDivision GmbH <info@appserver.io>
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @link      https://github.com/appserver-io/server
+ * @link      http://www.appserver.io
  */
 
 namespace AppserverIo\Server\Traits;
@@ -25,13 +23,11 @@ namespace AppserverIo\Server\Traits;
 /**
  * Trait EnvVarsObjectTrait
  *
- * @category   Library
- * @package    Server
- * @subpackage Traits
- * @author     Johann Zelger <jz@appserver.io>
- * @copyright  2014 TechDivision GmbH <info@appserver.io>
- * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @link       https://github.com/appserver-io/server
+ * @author    Johann Zelger <jz@appserver.io>
+ * @copyright 2015 TechDivision GmbH <info@appserver.io>
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @link      https://github.com/appserver-io/server
+ * @link      http://www.appserver.io
  */
 trait EnvVarsObjectTrait
 {
@@ -61,7 +57,7 @@ trait EnvVarsObjectTrait
     }
 
     /**
-     * Return's a value for specific env var
+     * Returns a value for specific env var
      *
      * @param string $envVar The env var to get value for
      *
@@ -76,7 +72,7 @@ trait EnvVarsObjectTrait
     }
 
     /**
-     * Return's all the env vars as array key value pair format
+     * Returns all the env vars as array key value pair format
      *
      * @return array The env vars as array
      */
@@ -86,7 +82,7 @@ trait EnvVarsObjectTrait
     }
 
     /**
-     * Check's if value exists for given env var
+     * Checks if value exists for given env var
      *
      * @param string $envVar The env var to check
      *
@@ -99,7 +95,7 @@ trait EnvVarsObjectTrait
     }
 
     /**
-     * Clear's the env vars storage
+     * Clears the env vars storage
      *
      * @return void
      */

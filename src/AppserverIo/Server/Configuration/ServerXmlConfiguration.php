@@ -11,13 +11,11 @@
  *
  * PHP version 5
  *
- * @category   Library
- * @package    Server
- * @subpackage Configuration
- * @author     Johann Zelger <jz@appserver.io>
- * @copyright  2014 TechDivision GmbH <info@appserver.io>
- * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @link       https://github.com/appserver-io/server
+ * @author    Johann Zelger <jz@appserver.io>
+ * @copyright 2015 TechDivision GmbH <info@appserver.io>
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @link      https://github.com/appserver-io/server
+ * @link      http://www.appserver.io
  */
 
 namespace AppserverIo\Server\Configuration;
@@ -27,13 +25,11 @@ use AppserverIo\Server\Interfaces\ServerConfigurationInterface;
 /**
  * Class ServerXmlConfiguration
  *
- * @category   Library
- * @package    Server
- * @subpackage Configuration
- * @author     Johann Zelger <jz@appserver.io>
- * @copyright  2014 TechDivision GmbH <info@appserver.io>
- * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @link       https://github.com/appserver-io/server
+ * @author    Johann Zelger <jz@appserver.io>
+ * @copyright 2015 TechDivision GmbH <info@appserver.io>
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @link      https://github.com/appserver-io/server
+ * @link      http://www.appserver.io
  */
 class ServerXmlConfiguration implements ServerConfigurationInterface
 {
@@ -293,7 +289,6 @@ class ServerXmlConfiguration implements ServerConfigurationInterface
         $environmentVariables = array();
         if ($node->environmentVariables) {
             foreach ($node->environmentVariables->environmentVariable as $environmentVariableNode) {
-
                 // Cut of the SimpleXML attributes wrapper and attach it to our environment variable
                 $environmentVariable = (array)$environmentVariableNode;
                 $environmentVariables[] = array_shift($environmentVariable);
@@ -363,7 +358,6 @@ class ServerXmlConfiguration implements ServerConfigurationInterface
             foreach ($node->analytics->analytic as $analyticNode) {
                 $connectors = array();
                 foreach ($analyticNode->connectors->connector as $connectorNode) {
-
                     // connectors might have params
                     $params = array();
                     if ($connectorNode->params) {

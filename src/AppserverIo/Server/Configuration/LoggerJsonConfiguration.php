@@ -11,13 +11,11 @@
  *
  * PHP version 5
  *
- * @category   Library
- * @package    Server
- * @subpackage Configuration
- * @author     Johann Zelger <jz@appserver.io>
- * @copyright  2014 TechDivision GmbH <info@appserver.io>
- * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @link       https://github.com/appserver-io/server
+ * @author    Johann Zelger <jz@appserver.io>
+ * @copyright 2015 TechDivision GmbH <info@appserver.io>
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @link      https://github.com/appserver-io/server
+ * @link      http://www.appserver.io
  */
 
 namespace AppserverIo\Server\Configuration;
@@ -27,33 +25,31 @@ use AppserverIo\Server\Interfaces\LoggerConfigurationInterface;
 /**
  * Class LoggerJsonConfiguration
  *
- * @category   Library
- * @package    Server
- * @subpackage Configuration
- * @author     Johann Zelger <jz@appserver.io>
- * @copyright  2014 TechDivision GmbH <info@appserver.io>
- * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @link       https://github.com/appserver-io/server
+ * @author    Johann Zelger <jz@appserver.io>
+ * @copyright 2015 TechDivision GmbH <info@appserver.io>
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @link      https://github.com/appserver-io/server
+ * @link      http://www.appserver.io
  */
 class LoggerJsonConfiguration implements LoggerConfigurationInterface
 {
 
     /**
-     * Hold's the data instance read by json file
+     * Holds the data instance read by json file
      *
      * @var \stdClass
      */
     protected $data;
 
     /**
-     * Hold's the handlers data
+     * Holds the handlers data
      *
      * @var array
      */
     protected $handlers;
 
     /**
-     * Hold's the processors data
+     * Holds the processors data
      *
      * @var array
      */
@@ -76,7 +72,7 @@ class LoggerJsonConfiguration implements LoggerConfigurationInterface
     }
 
     /**
-     * Return's name
+     * Returns name
      *
      * @return string
      */
@@ -86,7 +82,7 @@ class LoggerJsonConfiguration implements LoggerConfigurationInterface
     }
 
     /**
-     * Return's type
+     * Returns type
      *
      * @return string
      */
@@ -96,7 +92,7 @@ class LoggerJsonConfiguration implements LoggerConfigurationInterface
     }
 
     /**
-     * Return's channel
+     * Returns channel
      *
      * @return string|null
      */
@@ -109,7 +105,7 @@ class LoggerJsonConfiguration implements LoggerConfigurationInterface
     }
 
     /**
-     * Return's defined handlers for logger
+     * Returns defined handlers for logger
      *
      * @return array
      */
@@ -119,7 +115,7 @@ class LoggerJsonConfiguration implements LoggerConfigurationInterface
     }
 
     /**
-     * Return's defined processors for logger
+     * Returns defined processors for logger
      *
      * @return array
      */

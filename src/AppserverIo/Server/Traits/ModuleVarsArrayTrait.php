@@ -11,13 +11,11 @@
  *
  * PHP version 5
  *
- * @category   Library
- * @package    Server
- * @subpackage Traits
- * @author     Johann Zelger <jz@appserver.io>
- * @copyright  2014 TechDivision GmbH <info@appserver.io>
- * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @link       https://github.com/appserver-io/server
+ * @author    Johann Zelger <jz@appserver.io>
+ * @copyright 2015 TechDivision GmbH <info@appserver.io>
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @link      https://github.com/appserver-io/server
+ * @link      http://www.appserver.io
  */
 
 namespace AppserverIo\Server\Traits;
@@ -27,13 +25,11 @@ use AppserverIo\Server\Exceptions\ServerException;
 /**
  * Trait ModuleVarsArrayTrait
  *
- * @category   Library
- * @package    Server
- * @subpackage Traits
- * @author     Johann Zelger <jz@appserver.io>
- * @copyright  2014 TechDivision GmbH <info@appserver.io>
- * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @link       https://github.com/appserver-io/server
+ * @author    Johann Zelger <jz@appserver.io>
+ * @copyright 2015 TechDivision GmbH <info@appserver.io>
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @link      https://github.com/appserver-io/server
+ * @link      http://www.appserver.io
  */
 trait ModuleVarsArrayTrait
 {
@@ -68,7 +64,7 @@ trait ModuleVarsArrayTrait
     }
 
     /**
-     * Return's a value for specific module var
+     * Returns a value for specific module var
      *
      * @param string $moduleVar The module var to get value for
      *
@@ -89,7 +85,7 @@ trait ModuleVarsArrayTrait
 
 
     /**
-     * Return's all the module vars as array key value pair format
+     * Returns all the module vars as array key value pair format
      *
      * @return array The module vars as array
      */
@@ -99,7 +95,7 @@ trait ModuleVarsArrayTrait
     }
 
     /**
-     * Check's if value exists for given module var
+     * Checks if value exists for given module var
      *
      * @param string $moduleVar The module var to check
      *
@@ -116,7 +112,7 @@ trait ModuleVarsArrayTrait
     }
 
     /**
-     * Clear's the module vars storage
+     * Clears the module vars storage
      *
      * @return void
      */

@@ -1,6 +1,8 @@
 <?php
 
 /**
+ * AppserverIo\Server\Configuration\Extension\ArrayInjector
+ *
  * NOTICE OF LICENSE
  *
  * This source file is subject to the Open Software License (OSL 3.0)
@@ -9,29 +11,23 @@
  *
  * PHP version 5
  *
- * @category   Appserver
- * @package    Server
- * @subpackage Configuration
- * @author     Bernhard Wick <bw@appserver.io>
- * @copyright  2014 TechDivision GmbH - <info@appserver.io>
- * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @link       https://www.github.com/appserver-io/server
+ * @author    Bernhard Wick <bw@appserver.io>
+ * @copyright 2015 TechDivision GmbH - <info@appserver.io>
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @link      https://www.github.com/appserver-io/server
+ * @link      http://www.appserver.io
  */
 
 namespace AppserverIo\Server\Configuration\Extension;
 
 /**
- * AppserverIo\Server\Configuration\Extension\ArrayInjector
- *
  * Will inject data in the form of an array of the structure "key" => "value" (DB must look accordingly)
  *
- * @category   Appserver
- * @package    Server
- * @subpackage Configuration
- * @author     Bernhard Wick <bw@appserver.io>
- * @copyright  2014 TechDivision GmbH - <info@appserver.io>
- * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @link       https://www.github.com/appserver-io/server
+ * @author    Bernhard Wick <bw@appserver.io>
+ * @copyright 2015 TechDivision GmbH - <info@appserver.io>
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @link      https://www.github.com/appserver-io/server
+ * @link      http://www.appserver.io
  */
 class ArrayInjector extends AbstractInjector
 {
@@ -58,7 +54,6 @@ class ArrayInjector extends AbstractInjector
 
         // Get the results and fill them into our data
         foreach ($dbConnection->query($query, \PDO::FETCH_ASSOC) as $row) {
-
             $this->data[$row['key']] = $row['value'];
         }
     }
