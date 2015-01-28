@@ -48,14 +48,7 @@ class RequestContext implements RequestContextInterface
      * @var string
      */
     const REQUEST_HANDLER_DEFAULT = 'core';
-
-    /**
-     * Hold's the server context instance
-     *
-     * @var \AppserverIo\Server\Interfaces\ServerContextInterface
-     */
-    protected $serverContext;
-
+    
     /**
      * This member will hold the server variables which different modules can set/get in order to change the processing
      * of the incoming request.
