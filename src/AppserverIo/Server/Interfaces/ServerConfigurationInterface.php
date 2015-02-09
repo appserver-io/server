@@ -130,6 +130,13 @@ interface ServerConfigurationInterface
     public function getErrorsPageTemplatePath();
 
     /**
+     * Returns template path for possible configured welcome page
+     *
+     * @return string
+     */
+    public function getWelcomePageTemplatePath();
+
+    /**
      * Returns server context type
      *
      * @return string
