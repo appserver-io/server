@@ -195,6 +195,7 @@ class RequestContext implements RequestContextInterface
         );
         $this->setServerVar(ServerVars::SERVER_HANDLER, RequestContext::REQUEST_HANDLER_DEFAULT);
         $this->setServerVar(ServerVars::SERVER_ERRORS_PAGE_TEMPLATE_PATH, $serverConfig->getErrorsPageTemplatePath());
+        $this->setServerVar(ServerVars::SERVER_WELCOME_PAGE_TEMPLATE_PATH, $serverConfig->getWelcomePageTemplatePath());
         $this->setServerVar(ServerVars::PATH, getenv('PATH'));
         $this->setServerVar(ServerVars::HTTPS, ServerVars::VALUE_HTTPS_OFF);
 

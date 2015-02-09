@@ -238,6 +238,16 @@ class ServerJsonConfiguration implements ServerConfigurationInterface
     }
 
     /**
+     * Returns template path for possible configured welcome page
+     *
+     * @return string
+     */
+    public function getWelcomePageTemplatePath()
+    {
+        return $this->data->welcomePageTemplatePath;
+    }
+
+    /**
      * Returns worker number
      *
      * @return int

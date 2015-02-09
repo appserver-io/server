@@ -84,6 +84,7 @@ class ServerXmlConfiguration implements ServerConfigurationInterface
         $this->keepAliveMax = (string)array_shift($node->xpath("./params/param[@name='keepAliveMax']"));
         $this->keepAliveTimeout = (string)array_shift($node->xpath("./params/param[@name='keepAliveTimeout']"));
         $this->errorsPageTemplatePath = (string)array_shift($node->xpath("./params/param[@name='errorsPageTemplatePath']"));
+        $this->welcomePageTemplatePath = (string)array_shift($node->xpath("./params/param[@name='welcomePageTemplatePath']"));
 
         // prepare analytics
         $this->analytics = $this->prepareAnalytics($node);
@@ -514,6 +515,16 @@ class ServerXmlConfiguration implements ServerConfigurationInterface
     public function getErrorsPageTemplatePath()
     {
         return $this->errorsPageTemplatePath;
+    }
+
+    /**
+     * Returns template path for possible configured welcome page
+     *
+     * @return string
+     */
+    public function getWelcomePageTemplatePath()
+    {
+        return $this->welcomePageTemplatePath;
     }
 
     /**
