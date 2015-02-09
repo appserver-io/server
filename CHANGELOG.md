@@ -1,3 +1,13 @@
+# Version 0.2.3
+
+## Bugfixes
+
+* None
+
+## Features
+
+* Added welcome-page support
+
 # Version 0.2.2
 
 ## Bugfixes
