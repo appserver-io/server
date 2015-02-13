@@ -29,11 +29,11 @@
 	],
 	"require" : {
 		"php" : ">=5.4.0",
-        "appserver-io/logger" : "0.1.*",
-        "appserver-io-psr/socket" : "0.2.*"
+        "appserver-io/logger" : "~1.0",
+        "appserver-io-psr/socket" : "~1.0"
 	},
 	"require-dev" : {
-		"appserver-io/build" : "0.2.*"
+		"appserver-io/build" : "~1.0"
 	},
 	"autoload" : {
 		"psr-0" : {
@@ -50,7 +50,7 @@
 	},
 	"support" : {
 		"email" : "jz@appserver.io",
-		"issues" : "https://github.com/appserver-io/server/issues",
+		"issues" : "https://github.com/appserver-io/appserver/issues",
 		"source" : "https://github.com/appserver-io/server"
 	}
 }
