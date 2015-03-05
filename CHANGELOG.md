@@ -1,3 +1,13 @@
+# Version 1.0.1
+
+## Bugfixes
+
+* Add missing server variables constants REDIRECT_URL and REDIRECT_URI to ServerVars dictionary
+
+## Features
+
+* None
+
 # Version 1.0.0
 
 ## Bugfixes
