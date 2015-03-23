@@ -133,7 +133,11 @@ class MultiThreadedServer extends \Thread implements ServerInterface
         // check if ssl server config
         if ($serverConfig->getTransport() === 'ssl') {
             // get real cert path
-            $realCertPath = SERVER_BASEDIR . str_replace('/', DIRECTORY_SEPARATOR, $serverConfig->getCertPath());
+            $realCertPath = str_replace('/', DIRECTORY_SEPARATOR, $serverConfig->getCertPath());
+            // check if relative or absolute path was given
+            if(strpos($realCertPath, '/') === false) {
+                $realCertPath = SERVER_BASEDIR . $realCertPath;
+            }
             // path to local certificate file on filesystem. It must be a PEM encoded file which contains your
             // certificate and private key. It can optionally contain the certificate chain of issuers.
             $streamContext->setOption('ssl', 'local_cert', $realCertPath);
@@ -142,16 +146,16 @@ class MultiThreadedServer extends \Thread implements ServerInterface
             $streamContext->setOption('ssl', 'verify_peer', false);
             // allow self-signed certificates. requires verify_peer
             $streamContext->setOption('ssl', 'allow_self_signed', true);
-            // try to set given domain specific certificates
-            // validation checks are made there and we want the server started in case of invalid ssl certs
-            try {
-                // set all domain specific certificates
-                foreach ($serverConfig->getCertificates() as $certificate) {
+            // set all domain specific certificates
+            foreach ($serverConfig->getCertificates() as $certificate) {
+                // try to set ssl certificates
+                // validation checks are made there and we want the server started in case of invalid ssl context
+                try {
                     $streamContext->addSniServerCert($certificate['domain'], $certificate['certPath']);
+                } catch (\Exception $e) {
+                    // log exception message
+                    $logger->error($e->getMessage());
                 }
-            } catch (\Exception $e) {
-                // log exception message
-                $logger->error($e->getMessage());
             }
         }
         
