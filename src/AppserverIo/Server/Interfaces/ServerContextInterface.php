@@ -48,6 +48,15 @@ interface ServerContextInterface
     public function init(ServerConfigurationInterface $serverConfig);
 
     /**
+     * Injects the stream context object for the server socket to be bound with.
+     *
+     * @param resource $streamContext The stream context instance to inject
+     *
+     * @return void
+     */
+    public function injectStreamContext($streamContext);
+
+    /**
      * Injects a third party container
      *
      * @param mixed $container The container to inject

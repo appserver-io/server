@@ -142,6 +142,13 @@ interface ServerConfigurationInterface
      * @return string
      */
     public function getServerContextType();
+    
+    /**
+     * Returns stream context type
+     *
+     * @return string
+     */
+    public function getStreamContextType();
 
     /**
      * Returns request context type
@@ -191,7 +198,14 @@ interface ServerConfigurationInterface
      * @return array
      */
     public function getConnectionHandlers();
-
+    
+    /**
+     * Returns the certificates used by the server
+     *
+     * @return array
+     */
+    public function getCertificates();
+    
     /**
      * Returns the virtual hosts
      *
