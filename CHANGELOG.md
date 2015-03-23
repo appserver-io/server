@@ -1,3 +1,24 @@
+# Version 2.0.1
+
+## Bugfixes
+
+* fixed error logging on multiple ssl certificate errors
+* fixed relative and absolut cert path configuration
+
+## Features
+
+* None
+
+# Version 2.0.0
+
+## Bugfixes
+
+* None
+
+## Features
+
+* Added sni server certs feature which also needs php version 5.6
+
 # Version 1.0.1
 
 ## Bugfixes

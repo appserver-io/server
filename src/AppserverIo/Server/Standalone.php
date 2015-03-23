@@ -172,16 +172,19 @@ class Standalone
 
             // Synchronize the server so we can wait until preparation of the server finished.
             // This is used e.g. to wait for port opening or other important dependencies to proper server functionality
+            
+            /*
             $server->synchronized(
                 function ($self) {
                     $self->wait();
                 },
                 $server
             );
+            */
         }
 
         // @TODO here we are able to switch user to someone with lower rights (e.g. www-data or nobody)
-
+        
         // wait for servers
         foreach ($servers as $server) {
             $server->join();
