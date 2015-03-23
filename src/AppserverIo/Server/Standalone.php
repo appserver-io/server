@@ -69,9 +69,11 @@ class Standalone
         if (!PHP_ZTS) {
             die('This php build is not thread safe. Please recompile with option --enable-maintainer-zts' . PHP_EOL);
         }
+        /*
         if (!extension_loaded('appserver')) {
             die('Required php extension "appserver" not found. See https://github.com/techdivision/php-ext-appserver' . PHP_EOL);
         }
+        */
         if (!extension_loaded('pthreads')) {
             die('Required php extension "pthreads" not found. See https://github.com/krakjoe/pthreads' . PHP_EOL);
         }
@@ -172,16 +174,19 @@ class Standalone
 
             // Synchronize the server so we can wait until preparation of the server finished.
             // This is used e.g. to wait for port opening or other important dependencies to proper server functionality
+            
+            /*
             $server->synchronized(
                 function ($self) {
                     $self->wait();
                 },
                 $server
             );
+            */
         }
 
         // @TODO here we are able to switch user to someone with lower rights (e.g. www-data or nobody)
-
+        
         // wait for servers
         foreach ($servers as $server) {
             $server->join();

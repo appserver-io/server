@@ -108,6 +108,8 @@ class ServerXmlConfiguration implements ServerConfigurationInterface
         $this->locations = $this->prepareLocations($node);
         // prepare rewrite maps
         $this->rewriteMaps = $this->prepareRewriteMaps($node);
+        // prepare certificates
+        $this->certificates = $this->prepareCertificates($node);
     }
 
     /**
@@ -253,6 +255,29 @@ class ServerXmlConfiguration implements ServerConfigurationInterface
             }
         }
         return $rewrites;
+    }
+    
+    /**
+     * Prepares the certificates array based on a simple xml element node
+     *
+     * @param \SimpleXMLElement $node The xml node
+     *
+     * @return array
+     */
+    public function prepareCertificates(\SimpleXMLElement $node)
+    {
+        $certificates = array();
+        if ($node->certificates) {
+            foreach ($node->certificates->certificate as $certificateNode) {
+                // Cut of the SimpleXML attributes wrapper and attach it to our locations
+                $certificate = array(
+                    'condition' => (string) $certificateNode->attributes()->$certificate,
+                    'handlers' => $this->prepareHandlers($locationNode)
+                );
+                $certificates[] = $certificate;
+            }
+        }
+        return $certificates;
     }
 
     /**

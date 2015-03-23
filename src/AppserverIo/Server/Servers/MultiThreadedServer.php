@@ -135,29 +135,23 @@ class MultiThreadedServer extends \Thread implements ServerInterface
         $streamContext = stream_context_create($opts);
         // check if ssl server config
         if ($serverConfig->getTransport() === 'ssl') {
-            stream_context_set_option(
-                $streamContext,
-                'ssl',
-                'local_cert',
-                SERVER_BASEDIR . str_replace('/', DIRECTORY_SEPARATOR, $serverConfig->getCertPath())
-            );
+            // get real cert path
+            $realCertPath = SERVER_BASEDIR . str_replace('/', DIRECTORY_SEPARATOR, $serverConfig->getCertPath());
+            // path to local certificate file on filesystem. It must be a PEM encoded file which contains your
+            // certificate and private key. It can optionally contain the certificate chain of issuers.
+            stream_context_set_option($streamContext, 'ssl', 'local_cert', $realCertPath);
             stream_context_set_option($streamContext, 'ssl', 'passphrase', $serverConfig->getPassphrase());
-            stream_context_set_option($streamContext, 'ssl', 'allow_self_signed', true);
+            // require verification of SSL certificate used
             stream_context_set_option($streamContext, 'ssl', 'verify_peer', false);
+            // allow self-signed certificates. requires verify_peer
+            stream_context_set_option($streamContext, 'ssl', 'allow_self_signed', true);
         }
+        
+        // inject stream context to server context for further modification in modules init function
+        $serverContext->injectStreamContext($streamContext);
 
         // initialization has been successful
         $this->serverState = ServerStateKeys::INITIALIZATION_SUCCESSFUL;
-
-        // setup server bound on local adress
-        $serverConnection = $socketType::getServerInstance(
-            $serverConfig->getTransport() . '://' . $serverConfig->getAddress() . ':' . $serverConfig->getPort(),
-            STREAM_SERVER_BIND | STREAM_SERVER_LISTEN,
-            $streamContext
-        );
-
-        // sockets has been started
-        $this->serverState = ServerStateKeys::SERVER_SOCKET_STARTED;
 
         // init modules array
         $modules = array();
@@ -209,6 +203,16 @@ class MultiThreadedServer extends \Thread implements ServerInterface
         // connection handlers has been initialized successfully
         $this->serverState = ServerStateKeys::CONNECTION_HANDLERS_INITIALIZED;
 
+        // setup server bound on local adress
+        $serverConnection = $socketType::getServerInstance(
+            $serverConfig->getTransport() . '://' . $serverConfig->getAddress() . ':' . $serverConfig->getPort(),
+            STREAM_SERVER_BIND | STREAM_SERVER_LISTEN,
+            $streamContext
+        );
+
+        // sockets has been started
+        $this->serverState = ServerStateKeys::SERVER_SOCKET_STARTED;
+        
         $logger->debug(
             sprintf("%s starting %s workers (%s)", $serverName, $serverConfig->getWorkerNumber(), $workerType)
         );
@@ -225,7 +229,7 @@ class MultiThreadedServer extends \Thread implements ServerInterface
             $logger->debug(sprintf("Successfully started worker %s", $workers[$i]->getThreadId()));
         }
 
-        // connection handlers has been initialized successfully
+        // connection handlers has been initialized successfully        
         $this->serverState = ServerStateKeys::WORKERS_INITIALIZED;
 
         $logger->info(

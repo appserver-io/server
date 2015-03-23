@@ -85,19 +85,19 @@ class StreamSocket implements SocketInterface
                 )
             );
             // init stream context for server connection
-            $context = @stream_context_create($opts);
+            $context = stream_context_create($opts);
         }
 
         // create stream socket server resource
-        $serverResource = @stream_socket_server($socket, $errno, $errstr, $flags, $context);
-
+        $serverResource = stream_socket_server($socket, $errno, $errstr, $flags, $context);
+        
         // throw exception if it was not possible to create server socket binding
         if (!$serverResource) {
             throw new SocketServerException($errstr, $errno);
         }
 
         // set blocking mode
-        @stream_set_blocking($serverResource, 1);
+        stream_set_blocking($serverResource, 1);
         // create instance and return it.
         return self::getInstance($serverResource);
     }
@@ -122,11 +122,11 @@ class StreamSocket implements SocketInterface
 
         // init context if none was given
         if (is_null($context)) {
-            $context = @stream_context_create();
+            $context = stream_context_create();
         }
 
         // create a stream socket client resource
-        $clientResource = @stream_socket_client($socket, $errno, $errstr, ini_get('default_socket_timeout'), $flags, $context);
+        $clientResource = stream_socket_client($socket, $errno, $errstr, ini_get('default_socket_timeout'), $flags, $context);
 
         // throw exception if it was not possible to create server socket binding
         if (!$clientResource) {
@@ -134,7 +134,7 @@ class StreamSocket implements SocketInterface
         }
 
         // set blocking mode
-        @stream_set_blocking($clientResource, 1);
+        stream_set_blocking($clientResource, 1);
         // create instance and return it
         return self::getInstance($clientResource);
     }
@@ -164,6 +164,9 @@ class StreamSocket implements SocketInterface
      */
     public function accept($acceptTimeout = 600, $receiveTimeout = 60)
     {
+        // init local ref vars
+        $peername = null;
+        
         $connectionResource = @stream_socket_accept($this->getConnectionResource(), $acceptTimeout, $peername);
         // if timeout or error occurred return false as accept function does
         if ($connectionResource === false) {

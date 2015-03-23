@@ -84,6 +84,28 @@ class ServerContext implements ServerContextInterface
     }
 
     /**
+     * Injects the stream context object for the server socket to be bound with.
+     *
+     * @param resource $streamContext
+     *
+     * @return void
+     */
+    public function injectStreamContext($streamContext)
+    {
+        $this->streamContext = $streamContext;
+    }
+    
+    /**
+     * Returns the corresponding stream context for server socket to be bound with.
+     * 
+     * @return resource
+     */
+    public function getStreamContext()
+    {
+        return $this->streamContext;
+    }
+    
+    /**
      * Injects the container for further use in specific server mods etc...
      *
      * @param mixed $container An container instance for third party environment
