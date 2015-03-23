@@ -137,6 +137,13 @@ interface ServerConfigurationInterface
     public function getWelcomePageTemplatePath();
 
     /**
+     * Returns template path for possible configured auto index page
+     *
+     * @return string
+     */
+    public function getAutoIndexTemplatePath();
+
+    /**
      * Returns server context type
      *
      * @return string
@@ -275,4 +282,11 @@ interface ServerConfigurationInterface
      * @return array
      */
     public function getLocations();
+
+    /**
+     * Returns the auto index configuration.
+     *
+     * @return boolean
+     */
+    public function getAutoIndex();
 }

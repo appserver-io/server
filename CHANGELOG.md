@@ -1,3 +1,17 @@
+# Version 3.0.0
+
+## Bugfixes
+
+* None
+
+## Features
+
+* Extend ModuleVars with VOLATILE_HANDLERS constant
+* Add constants for auto index functionality to ServerVars
+* Extend ServerVarsArrayTrait with type mapping functionality
+* Extend ServerConfigurationInterface with getAutoIndexTemplatePath() and getAutoIndex() methods
+* Extend ServerJsonConfiguration + ServerXmlConfiguration with getAutoIndexTemplatePath() and getAutoIndex() methods
+
 # Version 2.0.1
 
 ## Bugfixes

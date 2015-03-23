@@ -102,7 +102,7 @@ class ServerJsonConfiguration implements ServerConfigurationInterface
      * @var array
      */
     protected $analytics;
-    
+
     /**
      * The configured locations.
      *
@@ -248,6 +248,16 @@ class ServerJsonConfiguration implements ServerConfigurationInterface
     }
 
     /**
+     * Returns template path for possible configured auto index page
+     *
+     * @return string
+     */
+    public function getAutoIndexTemplatePath()
+    {
+        return $this->data->autoIndexTemplatePath;
+    }
+
+    /**
      * Returns worker number
      *
      * @return int
@@ -275,6 +285,16 @@ class ServerJsonConfiguration implements ServerConfigurationInterface
     public function getWorkerAcceptMax()
     {
         return (int)$this->data->workerAcceptMax;
+    }
+
+    /**
+     * Returns the auto index configuration
+     *
+     * @return boolean
+     */
+    public function getAutoIndex()
+    {
+        return (boolean)$this->data->autoIndex;
     }
 
     /**
@@ -477,7 +497,7 @@ class ServerJsonConfiguration implements ServerConfigurationInterface
         }
         return $this->analytics;
     }
-    
+
     /**
      * Returns the locations.
      *

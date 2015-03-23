@@ -20,6 +20,7 @@
 
 namespace AppserverIo\Server\Traits;
 
+use AppserverIo\Server\Dictionaries\ServerVars;
 use AppserverIo\Server\Exceptions\ServerException;
 
 /**
@@ -33,6 +34,23 @@ use AppserverIo\Server\Exceptions\ServerException;
  */
 trait ServerVarsArrayTrait
 {
+
+    /**
+     * Maps configuration value types to string values.
+     *
+     * @var array
+     */
+    protected $typeMappings = array(
+        ServerVars::SERVER_AUTO_INDEX => array(
+            true  => ServerVars::VALUE_AUTO_INDEX_ON,
+            false => ServerVars::VALUE_AUTO_INDEX_OFF
+        ),
+        ServerVars::HTTPS => array(
+            'ssl' => ServerVars::VALUE_HTTPS_ON,
+            'tcp' => ServerVars::VALUE_HTTPS_OFF
+        )
+    );
+
     /**
      * Sets a value to specific server var
      *
@@ -44,7 +62,11 @@ trait ServerVarsArrayTrait
     public function setServerVar($serverVar, $value)
     {
         if (!is_null($value)) {
-            $this->serverVars[$serverVar] = $value;
+            if (isset($this->typeMappings[$serverVar][$value])) {
+                $this->serverVars[$serverVar] = $this->typeMappings[$serverVar][$value];
+            } else {
+                $this->serverVars[$serverVar] = $value;
+            }
         }
     }
 
@@ -75,7 +97,6 @@ trait ServerVarsArrayTrait
     {
         // check if server var is set
         if (isset($this->serverVars[$serverVar])) {
-            // return server vars value
             return $this->serverVars[$serverVar];
         }
         // throw exception
@@ -83,7 +104,7 @@ trait ServerVarsArrayTrait
     }
 
     /**
-     * Returns all the server vars as array key value pair format
+     * Returns all the server vars as array key value pair format.
      *
      * @return array The server vars as array
      */
@@ -116,7 +137,7 @@ trait ServerVarsArrayTrait
      */
     public function clearServerVars()
     {
-        foreach ($this->serverVars as $key => $value) {
+        foreach (array_keys($this->serverVars) as $key) {
             unset($this->serverVars[$key]);
         }
     }
