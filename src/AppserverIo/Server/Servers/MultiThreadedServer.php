@@ -135,7 +135,7 @@ class MultiThreadedServer extends \Thread implements ServerInterface
             // get real cert path
             $realCertPath = str_replace('/', DIRECTORY_SEPARATOR, $serverConfig->getCertPath());
             // check if relative or absolute path was given
-            if(strpos($realCertPath, '/') === false) {
+            if (strpos($realCertPath, '/') === false) {
                 $realCertPath = SERVER_BASEDIR . $realCertPath;
             }
             // path to local certificate file on filesystem. It must be a PEM encoded file which contains your
