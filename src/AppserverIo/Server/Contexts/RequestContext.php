@@ -48,7 +48,7 @@ class RequestContext implements RequestContextInterface
      * @var string
      */
     const REQUEST_HANDLER_DEFAULT = 'core';
-    
+
     /**
      * This member will hold the server variables which different modules can set/get in order to change the processing
      * of the incoming request.
@@ -196,12 +196,9 @@ class RequestContext implements RequestContextInterface
         $this->setServerVar(ServerVars::SERVER_HANDLER, RequestContext::REQUEST_HANDLER_DEFAULT);
         $this->setServerVar(ServerVars::SERVER_ERRORS_PAGE_TEMPLATE_PATH, $serverConfig->getErrorsPageTemplatePath());
         $this->setServerVar(ServerVars::SERVER_WELCOME_PAGE_TEMPLATE_PATH, $serverConfig->getWelcomePageTemplatePath());
+        $this->setServerVar(ServerVars::SERVER_AUTO_INDEX_TEMPLATE_PATH, $serverConfig->getAutoIndexTemplatePath());
+        $this->setServerVar(ServerVars::SERVER_AUTO_INDEX, $serverConfig->getAutoIndex());
+        $this->setServerVar(ServerVars::HTTPS, $serverConfig->getTransport());
         $this->setServerVar(ServerVars::PATH, getenv('PATH'));
-        $this->setServerVar(ServerVars::HTTPS, ServerVars::VALUE_HTTPS_OFF);
-
-        // check if ssl is going on and set server var for it like apache does
-        if ($serverConfig->getTransport() === 'ssl') {
-            $this->setServerVar(ServerVars::HTTPS, ServerVars::VALUE_HTTPS_ON);
-        }
     }
 }

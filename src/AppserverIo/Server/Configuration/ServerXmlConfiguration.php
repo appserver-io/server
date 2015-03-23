@@ -83,8 +83,10 @@ class ServerXmlConfiguration implements ServerConfigurationInterface
         $this->admin = (string)array_shift($node->xpath("./params/param[@name='admin']"));
         $this->keepAliveMax = (string)array_shift($node->xpath("./params/param[@name='keepAliveMax']"));
         $this->keepAliveTimeout = (string)array_shift($node->xpath("./params/param[@name='keepAliveTimeout']"));
+        $this->autoIndex = (boolean)array_shift($node->xpath("./params/param[@name='autoIndex']"));
         $this->errorsPageTemplatePath = (string)array_shift($node->xpath("./params/param[@name='errorsPageTemplatePath']"));
         $this->welcomePageTemplatePath = (string)array_shift($node->xpath("./params/param[@name='welcomePageTemplatePath']"));
+        $this->autoIndexTemplatePath = (string)array_shift($node->xpath("./params/param[@name='autoIndexTemplatePath']"));
 
         // prepare analytics
         $this->analytics = $this->prepareAnalytics($node);
@@ -528,6 +530,16 @@ class ServerXmlConfiguration implements ServerConfigurationInterface
     }
 
     /**
+     * Returns template path for possible configured auto index page
+     *
+     * @return string
+     */
+    public function getAutoIndexTemplatePath()
+    {
+        return $this->autoIndexTemplatePath;
+    }
+
+    /**
      * Return's worker number
      *
      * @return int
@@ -555,6 +567,16 @@ class ServerXmlConfiguration implements ServerConfigurationInterface
     public function getWorkerAcceptMax()
     {
         return (int)$this->workerAcceptMax;
+    }
+
+    /**
+     * Return's the auto index configuration
+     *
+     * @return boolean
+     */
+    public function getAutoIndex()
+    {
+        return (boolean)$this->autoIndex;
     }
 
     /**
