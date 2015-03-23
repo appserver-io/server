@@ -49,9 +49,9 @@ interface ServerContextInterface
 
     /**
      * Injects the stream context object for the server socket to be bound with.
-     * 
-     * @param resource $streamContext
-     * 
+     *
+     * @param resource $streamContext The stream context instance to inject
+     *
      * @return void
      */
     public function injectStreamContext($streamContext);

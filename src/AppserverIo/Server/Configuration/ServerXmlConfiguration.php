@@ -66,6 +66,7 @@ class ServerXmlConfiguration implements ServerConfigurationInterface
         $this->type = (string)$node->attributes()->type;
         $this->workerType = (string)$node->attributes()->worker;
         $this->socketType = (string)$node->attributes()->socket;
+        $this->streamContextType = (string)$node->attributes()->streamContext;
         $this->serverContextType = (string)$node->attributes()->serverContext;
         $this->requestContextType = (string)$node->attributes()->requestContext;
         $this->loggerName = (string)$node->attributes()->loggerName;
@@ -271,8 +272,8 @@ class ServerXmlConfiguration implements ServerConfigurationInterface
             foreach ($node->certificates->certificate as $certificateNode) {
                 // Cut of the SimpleXML attributes wrapper and attach it to our locations
                 $certificate = array(
-                    'condition' => (string) $certificateNode->attributes()->$certificate,
-                    'handlers' => $this->prepareHandlers($locationNode)
+                    'domain' => (string) $certificateNode->attributes()->domain,
+                    'certPath' => (string) $certificateNode->attributes()->certPath
                 );
                 $certificates[] = $certificate;
             }
@@ -591,6 +592,16 @@ class ServerXmlConfiguration implements ServerConfigurationInterface
     {
         return $this->serverContextType;
     }
+    
+    /**
+     * Returns stream context type
+     *
+     * @return string
+     */
+    public function getStreamContextType()
+    {
+        return $this->streamContextType;
+    }
 
     /**
      * Return's server context type
@@ -652,6 +663,16 @@ class ServerXmlConfiguration implements ServerConfigurationInterface
         return $this->connectionHandlers;
     }
 
+    /**
+     * Returns the certificates used by the server
+     *
+     * @return array
+     */
+    public function getCertificates()
+    {
+        return $this->certificates;
+    }
+    
     /**
      * Return's the virtual hosts
      *

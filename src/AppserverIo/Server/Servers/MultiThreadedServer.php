@@ -123,28 +123,36 @@ class MultiThreadedServer extends \Thread implements ServerInterface
         // get class names
         $socketType = $serverConfig->getSocketType();
         $workerType = $serverConfig->getWorkerType();
-
-        // set socket backlog to 1024 for perform many concurrent connections
-        $opts = array(
-            'socket' => array(
-                'backlog' => 1024,
-            )
-        );
+        $streamContextType = $serverConfig->getStreamContextType();
 
         // init stream context for server connection
-        $streamContext = stream_context_create($opts);
+        $streamContext = new $streamContextType();
+        // set socket backlog to 1024 for perform many concurrent connections
+        $streamContext->setOption('socket', 'backlog', 1024);
+        
         // check if ssl server config
         if ($serverConfig->getTransport() === 'ssl') {
             // get real cert path
             $realCertPath = SERVER_BASEDIR . str_replace('/', DIRECTORY_SEPARATOR, $serverConfig->getCertPath());
             // path to local certificate file on filesystem. It must be a PEM encoded file which contains your
             // certificate and private key. It can optionally contain the certificate chain of issuers.
-            stream_context_set_option($streamContext, 'ssl', 'local_cert', $realCertPath);
-            stream_context_set_option($streamContext, 'ssl', 'passphrase', $serverConfig->getPassphrase());
+            $streamContext->setOption('ssl', 'local_cert', $realCertPath);
+            $streamContext->setOption('ssl', 'passphrase', $serverConfig->getPassphrase());
             // require verification of SSL certificate used
-            stream_context_set_option($streamContext, 'ssl', 'verify_peer', false);
+            $streamContext->setOption('ssl', 'verify_peer', false);
             // allow self-signed certificates. requires verify_peer
-            stream_context_set_option($streamContext, 'ssl', 'allow_self_signed', true);
+            $streamContext->setOption('ssl', 'allow_self_signed', true);
+            // try to set given domain specific certificates
+            // validation checks are made there and we want the server started in case of invalid ssl certs
+            try {
+                // set all domain specific certificates
+                foreach ($serverConfig->getCertificates() as $certificate) {
+                    $streamContext->addSniServerCert($certificate['domain'], $certificate['certPath']);
+                }
+            } catch (\Exception $e) {
+                // log exception message
+                $logger->error($e->getMessage());
+            }
         }
         
         // inject stream context to server context for further modification in modules init function
@@ -207,7 +215,7 @@ class MultiThreadedServer extends \Thread implements ServerInterface
         $serverConnection = $socketType::getServerInstance(
             $serverConfig->getTransport() . '://' . $serverConfig->getAddress() . ':' . $serverConfig->getPort(),
             STREAM_SERVER_BIND | STREAM_SERVER_LISTEN,
-            $streamContext
+            $streamContext->getResource()
         );
 
         // sockets has been started
@@ -229,7 +237,7 @@ class MultiThreadedServer extends \Thread implements ServerInterface
             $logger->debug(sprintf("Successfully started worker %s", $workers[$i]->getThreadId()));
         }
 
-        // connection handlers has been initialized successfully        
+        // connection handlers has been initialized successfully
         $this->serverState = ServerStateKeys::WORKERS_INITIALIZED;
 
         $logger->info(

@@ -86,7 +86,7 @@ class ServerContext implements ServerContextInterface
     /**
      * Injects the stream context object for the server socket to be bound with.
      *
-     * @param resource $streamContext
+     * @param resource $streamContext The stream context instance to inject
      *
      * @return void
      */
@@ -97,7 +97,7 @@ class ServerContext implements ServerContextInterface
     
     /**
      * Returns the corresponding stream context for server socket to be bound with.
-     * 
+     *
      * @return resource
      */
     public function getStreamContext()
