@@ -147,6 +147,26 @@ class Standalone
             $loggers[$loggerConfig->getName()] = $logger;
         }
 
+        // init upstreams
+        $upstreams = array();
+        foreach ($mainConfiguration->getUpstreamConfigs() as $upstreamConfig) {
+            // get upstream type
+            $upstreamType = $upstreamConfig->getType();
+            // init upstream instance
+            $upstream = new $upstreamType();
+            // init upstream servers
+            $servers = array();
+            foreach ($upstreamConfig->getServers() as $serverName => $serverData) {
+                $serverType = $serverData['type'];
+                $serverParams = $serverData['params'];
+                $servers[$serverName] = new $serverType($serverParams);
+            }
+            // inject server instances to upstream
+            $upstream->injectServers($servers);
+            // set upstream by name
+            $upstreams[$upstreamConfig->getName()] = $upstream;
+        }
+
         // init servers
         $servers = array();
         foreach ($mainConfiguration->getServerConfigs() as $serverConfig) {
@@ -164,6 +184,9 @@ class Standalone
             } else {
                 throw new \Exception(sprintf('Logger %s not found.', $serverConfig->getLoggerName()));
             }
+            
+            // inject upstreams to server context
+            $serverContext->injectUpstreams($upstreams);
 
             // Create the server (which should start it automatically)
             $server = new $serverType($serverContext);

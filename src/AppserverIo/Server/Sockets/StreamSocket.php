@@ -24,6 +24,7 @@ use AppserverIo\Psr\Socket\SocketInterface;
 use AppserverIo\Psr\Socket\SocketReadException;
 use AppserverIo\Psr\Socket\SocketReadTimeoutException;
 use AppserverIo\Psr\Socket\SocketServerException;
+use AppserverIo\Psr\Socket\AppserverIo\Psr\Socket;
 
 /**
  * Class StreamSocket
@@ -84,8 +85,8 @@ class StreamSocket implements SocketInterface
                     'backlog' => 1024,
                 )
             );
-            // init stream context for server connection
-            $context = stream_context_create($opts);
+            // get default stream context for server connection with socket backlog preset
+            $context = stream_context_get_default($opts);
         }
 
         // create stream socket server resource
@@ -122,7 +123,8 @@ class StreamSocket implements SocketInterface
 
         // init context if none was given
         if (is_null($context)) {
-            $context = stream_context_create();
+            // create default stream context object
+            $context = stream_context_get_default();
         }
 
         // create a stream socket client resource
@@ -196,9 +198,16 @@ class StreamSocket implements SocketInterface
         }
         $line = @fgets($this->getConnectionResource(), $readLength);
         // check if timeout occurred
+        /*
         if (strlen($line) === 0) {
             throw new SocketReadTimeoutException();
         }
+        */
+        
+        if ($line === false) {
+            throw new SocketReadException();
+        }
+        
         return $line;
     }
 
@@ -252,9 +261,14 @@ class StreamSocket implements SocketInterface
      *
      * @return int The total count of bytes copied.
      */
-    public function copyStream($sourceResource)
+    public function copyStream($sourceResource, $length = null)
     {
+        // first try to rewind source resource stream
         @rewind($sourceResource);
+        // call function by given param values
+        if ($length !== null) {
+            return @stream_copy_to_stream($sourceResource, $this->getConnectionResource(), $length);
+        }
         return @stream_copy_to_stream($sourceResource, $this->getConnectionResource());
     }
 
@@ -270,6 +284,26 @@ class StreamSocket implements SocketInterface
             return @fclose($this->getConnectionResource());
         }
         return false;
+    }
+    
+    /**
+     * Returns the stream socket's status
+     * 
+     * @return bool|array The status information as array or false in case of an invalid stream socket resource
+     */
+    public function getStatus()
+    {
+        return @socket_get_status($this->getConnectionResource());
+    }
+    
+    /**
+     * Returns the meta information of the stream socket
+     * 
+     * @return bool|array The meta informations of the stream socket
+     */
+    public function getMetaInfo()
+    {
+        return @stream_get_meta_data($this->getConnectionResource());
     }
 
     /**
@@ -346,4 +380,5 @@ class StreamSocket implements SocketInterface
     {
         return $this->connectionResourceId;
     }
+
 }

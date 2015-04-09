@@ -21,7 +21,8 @@
 namespace AppserverIo\Server\Configuration;
 
 use AppserverIo\Server\Configuration\ServerXmlConfiguration;
-use AppserverIo\Server\Configuration\ConfigXmlConfiguration;
+use AppserverIo\Server\Configuration\LoggerXmlConfiguration;
+use AppserverIo\Server\Configuration\UpstreamXmlConfiguration;
 
 /**
  * Class MainXmlConfiguration
@@ -77,5 +78,19 @@ class MainXmlConfiguration
             $loggerConfigurations[] = new LoggerXmlConfiguration($loggerConfig);
         }
         return $loggerConfigurations;
+    }
+    
+    /**
+     * Return's upstream config nodes as array
+     *
+     * @return array
+     */
+    public function getUpstreamConfigs()
+    {
+        $upstreamConfigurations = array();
+        foreach ($this->xml->upstreams->upstream as $upstreamConfig) {
+            $upstreamConfigurations[] = new UpstreamXmlConfiguration($upstreamConfig);
+        }
+        return $upstreamConfigurations;
     }
 }

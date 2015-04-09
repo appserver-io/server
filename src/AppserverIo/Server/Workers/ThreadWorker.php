@@ -235,6 +235,7 @@ class ThreadWorker extends \Thread implements WorkerInterface
 
             // while worker not reached connection limit accept connections and process
             while (++$connectionCount <= $connectionLimit) {
+
                 // accept connections and process working connection by handlers
                 if (($connection = $serverConnection->accept()) !== false) {
                     /**
@@ -257,13 +258,13 @@ class ThreadWorker extends \Thread implements WorkerInterface
                             break;
                         }
                     }
+
                 }
             }
         } catch (\Exception $e) {
             // log error
             $serverContext->getLogger()->error($e->__toString());
         }
-
         // call internal shutdown
         $this->shutdown();
     }
