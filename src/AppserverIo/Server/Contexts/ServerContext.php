@@ -52,6 +52,13 @@ class ServerContext implements ServerContextInterface
     protected $loggers;
 
     /**
+     * Holds upstream instances
+     *
+     * @var array
+     */
+    protected $upstreams;
+    
+    /**
      * Holds the config instance
      *
      * @var \AppserverIo\Server\Interfaces\ServerConfigurationInterface $serverConfig
@@ -69,8 +76,10 @@ class ServerContext implements ServerContextInterface
     {
         // set configuration
         $this->serverConfig = $serverConfig;
-        // init logger storage as stackable
+        // init loggers array
         $this->loggers = array();
+        // init upstreams array
+        $this->upstreams = array();
     }
 
     /**
@@ -128,7 +137,39 @@ class ServerContext implements ServerContextInterface
     }
 
     /**
-     * Injects a Psr compatible logger instance
+     * Injects upstream instances
+     *
+     * @param array $upstreams The array of upstream instances
+     *
+     * @return void
+     */
+    public function injectUpstreams(array $upstreams)
+    {
+        // iterate loggers to collection hashmap
+        foreach ($upstreams as $upstreamName => $upstreamInstance) {
+            $this->upstreams[$upstreamName] = $upstreamInstance;
+        }
+    }
+    
+    /**
+     * Returns specific upstream by given name from upstream collection
+     *
+     * @param string $upstreamName The upstreams name to find
+     *
+     * @throws ServerException
+     * @return \AppserverIo\Server\Interfaces\UpstreamInterface
+     */
+    public function getUpstream($upstreamName)
+    {
+        if (!isset($this->upstreams[$upstreamName])) {
+            // throw exception
+            throw new ServerException("Upstream '$upstreamName' does not exist.", 500);
+        }
+        return $this->upstreams[$upstreamName];
+    }
+    
+    /**
+     * Injects compatible logger instances
      *
      * @param array<\Psr\Log\LoggerInterface> $loggers The array of logger instances
      *
