@@ -29,7 +29,7 @@ namespace AppserverIo\Server\Interfaces;
  * @link      https://github.com/appserver-io/server
  * @link      http://www.appserver.io
  */
-class UpstreamConfigurationInterface
+interface UpstreamConfigurationInterface
 {
     /**
      * Returns name
