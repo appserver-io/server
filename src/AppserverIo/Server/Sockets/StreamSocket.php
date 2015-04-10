@@ -261,14 +261,11 @@ class StreamSocket implements SocketInterface
      *
      * @return int The total count of bytes copied.
      */
-    public function copyStream($sourceResource, $length = null)
+    public function copyStream($sourceResource)
     {
         // first try to rewind source resource stream
         @rewind($sourceResource);
-        // call function by given param values
-        if ($length !== null) {
-            return @stream_copy_to_stream($sourceResource, $this->getConnectionResource(), $length);
-        }
+        // call internal stream copy function
         return @stream_copy_to_stream($sourceResource, $this->getConnectionResource());
     }
 

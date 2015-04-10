@@ -20,6 +20,8 @@
 
 namespace AppserverIo\Server\Configuration;
 
+use AppserverIo\Server\Interfaces\UpstreamConfigurationInterface;
+
 /**
  * Class UpstreamXmlConfiguration
  *
@@ -29,7 +31,7 @@ namespace AppserverIo\Server\Configuration;
  * @link      https://github.com/appserver-io/server
  * @link      http://www.appserver.io
  */
-class UpstreamXmlConfiguration
+class UpstreamXmlConfiguration extends UpstreamConfigurationInterface
 {
     /**
      * Holds the name of the upstream node
