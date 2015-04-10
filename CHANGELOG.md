@@ -1,3 +1,13 @@
+# Version 3.1.0
+
+## Bugfixes
+
+* None
+
+## Features
+
+* Added support for upstreams and proxy functionality
+
 # Version 3.0.0
 
 ## Bugfixes
