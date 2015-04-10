@@ -53,7 +53,7 @@ class ServerContext implements ServerContextInterface
 
     /**
      * Holds upstream instances
-     * 
+     *
      * @var array
      */
     protected $upstreams;
@@ -153,10 +153,11 @@ class ServerContext implements ServerContextInterface
     
     /**
      * Returns specific upstream by given name from upstream collection
-     * 
+     *
      * @param string $upstreamName The upstreams name to find
-     * 
+     *
      * @throws ServerException
+     * @return \AppserverIo\Server\Interfaces\UpstreamInterface
      */
     public function getUpstream($upstreamName)
     {

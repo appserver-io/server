@@ -34,9 +34,9 @@ interface UpstreamInterface
 
     /**
      * Returns the next server preserved by upstreams logic implementation.
-     * 
+     *
      * @param string $hash Any hash to make use of for identifying certain servers by mapping
-     * 
+     *
      * @return UpstreamServerInterface
      */
     public function findServer($hash);

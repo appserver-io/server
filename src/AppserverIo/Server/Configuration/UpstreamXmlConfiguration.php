@@ -35,21 +35,21 @@ class UpstreamXmlConfiguration extends UpstreamConfigurationInterface
 {
     /**
      * Holds the name of the upstream node
-     * 
+     *
      * @var string
      */
     public $name;
     
     /**
      * Holds the type of the upstream node
-     * 
+     *
      * @var string
      */
     public $type;
     
     /**
      * Holds the servers for the upstream node
-     * 
+     *
      * @var array
      */
     public $servers;
@@ -76,7 +76,9 @@ class UpstreamXmlConfiguration extends UpstreamConfigurationInterface
     /**
      * Prepares server nodes configured for upstream
      *
-     * @param \SimpleXMLElement $node
+     * @param \SimpleXMLElement $node The xml node for servers to prepare
+     *
+     * @return array
      */
     protected function prepareServers(\SimpleXMLElement $node)
     {
@@ -128,12 +130,11 @@ class UpstreamXmlConfiguration extends UpstreamConfigurationInterface
 
     /**
      * Returns servers
-     * 
+     *
      * @return array
      */
     public function getServers()
     {
         return $this->servers;
     }
-
 }

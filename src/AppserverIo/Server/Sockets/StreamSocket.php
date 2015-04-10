@@ -285,7 +285,7 @@ class StreamSocket implements SocketInterface
     
     /**
      * Returns the stream socket's status
-     * 
+     *
      * @return bool|array The status information as array or false in case of an invalid stream socket resource
      */
     public function getStatus()
@@ -295,7 +295,7 @@ class StreamSocket implements SocketInterface
     
     /**
      * Returns the meta information of the stream socket
-     * 
+     *
      * @return bool|array The meta informations of the stream socket
      */
     public function getMetaInfo()
@@ -377,5 +377,4 @@ class StreamSocket implements SocketInterface
     {
         return $this->connectionResourceId;
     }
-
 }

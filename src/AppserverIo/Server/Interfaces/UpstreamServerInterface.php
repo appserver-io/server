@@ -33,7 +33,7 @@ interface UpstreamServerInterface
 {
     /**
      * Returns the address
-     * 
+     *
      * @return string
      */
     public function getAddress();
@@ -47,28 +47,28 @@ interface UpstreamServerInterface
 
     /**
      * Returns the weight
-     * 
+     *
      * @return int
      */
     public function getWeight();
 
     /**
      * Returns the max fails
-     * 
+     *
      * @return int
      */
     public function getMaxFails();
 
     /**
      * Returns the fail timeout
-     * 
+     *
      * @return int
      */
     public function getFailTimeout();
 
     /**
      * Returns the backup flag
-     * 
+     *
      * @return bool
      */
     public function isBackup();
@@ -82,7 +82,7 @@ interface UpstreamServerInterface
 
     /**
      * Returns the max conns
-     * 
+     *
      * @return int
      */
     public function getMaxConns();

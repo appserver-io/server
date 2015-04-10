@@ -47,7 +47,7 @@ class UpstreamConfigurationInterface
 
     /**
      * Returns servers
-     * 
+     *
      * @return array
      */
     public function getServers();
