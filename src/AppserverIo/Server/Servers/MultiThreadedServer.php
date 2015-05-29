@@ -83,6 +83,16 @@ class MultiThreadedServer extends \Thread implements ServerInterface
     }
 
     /**
+     * Shutdown the workers and stop the server.
+     */
+    public function stop()
+    {
+        $this->synchronized(function ($self) {
+            $self->serverState = ServerStateKeys::HALT;
+        }, $this)
+    }
+
+    /**
      * Starts the server's worker as defined in configuration
      *
      * @return void
@@ -129,7 +139,7 @@ class MultiThreadedServer extends \Thread implements ServerInterface
         $streamContext = new $streamContextType();
         // set socket backlog to 1024 for perform many concurrent connections
         $streamContext->setOption('socket', 'backlog', 1024);
-        
+
         // check if ssl server config
         if ($serverConfig->getTransport() === 'ssl') {
             // get real cert path
@@ -158,7 +168,7 @@ class MultiThreadedServer extends \Thread implements ServerInterface
                 }
             }
         }
-        
+
         // inject stream context to server context for further modification in modules init function
         $serverContext->injectStreamContext($streamContext);
 
@@ -224,7 +234,7 @@ class MultiThreadedServer extends \Thread implements ServerInterface
 
         // sockets has been started
         $this->serverState = ServerStateKeys::SERVER_SOCKET_STARTED;
-        
+
         $logger->debug(
             sprintf("%s starting %s workers (%s)", $serverName, $serverConfig->getWorkerNumber(), $workerType)
         );
@@ -277,5 +287,58 @@ class MultiThreadedServer extends \Thread implements ServerInterface
             // sleep for 1 second to lower system load
             usleep(1000000);
         }
+
+
+
+
+
+
+
+
+        // print a message with the number of initialized workers
+        $logger->info("Found " . sizeof($workers) . " workers to shutdown!");
+
+        $scheme = '';
+
+        // prepare the URL and the options for the shutdown requests
+        switch ($serverConfig->getTransport()) {
+            case 'tcp':
+
+                $scheme = 'http'
+                break;
+
+            case 'ssl':
+
+                $scheme = 'https'
+                break;
+
+            default:
+
+                break;
+        }
+
+        $url =  . $scheme . '://' . $serverConfig->getAddress() . ':' . $serverConfig->getPort();
+        $opts = array($scheme =>
+            array(
+                'method'  => 'GET',
+                'header'  => array('Content-Type: text/plain', 'Connection: close'),
+                'timeout' => 0.5
+            )
+        );
+        $context  = stream_context_create($opts);
+
+        // send requests to close all running workers
+        while (@file_get_contents($url, false, $context)) {
+            $logger->info("Successfully created client connection to shutdown worker!");
+        }
+
+        // kill/unset the worker threads
+        foreach ($workers as $key => $worker) {
+            $workers[$key]->kill();
+            unset($workers[$key]);
+        }
+
+        // close the server sockets
+        $serverConnection->close();
     }
 }
