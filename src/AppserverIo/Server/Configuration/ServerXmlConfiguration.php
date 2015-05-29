@@ -165,7 +165,7 @@ class ServerXmlConfiguration implements ServerConfigurationInterface
         if ($node->handlers) {
             foreach ($node->handlers->handler as $handlerNode) {
                 $params = array();
-                if (is_array($handlerNode->params->param)) {
+                if ($handlerNode->params->param) {
                     foreach ($handlerNode->params->param as $paramNode) {
                         $paramName = (string)$paramNode->attributes()->name;
                         $params[$paramName] = (string)array_shift($handlerNode->xpath(".//param[@name='$paramName']"));

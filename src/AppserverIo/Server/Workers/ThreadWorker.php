@@ -257,13 +257,13 @@ class ThreadWorker extends \Thread implements WorkerInterface
                             break;
                         }
                     }
+
                 }
             }
         } catch (\Exception $e) {
             // log error
             $serverContext->getLogger()->error($e->__toString());
         }
-
         // call internal shutdown
         $this->shutdown();
     }

@@ -257,7 +257,7 @@ class MultiThreadedServer extends \Thread implements ServerInterface
         $logger->info(
             sprintf("%s listing on %s:%s...", $serverName, $serverConfig->getAddress(), $serverConfig->getPort())
         );
-
+        
         // watch dog for all workers to restart if it's needed while server is up
         while ($this->serverState === ServerStateKeys::WORKERS_INITIALIZED) {
             // iterate all workers

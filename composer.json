@@ -43,11 +43,6 @@
 			]
 		}
 	},
-	"config" : {
-		"github-oauth" : {
-			"github.com" : "bb0ca6adf013e65b1e630197308621791517b5d8"
-		}
-	},
 	"support" : {
 		"email" : "jz@appserver.io",
 		"issues" : "https://github.com/appserver-io/appserver/issues",
