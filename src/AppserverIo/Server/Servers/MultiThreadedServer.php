@@ -89,7 +89,7 @@ class MultiThreadedServer extends \Thread implements ServerInterface
     {
         $this->synchronized(function ($self) {
             $self->serverState = ServerStateKeys::HALT;
-        }, $this)
+        }, $this);
     }
 
     /**
@@ -257,7 +257,7 @@ class MultiThreadedServer extends \Thread implements ServerInterface
         $logger->info(
             sprintf("%s listing on %s:%s...", $serverName, $serverConfig->getAddress(), $serverConfig->getPort())
         );
-        
+
         // watch dog for all workers to restart if it's needed while server is up
         while ($this->serverState === ServerStateKeys::WORKERS_INITIALIZED) {
             // iterate all workers
@@ -288,57 +288,60 @@ class MultiThreadedServer extends \Thread implements ServerInterface
             usleep(1000000);
         }
 
-
-
-
-
-
-
-
         // print a message with the number of initialized workers
-        $logger->info("Found " . sizeof($workers) . " workers to shutdown!");
-
-        $scheme = '';
+        $logger->debug(sprintf('Now shutdown server %s (%d workers)', $serverName, sizeof($workers)));
 
         // prepare the URL and the options for the shutdown requests
-        switch ($serverConfig->getTransport()) {
-            case 'tcp':
+        $scheme = $serverConfig->getTransport() == 'tcp' ? 'http' : 'https';
 
-                $scheme = 'http'
-                break;
+        // prepare the URL for the request to shutdown the workers
+        $url =  sprintf('%s://%s:%d', $scheme, $serverConfig->getAddress(), $serverConfig->getPort());
 
-            case 'ssl':
-
-                $scheme = 'https'
-                break;
-
-            default:
-
-                break;
-        }
-
-        $url =  . $scheme . '://' . $serverConfig->getAddress() . ':' . $serverConfig->getPort();
-        $opts = array($scheme =>
+        // create a context for the HTTP/HTTPS connection
+        $context  = stream_context_create(
             array(
-                'method'  => 'GET',
-                'header'  => array('Content-Type: text/plain', 'Connection: close'),
-                'timeout' => 0.5
+                'http' => array(
+                    'method'  => 'GET',
+                    'header'  => "Connection: close\r\n"
+                ),
+                'https' => array(
+                    'method'  => 'GET',
+                    'header'  => "Connection: close\r\n"
+                ),
+                'ssl' => array(
+                    'verify_peer'      => false,
+                    'verify_peer_name' => false
+                )
             )
         );
-        $context  = stream_context_create($opts);
 
-        // send requests to close all running workers
-        while (@file_get_contents($url, false, $context)) {
-            $logger->info("Successfully created client connection to shutdown worker!");
-        }
-
-        // kill/unset the worker threads
-        foreach ($workers as $key => $worker) {
-            $workers[$key]->kill();
-            unset($workers[$key]);
+        // try to shutdown all workers
+        while (sizeof($workers) > 0) {
+            // iterate all workers
+            for ($i = 1; $i <= $serverConfig->getWorkerNumber(); ++$i) {
+                // check if worker should be restarted
+                if (isset($workers[$i]) && $workers[$i]->shouldRestart()) {
+                    // unset worker, it has been shutdown successfully
+                    unset($workers[$i]);
+                } elseif (isset($workers[$i]) && $workers[$i]->shouldRestart() === false) {
+                    // send a request to shutdown running worker
+                    @file_get_contents($url, false, $context);
+                    // don't flood the remaining workers
+                    usleep(10000);
+                } else {
+                    // send a debug log message that worker has been shutdown
+                    $logger->debug("Worker $i successfully been shutdown ...");
+                }
+            }
         }
 
         // close the server sockets
         $serverConnection->close();
+
+        // mark the server as successfully shutdown
+        $this->serverState = ServerStateKeys::SHUTDOWN;
+
+        // send a debug log message that connection has been closed and server has been shutdown
+        $logger->info("Successfully closed connection and shutdown server $serverName");
     }
 }
