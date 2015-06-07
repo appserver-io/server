@@ -90,6 +90,18 @@ class MultiThreadedServer extends \Thread implements ServerInterface
         $this->synchronized(function ($self) {
             $self->serverState = ServerStateKeys::HALT;
         }, $this);
+
+        do {
+
+            // query whether application state key is SHUTDOWN or not
+            $waitForShutdown = $this->synchronized(function ($self) {
+                return $self->serverState !== ServerStateKeys::SHUTDOWN;
+            }, $this);
+
+            // wait one second more
+            sleep(1);
+
+        } while ($waitForShutdown);
     }
 
     /**
@@ -339,7 +351,9 @@ class MultiThreadedServer extends \Thread implements ServerInterface
         $serverConnection->close();
 
         // mark the server as successfully shutdown
-        $this->serverState = ServerStateKeys::SHUTDOWN;
+        $this->synchronized(function ($self) {
+            $self->serverState = ServerStateKeys::SHUTDOWN;
+        }, $this);
 
         // send a debug log message that connection has been closed and server has been shutdown
         $logger->info("Successfully closed connection and shutdown server $serverName");
