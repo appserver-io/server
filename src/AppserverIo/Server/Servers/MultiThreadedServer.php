@@ -84,6 +84,8 @@ class MultiThreadedServer extends \Thread implements ServerInterface
 
     /**
      * Shutdown the workers and stop the server.
+     *
+     * @return void
      */
     public function stop()
     {
@@ -92,7 +94,6 @@ class MultiThreadedServer extends \Thread implements ServerInterface
         }, $this);
 
         do {
-
             // query whether application state key is SHUTDOWN or not
             $waitForShutdown = $this->synchronized(function ($self) {
                 return $self->serverState !== ServerStateKeys::SHUTDOWN;
