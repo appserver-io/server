@@ -6,7 +6,7 @@
 
 ## Features
 
-* Added support for upstreams and proxy functionality
+* Implement stop() method and controlled shutdown functionality
 
 # Version 3.1.0
 
