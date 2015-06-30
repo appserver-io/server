@@ -84,6 +84,13 @@ class ServerStateKeys
     const WORKERS_INITIALIZED = 6;
 
     /**
+     * Server has successfully been shutdown.
+     *
+     * @var integer
+     */
+    const SHUTDOWN = 7;
+
+    /**
      * The actual server state.
      *
      * @var integer
@@ -139,12 +146,14 @@ class ServerStateKeys
     public static function getServerStates()
     {
         return array(
+            ServerStateKeys::HALT,
             ServerStateKeys::WAITING_FOR_INITIALIZATION,
             ServerStateKeys::INITIALIZATION_SUCCESSFUL,
             ServerStateKeys::SERVER_SOCKET_STARTED,
             ServerStateKeys::MODULES_INITIALIZED,
             ServerStateKeys::CONNECTION_HANDLERS_INITIALIZED,
-            ServerStateKeys::WORKERS_INITIALIZED
+            ServerStateKeys::WORKERS_INITIALIZED,
+            ServerStateKeys::SHUTDOWN,
         );
     }
 

@@ -83,6 +83,29 @@ class MultiThreadedServer extends \Thread implements ServerInterface
     }
 
     /**
+     * Shutdown the workers and stop the server.
+     *
+     * @return void
+     */
+    public function stop()
+    {
+        $this->synchronized(function ($self) {
+            $self->serverState = ServerStateKeys::HALT;
+        }, $this);
+
+        do {
+            // query whether application state key is SHUTDOWN or not
+            $waitForShutdown = $this->synchronized(function ($self) {
+                return $self->serverState !== ServerStateKeys::SHUTDOWN;
+            }, $this);
+
+            // wait one second more
+            sleep(1);
+
+        } while ($waitForShutdown);
+    }
+
+    /**
      * Starts the server's worker as defined in configuration
      *
      * @return void
@@ -129,7 +152,7 @@ class MultiThreadedServer extends \Thread implements ServerInterface
         $streamContext = new $streamContextType();
         // set socket backlog to 1024 for perform many concurrent connections
         $streamContext->setOption('socket', 'backlog', 1024);
-        
+
         // check if ssl server config
         if ($serverConfig->getTransport() === 'ssl') {
             // get real cert path
@@ -158,7 +181,7 @@ class MultiThreadedServer extends \Thread implements ServerInterface
                 }
             }
         }
-        
+
         // inject stream context to server context for further modification in modules init function
         $serverContext->injectStreamContext($streamContext);
 
@@ -224,7 +247,7 @@ class MultiThreadedServer extends \Thread implements ServerInterface
 
         // sockets has been started
         $this->serverState = ServerStateKeys::SERVER_SOCKET_STARTED;
-        
+
         $logger->debug(
             sprintf("%s starting %s workers (%s)", $serverName, $serverConfig->getWorkerNumber(), $workerType)
         );
@@ -247,7 +270,7 @@ class MultiThreadedServer extends \Thread implements ServerInterface
         $logger->info(
             sprintf("%s listing on %s:%s...", $serverName, $serverConfig->getAddress(), $serverConfig->getPort())
         );
-        
+
         // watch dog for all workers to restart if it's needed while server is up
         while ($this->serverState === ServerStateKeys::WORKERS_INITIALIZED) {
             // iterate all workers
@@ -277,5 +300,63 @@ class MultiThreadedServer extends \Thread implements ServerInterface
             // sleep for 1 second to lower system load
             usleep(1000000);
         }
+
+        // print a message with the number of initialized workers
+        $logger->debug(sprintf('Now shutdown server %s (%d workers)', $serverName, sizeof($workers)));
+
+        // prepare the URL and the options for the shutdown requests
+        $scheme = $serverConfig->getTransport() == 'tcp' ? 'http' : 'https';
+
+        // prepare the URL for the request to shutdown the workers
+        $url =  sprintf('%s://%s:%d', $scheme, $serverConfig->getAddress(), $serverConfig->getPort());
+
+        // create a context for the HTTP/HTTPS connection
+        $context  = stream_context_create(
+            array(
+                'http' => array(
+                    'method'  => 'GET',
+                    'header'  => "Connection: close\r\n"
+                ),
+                'https' => array(
+                    'method'  => 'GET',
+                    'header'  => "Connection: close\r\n"
+                ),
+                'ssl' => array(
+                    'verify_peer'      => false,
+                    'verify_peer_name' => false
+                )
+            )
+        );
+
+        // try to shutdown all workers
+        while (sizeof($workers) > 0) {
+            // iterate all workers
+            for ($i = 1; $i <= $serverConfig->getWorkerNumber(); ++$i) {
+                // check if worker should be restarted
+                if (isset($workers[$i]) && $workers[$i]->shouldRestart()) {
+                    // unset worker, it has been shutdown successfully
+                    unset($workers[$i]);
+                } elseif (isset($workers[$i]) && $workers[$i]->shouldRestart() === false) {
+                    // send a request to shutdown running worker
+                    @file_get_contents($url, false, $context);
+                    // don't flood the remaining workers
+                    usleep(10000);
+                } else {
+                    // send a debug log message that worker has been shutdown
+                    $logger->debug("Worker $i successfully been shutdown ...");
+                }
+            }
+        }
+
+        // close the server sockets
+        $serverConnection->close();
+
+        // mark the server as successfully shutdown
+        $this->synchronized(function ($self) {
+            $self->serverState = ServerStateKeys::SHUTDOWN;
+        }, $this);
+
+        // send a debug log message that connection has been closed and server has been shutdown
+        $logger->info("Successfully closed connection and shutdown server $serverName");
     }
 }
