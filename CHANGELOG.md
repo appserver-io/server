@@ -1,3 +1,13 @@
+# Version 4.0.2
+
+## Bugfixes
+
+* Fixed sql select query in RewriteMap Module.
+
+## Features
+
+* None
+
 # Version 4.0.1
 
 ## Bugfixes
