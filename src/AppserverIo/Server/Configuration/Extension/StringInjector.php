@@ -57,7 +57,7 @@ class StringInjector extends AbstractInjector
         $dbConnection = $this->getDbResource();
 
         // Build up the query
-        $query = 'SELECT * FROM "virtualHost"';
+        $query = 'SELECT * FROM `virtualHost`';
 
         // Get the results and fill them into our data
         foreach ($dbConnection->query($query) as $row) {

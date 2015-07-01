@@ -50,7 +50,7 @@ class ArrayInjector extends AbstractInjector
         $dbConnection = $this->getDbResource();
 
         // Build up the query
-        $query = 'SELECT * FROM "rewrite"';
+        $query = 'SELECT * FROM `rewrite`';
 
         // Get the results and fill them into our data
         foreach ($dbConnection->query($query, \PDO::FETCH_ASSOC) as $row) {
