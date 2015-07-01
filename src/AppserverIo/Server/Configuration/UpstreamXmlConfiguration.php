@@ -31,7 +31,7 @@ use AppserverIo\Server\Interfaces\UpstreamConfigurationInterface;
  * @link      https://github.com/appserver-io/server
  * @link      http://www.appserver.io
  */
-class UpstreamXmlConfiguration extends UpstreamConfigurationInterface
+class UpstreamXmlConfiguration implements UpstreamConfigurationInterface
 {
     /**
      * Holds the name of the upstream node
