@@ -1,3 +1,13 @@
+# Version 4.0.1
+
+## Bugfixes
+
+* Minor syntax fix for UpstreamConfigurationInterface to be implemented instead of extended...
+
+## Features
+
+* None
+
 # Version 4.0.0
 
 ## Bugfixes
