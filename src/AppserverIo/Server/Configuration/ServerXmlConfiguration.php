@@ -46,6 +46,13 @@ class ServerXmlConfiguration implements ServerConfigurationInterface
      * @var array
      */
     protected $locations;
+    
+    /**
+     * The configured headers
+     *
+     * @var array
+     */
+    protected $headers;
 
     /**
      * Holds the environmentVariables array
@@ -92,6 +99,8 @@ class ServerXmlConfiguration implements ServerConfigurationInterface
         // prepare analytics
         $this->analytics = $this->prepareAnalytics($node);
         // prepare modules
+        $this->headers = $this->prepareHeaders($node);
+        // prepare modules
         $this->modules = $this->prepareModules($node);
         // prepare connection handlers
         $this->connectionHandlers = $this->prepareConnectionHandlers($node);
@@ -113,6 +122,43 @@ class ServerXmlConfiguration implements ServerConfigurationInterface
         $this->rewriteMaps = $this->prepareRewriteMaps($node);
         // prepare certificates
         $this->certificates = $this->prepareCertificates($node);
+    }
+    
+    /**
+     * Prepares the headers array based on a simple xml element node
+     *
+     * @param \SimpleXMLElement $node The xml node
+     *
+     * @return array
+     */
+    public function prepareHeaders(\SimpleXMLElement $node)
+    {
+        $headers = array();
+        if ($node->headers) {
+            foreach ($node->headers->header as $headerNode) {
+                // Cut of the SimpleXML attributes wrapper and attach it to our headers
+                $override = false;
+                $overrideAttribute = strtolower((string)$headerNode->attributes()->override);
+                if ($overrideAttribute && $overrideAttribute === 'true') {
+                    $override = true;
+                }
+                $append = false;
+                $appendAttribute = strtolower((string)$headerNode->attributes()->append);
+                if ($appendAttribute && $appendAttribute === 'true') {
+                    $append = true;
+                }
+                $header = array(
+                    'type' => (string) $headerNode->attributes()->type,
+                    'name' => (string) $headerNode->attributes()->name,
+                    'value' => (string) $headerNode->attributes()->value,
+                    'uri' => (string) $headerNode->attributes()->uri,
+                    'override' => $override,
+                    'append' => $append
+                );
+                $headers[(string) $headerNode->attributes()->type][] = $header;
+            }
+        }
+        return $headers;
     }
 
     /**
@@ -202,6 +248,7 @@ class ServerXmlConfiguration implements ServerConfigurationInterface
                     // set all virtual hosts params per key for faster matching later on
                     $virutalHosts[trim($virtualHostName)] = array(
                         'params' => $params,
+                        'headers' => $this->prepareHeaders($virtualHostNode),
                         'rewriteMaps' => $this->prepareRewriteMaps($virtualHostNode),
                         'rewrites' => $this->prepareRewrites($virtualHostNode),
                         'locations' => $this->prepareLocations($virtualHostNode),
@@ -298,7 +345,8 @@ class ServerXmlConfiguration implements ServerConfigurationInterface
                 // Cut of the SimpleXML attributes wrapper and attach it to our locations
                 $location = array(
                     'condition' => (string) $locationNode->attributes()->condition,
-                    'handlers' => $this->prepareHandlers($locationNode)
+                    'handlers' => $this->prepareHandlers($locationNode),
+                    'headers' => $this->prepareHeaders($locationNode),
                 );
                 $locations[] = $location;
             }
@@ -683,6 +731,16 @@ class ServerXmlConfiguration implements ServerConfigurationInterface
     public function getConnectionHandlers()
     {
         return $this->connectionHandlers;
+    }
+    
+    /**
+     * Returns the headers used by the server
+     *
+     * @return array
+     */
+    public function getHeaders()
+    {
+        return $this->headers;
     }
 
     /**
