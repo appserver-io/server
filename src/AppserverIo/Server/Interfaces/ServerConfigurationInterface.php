@@ -207,6 +207,13 @@ interface ServerConfigurationInterface
     public function getConnectionHandlers();
     
     /**
+     * Returns the headers definition used by the server
+     *
+     * @return array
+     */
+    public function getHeaders();
+    
+    /**
      * Returns the certificates used by the server
      *
      * @return array
