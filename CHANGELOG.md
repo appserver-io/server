@@ -1,3 +1,13 @@
+# Version 5.0.0
+
+## Bugfixes
+
+* None
+
+## Features
+
+* Added headers module compatibility to configuration
+
 # Version 4.0.2
 
 ## Bugfixes
