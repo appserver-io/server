@@ -27,6 +27,7 @@ use AppserverIo\Server\Interfaces\ServerConfigurationInterface;
 use AppserverIo\Server\Traits\EnvVarsArrayTrait;
 use AppserverIo\Server\Traits\ModuleVarsArrayTrait;
 use AppserverIo\Server\Traits\ServerVarsArrayTrait;
+use AppserverIo\Server\Exceptions\ServerException;
 
 /**
  * Class ServerContext
@@ -179,6 +180,19 @@ class RequestContext implements RequestContextInterface
         // check if relative path is given and make is absolute by using getcwd() as prefix
         if (!preg_match("/^([a-zA-Z]:|\/)/", $documentRoot)) {
             $documentRoot = getcwd() . DIRECTORY_SEPARATOR . $documentRoot;
+        }
+        
+        // check if document root exists on file system
+        if (!is_dir($documentRoot)) {
+            throw new ServerException(
+                sprintf(
+                    "Document root '%s' does not exist for '%s' listing on '%s:%s'",
+                    $documentRoot,
+                    $serverConfig->getName(),
+                    $serverAddress,
+                    $serverPort
+                )
+            );
         }
 
         // build initial server vars
