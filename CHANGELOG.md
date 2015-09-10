@@ -1,3 +1,13 @@
+# Version 5.0.1
+
+## Bugfixes
+
+* Do not inherit anything in worker threads instead of constants
+
+## Features
+
+* None
+
 # Version 5.0.0
 
 ## Bugfixes
