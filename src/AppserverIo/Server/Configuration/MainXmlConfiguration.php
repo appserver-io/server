@@ -60,8 +60,10 @@ class MainXmlConfiguration
     public function getServerConfigs()
     {
         $serverConfigurations = array();
-        foreach ($this->xml->servers->server as $serverConfig) {
-            $serverConfigurations[] = new ServerXmlConfiguration($serverConfig);
+        if (isset($this->xml->servers)) {
+            foreach ($this->xml->servers->server as $serverConfig) {
+                $serverConfigurations[] = new ServerXmlConfiguration($serverConfig);
+            }
         }
         return $serverConfigurations;
     }
@@ -74,12 +76,14 @@ class MainXmlConfiguration
     public function getLoggerConfigs()
     {
         $loggerConfigurations = array();
-        foreach ($this->xml->loggers->logger as $loggerConfig) {
-            $loggerConfigurations[] = new LoggerXmlConfiguration($loggerConfig);
+        if (isset($this->xml->loggers)) {
+            foreach ($this->xml->loggers->logger as $loggerConfig) {
+                $loggerConfigurations[] = new LoggerXmlConfiguration($loggerConfig);
+            }
         }
         return $loggerConfigurations;
     }
-    
+
     /**
      * Return's upstream config nodes as array
      *
@@ -88,8 +92,10 @@ class MainXmlConfiguration
     public function getUpstreamConfigs()
     {
         $upstreamConfigurations = array();
-        foreach ($this->xml->upstreams->upstream as $upstreamConfig) {
-            $upstreamConfigurations[] = new UpstreamXmlConfiguration($upstreamConfig);
+        if (isset($this->xml->upstreams)) {
+            foreach ($this->xml->upstreams->upstream as $upstreamConfig) {
+                $upstreamConfigurations[] = new UpstreamXmlConfiguration($upstreamConfig);
+            }
         }
         return $upstreamConfigurations;
     }

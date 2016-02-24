@@ -46,7 +46,7 @@ class ServerXmlConfiguration implements ServerConfigurationInterface
      * @var array
      */
     protected $locations;
-    
+
     /**
      * The configured headers
      *
@@ -80,6 +80,7 @@ class ServerXmlConfiguration implements ServerConfigurationInterface
         $this->transport = (string)array_shift($node->xpath("./params/param[@name='transport']"));
         $this->address = (string)array_shift($node->xpath("./params/param[@name='address']"));
         $this->port = (int)array_shift($node->xpath("./params/param[@name='port']"));
+        $this->flags = (string)array_shift($node->xpath("./params/param[@name='flags']"));
         $this->software = (string)array_shift($node->xpath("./params/param[@name='software']"));
         $this->workerNumber = (int)array_shift($node->xpath("./params/param[@name='workerNumber']"));
         $this->workerAcceptMin = (int)array_shift($node->xpath("./params/param[@name='workerAcceptMin']"));
@@ -123,7 +124,7 @@ class ServerXmlConfiguration implements ServerConfigurationInterface
         // prepare certificates
         $this->certificates = $this->prepareCertificates($node);
     }
-    
+
     /**
      * Prepares the headers array based on a simple xml element node
      *
@@ -306,7 +307,7 @@ class ServerXmlConfiguration implements ServerConfigurationInterface
         }
         return $rewrites;
     }
-    
+
     /**
      * Prepares the certificates array based on a simple xml element node
      *
@@ -462,7 +463,6 @@ class ServerXmlConfiguration implements ServerConfigurationInterface
         return $analytics;
     }
 
-
     /**
      * Return's name
      *
@@ -531,6 +531,16 @@ class ServerXmlConfiguration implements ServerConfigurationInterface
     public function getPort()
     {
         return (int)$this->port;
+    }
+
+    /**
+     * Return's flags
+     *
+     * @return string
+     */
+    public function getFlags()
+    {
+        return $this->flags;
     }
 
     /**
@@ -662,7 +672,7 @@ class ServerXmlConfiguration implements ServerConfigurationInterface
     {
         return $this->serverContextType;
     }
-    
+
     /**
      * Returns stream context type
      *
@@ -732,7 +742,7 @@ class ServerXmlConfiguration implements ServerConfigurationInterface
     {
         return $this->connectionHandlers;
     }
-    
+
     /**
      * Returns the headers used by the server
      *
@@ -752,7 +762,7 @@ class ServerXmlConfiguration implements ServerConfigurationInterface
     {
         return $this->certificates;
     }
-    
+
     /**
      * Return's the virtual hosts
      *

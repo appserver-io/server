@@ -148,12 +148,12 @@ class MultiThreadedServer extends \Thread implements ServerInterface
             $socketType = $serverConfig->getSocketType();
             $workerType = $serverConfig->getWorkerType();
             $streamContextType = $serverConfig->getStreamContextType();
-    
+
             // init stream context for server connection
             $streamContext = new $streamContextType();
             // set socket backlog to 1024 for perform many concurrent connections
             $streamContext->setOption('socket', 'backlog', 1024);
-    
+
             // check if ssl server config
             if ($serverConfig->getTransport() === 'ssl') {
                 // get real cert path
@@ -182,13 +182,13 @@ class MultiThreadedServer extends \Thread implements ServerInterface
                     }
                 }
             }
-    
+
             // inject stream context to server context for further modification in modules init function
             $serverContext->injectStreamContext($streamContext);
-    
+
             // initialization has been successful
             $this->serverState = ServerStateKeys::INITIALIZATION_SUCCESSFUL;
-    
+
             // init modules array
             $modules = array();
             // initiate server modules
@@ -202,18 +202,18 @@ class MultiThreadedServer extends \Thread implements ServerInterface
                 $module = new $moduleType();
                 $moduleName = $module->getModuleName();
                 $modules[$moduleName] = $module;
-    
+
                 $logger->debug(
                     sprintf("%s init %s module (%s)", $serverName, $moduleType::MODULE_NAME, $moduleType)
                 );
-    
+
                 // init module with serverContext (this)
                 $modules[$moduleName]->init($serverContext);
             }
-    
+
             // modules has been initialized successfully
             $this->serverState = ServerStateKeys::MODULES_INITIALIZED;
-    
+
             // init connection handler array
             $connectionHandlers = array();
             // initiate server connection handlers
@@ -225,34 +225,44 @@ class MultiThreadedServer extends \Thread implements ServerInterface
                 }
                 // instantiate connection handler type
                 $connectionHandlers[$connectionHandlerType] = new $connectionHandlerType();
-    
+
                 $logger->debug(
                     sprintf("%s init connectionHandler (%s)", $serverName, $connectionHandlerType)
                 );
-    
+
                 // init connection handler with serverContext (this)
                 $connectionHandlers[$connectionHandlerType]->init($serverContext);
                 // inject modules
                 $connectionHandlers[$connectionHandlerType]->injectModules($modules);
             }
-    
+
             // connection handlers has been initialized successfully
             $this->serverState = ServerStateKeys::CONNECTION_HANDLERS_INITIALIZED;
-    
-            // setup server bound on local adress
-            $serverConnection = $socketType::getServerInstance(
-                $serverConfig->getTransport() . '://' . $serverConfig->getAddress() . ':' . $serverConfig->getPort(),
-                STREAM_SERVER_BIND | STREAM_SERVER_LISTEN,
-                $streamContext->getResource()
+
+            // prepare the socket
+            $localSocket = sprintf(
+                '%s://%s:%d',
+                $serverConfig->getTransport(),
+                $serverConfig->getAddress(),
+                $serverConfig->getPort()
             );
-    
+
+            // prepare the socket flags
+            $flags = null;
+            foreach (explode('|', $serverConfig->getFlags()) as $flag) {
+                $flags += constant(trim($flag));
+            }
+
+            // setup server bound on local adress
+            $serverConnection = $socketType::getServerInstance($localSocket, $flags, $streamContext->getResource());
+
             // sockets has been started
             $this->serverState = ServerStateKeys::SERVER_SOCKET_STARTED;
-    
+
             $logger->debug(
                 sprintf("%s starting %s workers (%s)", $serverName, $serverConfig->getWorkerNumber(), $workerType)
             );
-    
+
             // setup and start workers
             $workers = array();
             for ($i = 1; $i <= $serverConfig->getWorkerNumber(); ++$i) {
@@ -261,17 +271,17 @@ class MultiThreadedServer extends \Thread implements ServerInterface
                     $serverContext,
                     $connectionHandlers
                 );
-    
+
                 $logger->debug(sprintf("Successfully started worker %s", $workers[$i]->getThreadId()));
             }
-    
+
             // connection handlers has been initialized successfully
             $this->serverState = ServerStateKeys::WORKERS_INITIALIZED;
-    
+
             $logger->info(
                 sprintf("%s listing on %s:%s...", $serverName, $serverConfig->getAddress(), $serverConfig->getPort())
             );
-    
+
             // watch dog for all workers to restart if it's needed while server is up
             while ($this->serverState === ServerStateKeys::WORKERS_INITIALIZED) {
                 // iterate all workers
@@ -281,7 +291,7 @@ class MultiThreadedServer extends \Thread implements ServerInterface
                         $logger->debug(
                             sprintf("%s restarting worker #%s (%s)", $serverName, $i, $workerType)
                         );
-    
+
                         // unset origin worker ref
                         unset($workers[$i]);
                         // build up and start new worker instance
@@ -292,25 +302,25 @@ class MultiThreadedServer extends \Thread implements ServerInterface
                         );
                     }
                 }
-    
+
                 if ($profileLogger) {
                     // profile the worker shutdown beeing processed
                     $profileLogger->debug(sprintf('Server %s waiting for shutdown', $serverName));
                 }
-    
+
                 // sleep for 1 second to lower system load
                 usleep(1000000);
             }
-    
+
             // print a message with the number of initialized workers
             $logger->debug(sprintf('Now shutdown server %s (%d workers)', $serverName, sizeof($workers)));
-    
+
             // prepare the URL and the options for the shutdown requests
             $scheme = $serverConfig->getTransport() == 'tcp' ? 'http' : 'https';
-    
+
             // prepare the URL for the request to shutdown the workers
             $url =  sprintf('%s://%s:%d', $scheme, $serverConfig->getAddress(), $serverConfig->getPort());
-    
+
             // create a context for the HTTP/HTTPS connection
             $context  = stream_context_create(
                 array(
@@ -328,7 +338,7 @@ class MultiThreadedServer extends \Thread implements ServerInterface
                     )
                 )
             );
-    
+
             // try to shutdown all workers
             while (sizeof($workers) > 0) {
                 // iterate all workers
@@ -348,12 +358,12 @@ class MultiThreadedServer extends \Thread implements ServerInterface
                     }
                 }
             }
-            
+
         } catch (\Exception $e) {
             // log error message
             $logger->error($e->getMessage());
         }
-        
+
         // close the server sockets if opened before
         if ($serverConnection) {
             $serverConnection->close();
@@ -362,7 +372,7 @@ class MultiThreadedServer extends \Thread implements ServerInterface
                 $self->serverState = ServerStateKeys::SHUTDOWN;
             }, $this);
         }
-        
+
         // send a debug log message that connection has been closed and server has been shutdown
         $logger->info("Successfully closed connection and shutdown server $serverName");
     }

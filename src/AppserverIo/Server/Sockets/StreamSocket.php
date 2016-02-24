@@ -91,7 +91,7 @@ class StreamSocket implements SocketInterface
 
         // create stream socket server resource
         $serverResource = stream_socket_server($socket, $errno, $errstr, $flags, $context);
-        
+
         // throw exception if it was not possible to create server socket binding
         if (!$serverResource) {
             throw new SocketServerException($errstr, $errno);
@@ -168,7 +168,7 @@ class StreamSocket implements SocketInterface
     {
         // init local ref vars
         $peername = null;
-        
+
         $connectionResource = @stream_socket_accept($this->getConnectionResource(), $acceptTimeout, $peername);
         // if timeout or error occurred return false as accept function does
         if ($connectionResource === false) {
@@ -197,7 +197,7 @@ class StreamSocket implements SocketInterface
             @stream_set_timeout($this->getConnectionResource(), $receiveTimeout);
         }
         $line = @fgets($this->getConnectionResource(), $readLength);
-        
+
         // check if read error occured
         if ($line === false) {
             throw new SocketReadException();
@@ -207,7 +207,7 @@ class StreamSocket implements SocketInterface
         if (strlen($line) === 0) {
             throw new SocketReadTimeoutException();
         }
-        
+
         return $line;
     }
 
@@ -255,6 +255,55 @@ class StreamSocket implements SocketInterface
     }
 
     /**
+     * Receives data from a socket, connected or not.
+     *
+     * This method HAS to be used when working with an UDP socket.
+     *
+     * @param integer $length The number of bytes to receive from the
+     * @param integer $flags  The value of flags, can be STREAM_OOB or STREAM_PEEK
+     *
+     * @return string Returns the read data, as a string
+     * @see http://docs.php.net/manual/de/function.stream-socket-recvfrom.php
+     */
+    public function receiveFrom($length = 512, $flags = null)
+    {
+
+        // initialize the peername
+        $peername = '';
+
+        // receive the data from the socket
+        $buffer = stream_socket_recvfrom($this->getConnectionResource(), $length, $flags, $peername);
+
+        // check if receiving the data has been succeeded
+        if ($buffer === false) {
+            // throw new socket exception
+            throw new SocketReadException();
+        }
+
+        // set the peername
+        $this->setPeername($peername);
+
+        // return the received data
+        return $buffer;
+    }
+
+    /**
+     * Sends a message to a socket, whether it is connected or not.
+     *
+     *This method HAS to be used when working with an UDP socket.
+     *
+     * @param string  $message The data to be sent
+     * @param integer $flags   The value of flags can be STREAM_OOB
+     *
+     * @return integer Returns a result code, as an integer
+     * @see http://docs.php.net/manual/de/function.stream-socket-sendto.php
+     */
+    public function sendTo($message, $flags = 0)
+    {
+        return @stream_socket_sendto($this->getConnectionResource(), $message, 0, $this->getPeername());
+    }
+
+    /**
      * Copies data from a stream
      *
      * @param resource $sourceResource The source stream
@@ -282,7 +331,7 @@ class StreamSocket implements SocketInterface
         }
         return false;
     }
-    
+
     /**
      * Returns the stream socket's status
      *
@@ -292,7 +341,7 @@ class StreamSocket implements SocketInterface
     {
         return @socket_get_status($this->getConnectionResource());
     }
-    
+
     /**
      * Returns the meta information of the stream socket
      *
