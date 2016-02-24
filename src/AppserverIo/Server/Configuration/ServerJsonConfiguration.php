@@ -188,6 +188,16 @@ class ServerJsonConfiguration implements ServerConfigurationInterface
     }
 
     /**
+     * Returns flags
+     *
+     * @return string
+     */
+    public function getFlags()
+    {
+        return $this->data->flags;
+    }
+
+    /**
      * Returns software
      *
      * @return string

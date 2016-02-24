@@ -1,3 +1,14 @@
+# Version 6.0.0
+
+## Bugfixes
+
+* None
+
+## Features
+
+* Allow initialization flags for server socket
+* Add sendTo() and receiveFrom() methods to StreamSocket to allow handle UDP connections
+
 # Version 5.0.1
 
 ## Bugfixes
