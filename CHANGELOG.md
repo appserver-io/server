@@ -1,3 +1,13 @@
+# Version 6.0.2
+
+## Bugfixes
+
+* Fixed warning with constants when flags have been passed
+
+## Features
+
+* None
+
 # Version 6.0.1
 
 ## Bugfixes
