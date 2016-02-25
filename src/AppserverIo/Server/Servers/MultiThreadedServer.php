@@ -249,7 +249,7 @@ class MultiThreadedServer extends \Thread implements ServerInterface
             foreach (explode('|', $serverConfig->getFlags()) as $flag) {
                 $constant = trim($flag);
                 if (empty($constant) === false) {
-                    $flags += constant();
+                    $flags += constant($constant);
                 }
             }
 
