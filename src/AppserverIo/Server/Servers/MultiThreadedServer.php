@@ -21,17 +21,14 @@
 namespace AppserverIo\Server\Servers;
 
 use AppserverIo\Logger\LoggerUtils;
-use AppserverIo\Server\Dictionaries\ModuleVars;
-use AppserverIo\Server\Dictionaries\ServerVars;
-use AppserverIo\Server\Interfaces\ServerConfigurationInterface;
-use AppserverIo\Server\Interfaces\ServerContextInterface;
+use AppserverIo\Server\Dictionaries\ServerStateKeys;
 use AppserverIo\Server\Interfaces\ServerInterface;
+use AppserverIo\Server\Interfaces\ServerContextInterface;
 use AppserverIo\Server\Exceptions\ModuleNotFoundException;
 use AppserverIo\Server\Exceptions\ConnectionHandlerNotFoundException;
-use AppserverIo\Server\Dictionaries\ServerStateKeys;
 
 /**
- * Class MultiThreadedServer
+ * A multithreaded server implemenation.
  *
  * @author    Johann Zelger <jz@appserver.io>
  * @copyright 2015 TechDivision GmbH <info@appserver.io>
@@ -250,7 +247,10 @@ class MultiThreadedServer extends \Thread implements ServerInterface
             // prepare the socket flags
             $flags = null;
             foreach (explode('|', $serverConfig->getFlags()) as $flag) {
-                $flags += constant(trim($flag));
+                $constant = trim($flag);
+                if (empty($constant) === false) {
+                    $flags += constant();
+                }
             }
 
             // setup server bound on local adress
