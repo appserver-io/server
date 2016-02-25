@@ -1,3 +1,13 @@
+# Version 6.0.1
+
+## Bugfixes
+
+* Fixed warning with unknown constant when no flags have been passed
+
+## Features
+
+* None
+
 # Version 6.0.0
 
 ## Bugfixes
