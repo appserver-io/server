@@ -174,7 +174,7 @@ class ServerXmlConfiguration implements ServerConfigurationInterface
         $modules = array();
         if ($node->modules) {
             foreach ($node->modules->module as $moduleNode) {
-                $modules[] = (string)$moduleNode->attributes()->type;
+                $modules[] = new ModuleXmlConfiguration($moduleNode);
             }
         }
         return $modules;

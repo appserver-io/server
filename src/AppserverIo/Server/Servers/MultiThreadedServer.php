@@ -26,6 +26,7 @@ use AppserverIo\Server\Interfaces\ServerInterface;
 use AppserverIo\Server\Interfaces\ServerContextInterface;
 use AppserverIo\Server\Exceptions\ModuleNotFoundException;
 use AppserverIo\Server\Exceptions\ConnectionHandlerNotFoundException;
+use AppserverIo\Server\Interfaces\ModuleConfigurationAwareInterface;
 
 /**
  * A multithreaded server implemenation.
@@ -188,18 +189,26 @@ class MultiThreadedServer extends \Thread implements ServerInterface
 
             // init modules array
             $modules = array();
+
             // initiate server modules
-            $moduleTypes = $serverConfig->getModules();
-            foreach ($moduleTypes as $moduleType) {
+            foreach ($serverConfig->getModules() as $moduleConfiguration) {
                 // check if module type exists
-                if (!class_exists($moduleType)) {
+                if (class_exists($moduleType = $moduleConfiguration->getType()) === false) {
                     throw new ModuleNotFoundException($moduleType);
                 }
+
                 // instantiate module type
                 $module = new $moduleType();
-                $moduleName = $module->getModuleName();
-                $modules[$moduleName] = $module;
 
+                // query whether or not we've to inject the module configuration
+                if ($module instanceof ModuleConfigurationAwareInterface) {
+                    $module->injectModuleConfiguration($moduleConfiguration);
+                }
+
+                // append the initialized module to the list
+                $modules[$moduleName = $module->getModuleName()] = $module;
+
+                // debug log that the module has successfully been initialized
                 $logger->debug(
                     sprintf("%s init %s module (%s)", $serverName, $moduleType::MODULE_NAME, $moduleType)
                 );

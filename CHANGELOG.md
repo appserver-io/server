@@ -1,3 +1,13 @@
+# Version 6.1.0
+
+## Bugfixes
+
+* None
+
+## Features
+
+* Add module configuration by passing params
+
 # Version 6.0.2
 
 ## Bugfixes

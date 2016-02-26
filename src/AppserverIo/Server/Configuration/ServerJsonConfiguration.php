@@ -318,6 +318,16 @@ class ServerJsonConfiguration implements ServerConfigurationInterface
     }
 
     /**
+     * Returns stream context type
+     *
+     * @return string
+     */
+    public function getStreamContextType()
+    {
+        return $this->data->streamContext;
+    }
+
+    /**
      * Returns request type
      *
      * @return string
@@ -378,6 +388,32 @@ class ServerJsonConfiguration implements ServerConfigurationInterface
             $this->connectionHandlers = $this->prepareConnectionHandlers($this->data);
         }
         return $this->connectionHandlers;
+    }
+
+    /**
+     * Returns the headers used by the server
+     *
+     * @return array
+     */
+    public function getHeaders()
+    {
+        if (!$this->headers) {
+            $this->headers = $this->prepareHeaders($this->data);
+        }
+        return $this->headers;
+    }
+
+    /**
+     * Returns the certificates used by the server
+     *
+     * @return array
+     */
+    public function getCertificates()
+    {
+        if (!$this->certificates) {
+            $this->certificates = $this->prepareCertificates($this->data);
+        }
+        return $this->certificates;
     }
 
     /**
@@ -544,9 +580,12 @@ class ServerJsonConfiguration implements ServerConfigurationInterface
      */
     public function prepareModules(\stdClass $data)
     {
+
         $modules = array();
         if (isset($data->modules)) {
-            $modules = $data->modules;
+            foreach ($data->modules as $module) {
+                $modules[] = new ModuleJsonConfiguration($module);
+            }
         }
         return $modules;
     }
@@ -565,6 +604,38 @@ class ServerJsonConfiguration implements ServerConfigurationInterface
             $connectionHandlers = $data->connectionHandlers;
         }
         return $connectionHandlers;
+    }
+
+    /**
+     * Prepares the headers array based on a data object
+     *
+     * @param \stdClass $data The data object
+     *
+     * @return array
+     */
+    public function prepareHeaders(\stdClass $data)
+    {
+        $headers = array();
+        if (isset($data->headers)) {
+            $headers = $data->headers;
+        }
+        return $headers;
+    }
+
+    /**
+     * Prepares the certificates array based on a data object
+     *
+     * @param \stdClass $data The data object
+     *
+     * @return array
+     */
+    public function prepareCertificates(\stdClass $data)
+    {
+        $certificates = array();
+        if (isset($data->certificates)) {
+            $certificates = $data->certificates;
+        }
+        return $certificates;
     }
 
     /**
