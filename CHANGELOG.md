@@ -1,3 +1,13 @@
+# Version 6.1.1
+
+## Bugfixes
+
+* None
+
+## Features
+
+* Disable SSL2/SSL3 server connections
+
 # Version 6.1.0
 
 ## Bugfixes
