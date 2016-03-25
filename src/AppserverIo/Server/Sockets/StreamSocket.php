@@ -82,7 +82,10 @@ class StreamSocket implements SocketInterface
             // set socket backlog to 1024 for perform many concurrent connections
             $opts = array(
                 'socket' => array(
-                    'backlog' => 1024,
+                    'backlog' => 1024
+                ),
+                'ssl' => array(
+                    'crypto_method' => STREAM_CRYPTO_METHOD_TLS_SERVER
                 )
             );
             // get default stream context for server connection with socket backlog preset
