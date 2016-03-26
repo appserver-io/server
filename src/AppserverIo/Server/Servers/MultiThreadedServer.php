@@ -168,8 +168,10 @@ class MultiThreadedServer extends \Thread implements ServerInterface
                 $streamContext->setOption('ssl', 'verify_peer', false);
                 // allow self-signed certificates. requires verify_peer
                 $streamContext->setOption('ssl', 'allow_self_signed', true);
-                // disallow unsecure SSL2/SSL3 protocol
-                $streamContext->setOption('ssl', 'crypto_method', STREAM_CRYPTO_METHOD_TLS_SERVER);
+                // allow TLS 1.0/1.1 + 1.2 protocol only
+                $streamContext->setOption('ssl', 'crypto_method', STREAM_CRYPTO_METHOD_TLSv1_0_SERVER |
+                                                                  STREAM_CRYPTO_METHOD_TLSv1_1_SERVER |
+                                                                  STREAM_CRYPTO_METHOD_TLSv1_2_SERVER);
                 // set all domain specific certificates
                 foreach ($serverConfig->getCertificates() as $certificate) {
                     // try to set ssl certificates
