@@ -1,3 +1,13 @@
+# Version 6.1.2
+
+## Bugfixes
+
+* None
+
+## Features
+
+* Explictly enable TLS 1.0/1.1 + 1.2 server protocols only
+
 # Version 6.1.1
 
 ## Bugfixes
