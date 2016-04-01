@@ -20,10 +20,11 @@
 
 namespace AppserverIo\Server\Configuration;
 
+use AppserverIo\Server\Utils\ServerUtil;
 use AppserverIo\Server\Interfaces\ServerConfigurationInterface;
 
 /**
- * Class ServerXmlConfiguration
+ * Server configuration that handles XML files.
  *
  * @author    Johann Zelger <jz@appserver.io>
  * @copyright 2015 TechDivision GmbH <info@appserver.io>
@@ -33,26 +34,27 @@ use AppserverIo\Server\Interfaces\ServerConfigurationInterface;
  */
 class ServerXmlConfiguration implements ServerConfigurationInterface
 {
+
     /**
      * The configured rewrite rules
      *
      * @var array
      */
-    protected $rewrites;
+    protected $rewrites = array();
 
     /**
      * The configured locations.
      *
      * @var array
      */
-    protected $locations;
+    protected $locations = array();
 
     /**
      * The configured headers
      *
      * @var array
      */
-    protected $headers;
+    protected $headers = array();
 
     /**
      * Holds the environmentVariables array
@@ -62,52 +64,304 @@ class ServerXmlConfiguration implements ServerConfigurationInterface
     protected $environmentVariables = array();
 
     /**
+     * The server name for internal purposes.
+     *
+     * @var string
+     */
+    protected $name = 'httpsServer';
+
+    /**
+     * The server class name.
+     *
+     * @var string
+     */
+    protected $type = '\\AppserverIo\\Server\\Servers\\MultiThreadedServer';
+
+    /**
+     * The worker class name.
+     *
+     * @var string
+     */
+    protected $workerType = '\\AppserverIo\\Server\\Workers\\ThreadWorker';
+
+    /**
+     * The socket class name.
+     *
+     * @var string
+     */
+    protected $socketType = '\\AppserverIo\\Server\\Sockets\\StreamSocket';
+
+    /**
+     * The stream context class name.
+     *
+     * @var string
+     */
+    protected $streamContextType = '\\AppserverIo\\Server\\Contexts\\StreamContext';
+
+    /**
+     * The server context class name.
+     *
+     * @var string
+     */
+    protected $serverContextType = '\\AppserverIo\\Server\\Contexts\\ServerContext';
+
+    /**
+     * The request context class name.
+     *
+     * @var string
+     */
+    protected $requestContextType = '\\AppserverIo\\Server\\Contexts\\RequestContext';
+
+    /**
+     * The logger name for internal purposes.
+     *
+     * @var string
+     */
+    protected $loggerName = 'System';
+
+    /**
+     * The server admin's email addres.
+     *
+     * @var string
+     */
+    protected $admin = 'www@localhost.localdomain';
+
+    /**
+     * The server software name.
+     *
+     * @var string
+     */
+    protected $software = 'phpWebServer/7.0.0';
+
+    /**
+     * The number of workers to start.
+     *
+     * @var integer
+     */
+    protected $workerNumber = 64;
+
+    /**
+     * The minimum number of requests a worker handles.
+     *
+     * @var integer
+     */
+    protected $workerAcceptMin = 16;
+
+    /**
+     * The maximum number of requests a worker handles.
+     *
+     * @var integer
+     */
+    protected $workerAcceptMax = 64;
+
+    /**
+     * The transport protocol to use.
+     *
+     * @var string
+     */
+    protected $transport = 'tcp';
+
+    /**
+     * The IP address to use.
+     *
+     * @var string
+     */
+    protected $address = '0.0.0.0';
+
+    /**
+     * The port to use.
+     *
+     * @var string
+     */
+    protected $port = 9080;
+
+    /**
+     * Socket flags used for socket initialization.
+     *
+     * @var string
+     */
+    protected $flags = null;
+
+    /**
+     * The server's document root.
+     *
+     * @var string
+     */
+    protected $documentRoot = 'var/www';
+
+    /**
+     * Directory index files to be used.
+     *
+     * @var string
+     */
+    protected $directoryIndex = 'index.php index.html index.htm';
+
+    /**
+     * The maximum requests to be handled for a keep alive connection.
+     *
+     * @var integer
+     */
+    protected $keepAliveMax = 64;
+
+    /**
+     * The timeout for the keep alive connection.
+     *
+     * @var integer
+     */
+    protected $keepAliveTimeout = 5;
+
+    /**
+     * Flag to enable/disable auto index functionality.
+     *
+     * @var boolean
+     */
+    protected $autoIndex = false;
+
+    /**
+     * The path to the error page template.
+     *
+     * @var string
+     */
+    protected $errorsPageTemplatePath = 'resources/templates/www/error.phtml';
+
+    /**
+     * The path to the welcome page template.
+     *
+     * @var string
+     */
+    protected $welcomePageTemplatePath = 'resources/templates/www/welcome.phtml';
+
+    /**
+     * The path to the auto index template.
+     *
+     * @var string
+     */
+    protected $autoIndexTemplatePath = 'resources/templates/www/auto_index.phtml';
+
+    /**
+     * The path to the SSL certificate.
+     *
+     * @var string
+     */
+    protected $certPath = 'etc/webserver.pem';
+
+    /**
+     * The path to the SSL certificate's private key file.
+     *
+     * @var string
+     */
+    protected $privateKeyPath = null;
+
+    /**
+     * The path to the Diffie Hellmann param file.
+     *
+     * @var string
+     */
+    protected $dhParamPath = null;
+
+    /**
+     * The SSL certificate's passphrase.
+     *
+     * @var string
+     */
+    protected $passphrase = null;
+
+    /**
+     * The crypto method(s) to use.
+     *
+     * @var string
+     */
+    protected $cryptoMethod = 'STREAM_CRYPTO_METHOD_TLS_SERVER';
+
+    /**
+     * The peer name.
+     *
+     * @var string
+     */
+    protected $peerName = null;
+
+    /**
+     * Flag to enable/disable peer verification.
+     *
+     * @var boolean
+     */
+    protected $verifyPeer = false;
+
+    /**
+     * The flag to enable/disable peer name verification.
+     *
+     * @var boolean
+     */
+    protected $verifyPeerName = false;
+
+    /**
+     * Flag to allow/disallow self signed SSL certificates.
+     *
+     * @var boolean
+     */
+    protected $allowSelfSigned = true;
+
+    /**
+     *The flag to disable TLS compression. This can help mitigate the CRIME attack vector.
+     *
+     * @var boolean
+     */
+    protected $disableCompression = true;
+
+    /**
+     * The flag to control cipher ordering preferences during negotiation has to be allowed.
+     *
+     * @var boolean
+     */
+    protected $honorCipherOrder = true;
+
+    /**
+     * The curve to use with ECDH ciphers, if not specified prime256v1 will be used.
+     *
+     * @var string
+     */
+    protected $ecdhCurve = 'prime256v1';
+
+    /**
+     * The flag to enable/disable new key pair has to be created in scenarios where ECDH cipher suites are negotiated (instead of the preferred ECDHE ciphers).
+     * @var boolean
+     */
+    protected $singleEcdhUse = true;
+
+    /**
+     * The flag to enable/disable new key pair creation when using DH parameters (improves forward secrecy).
+     *
+     * @var boolean
+     */
+    protected $singleDhUse = true;
+
+    /**
      * Constructs config
      *
      * @param \SimpleXMLElement $node The simple xml element used to build config
      */
     public function __construct($node)
     {
+
+        // load the object properties
+        $properties = get_object_vars($this);
+
         // prepare properties
-        $this->name = (string)$node->attributes()->name;
-        $this->type = (string)$node->attributes()->type;
-        $this->workerType = (string)$node->attributes()->worker;
-        $this->socketType = (string)$node->attributes()->socket;
-        $this->streamContextType = (string)$node->attributes()->streamContext;
-        $this->serverContextType = (string)$node->attributes()->serverContext;
-        $this->requestContextType = (string)$node->attributes()->requestContext;
-        $this->loggerName = (string)$node->attributes()->loggerName;
-        $this->transport = (string)array_shift($node->xpath("./params/param[@name='transport']"));
-        $this->address = (string)array_shift($node->xpath("./params/param[@name='address']"));
-        $this->port = (int)array_shift($node->xpath("./params/param[@name='port']"));
-        $this->flags = (string)array_shift($node->xpath("./params/param[@name='flags']"));
-        $this->software = (string)array_shift($node->xpath("./params/param[@name='software']"));
-        $this->workerNumber = (int)array_shift($node->xpath("./params/param[@name='workerNumber']"));
-        $this->workerAcceptMin = (int)array_shift($node->xpath("./params/param[@name='workerAcceptMin']"));
-        $this->workerAcceptMax = (int)array_shift($node->xpath("./params/param[@name='workerAcceptMax']"));
-        $this->certPath = (string)array_shift($node->xpath("./params/param[@name='certPath']"));
-        $this->passphrase = (string)array_shift($node->xpath("./params/param[@name='passphrase']"));
-        $this->documentRoot = (string)array_shift($node->xpath("./params/param[@name='documentRoot']"));
-        $this->directoryIndex = (string)array_shift($node->xpath("./params/param[@name='directoryIndex']"));
-        $this->admin = (string)array_shift($node->xpath("./params/param[@name='admin']"));
-        $this->keepAliveMax = (string)array_shift($node->xpath("./params/param[@name='keepAliveMax']"));
-        $this->keepAliveTimeout = (string)array_shift($node->xpath("./params/param[@name='keepAliveTimeout']"));
-        $this->autoIndex = (boolean)array_shift($node->xpath("./params/param[@name='autoIndex']"));
-        $this->errorsPageTemplatePath = (string)array_shift($node->xpath("./params/param[@name='errorsPageTemplatePath']"));
-        $this->welcomePageTemplatePath = (string)array_shift($node->xpath("./params/param[@name='welcomePageTemplatePath']"));
-        $this->autoIndexTemplatePath = (string)array_shift($node->xpath("./params/param[@name='autoIndexTemplatePath']"));
-        $this->dhParamPath = (string)array_shift($node->xpath("./params/param[@name='dhParamPath']"));
-        $this->privateKeyPath = (string)array_shift($node->xpath("./params/param[@name='privateKeyPath']"));
-        $this->cryptoMethod = (string)array_shift($node->xpath("./params/param[@name='cryptoMethod']"));
-        $this->peerName = (string)array_shift($node->xpath("./params/param[@name='peerName']"));
-        $this->verifyPeer = (boolean)array_shift($node->xpath("./params/param[@name='verifyPeer']"));
-        $this->verifyPeerName = (boolean)array_shift($node->xpath("./params/param[@name='verifyPeerName']"));
-        $this->disableCompression = (boolean)array_shift($node->xpath("./params/param[@name='disableCompression']"));
-        $this->allowSelfSigned = (boolean)array_shift($node->xpath("./params/param[@name='allowSelfSigned']"));
-        $this->honorCipherOrder = (boolean)array_shift($node->xpath("./params/param[@name='honorCipherOrder']"));
-        $this->ecdhCurve = (string)array_shift($node->xpath("./params/param[@name='ecdhCurve']"));
-        $this->singleEcdhUse = (boolean)array_shift($node->xpath("./params/param[@name='singleEcdhUse']"));
-        $this->singleDhUse = (boolean)array_shift($node->xpath("./params/param[@name='singleDhUse']"));
+        $this->name = (string) $node->attributes()->name;
+        $this->type = (string) $node->attributes()->type;
+        $this->workerType = (string) $node->attributes()->worker;
+        $this->socketType = (string) $node->attributes()->socket;
+        $this->streamContextType = (string) $node->attributes()->streamContext;
+        $this->serverContextType = (string) $node->attributes()->serverContext;
+        $this->requestContextType = (string) $node->attributes()->requestContext;
+        $this->loggerName = (string) $node->attributes()->loggerName;
+
+        // extract the properties from the params
+        foreach ($node->xpath('./params/param') as $param) {
+            if (array_key_exists($propertyName = (string) $param->attributes()->name, $properties)) {
+                $this->{$propertyName} = ServerUtil::singleton()->castToType($param->attributes()->type, (string) $param);
+            }
+        }
 
         // prepare analytics
         $this->analytics = $this->prepareAnalytics($node);
@@ -986,7 +1240,7 @@ class ServerXmlConfiguration implements ServerConfigurationInterface
     }
 
     /**
-     * Return's TRUE if new key pair has to be created created when using DH parameters (improves forward secrecy)
+     * Return's TRUE if new key pair has to be created when using DH parameters (improves forward secrecy)
      *
      * @return boolean
      */

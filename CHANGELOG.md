@@ -1,3 +1,13 @@
+# Version 7.0.1
+
+## Bugfixes
+
+* Fixed/Refactored server parameter initialization
+
+## Features
+
+* None
+
 # Version 7.0.0
 
 ## Bugfixes
