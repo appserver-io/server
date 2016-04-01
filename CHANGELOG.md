@@ -1,3 +1,13 @@
+# Version 7.0.0
+
+## Bugfixes
+
+* None
+
+## Features
+
+* Add SSL configuration options
+
 # Version 6.1.2
 
 ## Bugfixes
