@@ -67,6 +67,13 @@ interface ServerConfigurationInterface
     public function getPort();
 
     /**
+     * Return's flags
+     *
+     * @return string
+     */
+    public function getFlags();
+
+    /**
      * Returns logger name
      *
      * @return string
@@ -149,7 +156,7 @@ interface ServerConfigurationInterface
      * @return string
      */
     public function getServerContextType();
-    
+
     /**
      * Returns stream context type
      *
@@ -205,21 +212,21 @@ interface ServerConfigurationInterface
      * @return array
      */
     public function getConnectionHandlers();
-    
+
     /**
      * Returns the headers definition used by the server
      *
      * @return array
      */
     public function getHeaders();
-    
+
     /**
      * Returns the certificates used by the server
      *
      * @return array
      */
     public function getCertificates();
-    
+
     /**
      * Returns the virtual hosts
      *
@@ -296,4 +303,88 @@ interface ServerConfigurationInterface
      * @return boolean
      */
     public function getAutoIndex();
+
+    /**
+     * Return's DH param path
+     *
+     * @return string
+     */
+    public function getDhParamPath();
+
+    /**
+     * Return's private key path
+     *
+     * @return string
+     */
+    public function getPrivateKeyPath();
+
+    /**
+     * Return's the crypto method to use
+     *
+     * @return string
+     */
+    public function getCryptoMethod();
+
+    /**
+     * Return's the peer name to be used, if this value is not set, then the name is guessed based on the hostname used when opening the stream
+     *
+     * @return string
+     */
+    public function getPeerName();
+
+    /**
+     * Return's TRUE it the verification of use SSL certificate has to be required
+     *
+     * @return boolean
+     */
+    public function getVerifyPeer();
+
+    /**
+     * Return's TRUE it the peer name has to be verified
+     *
+     * @return boolean
+     */
+    public function getVerifyPeerName();
+
+    /**
+     * Return's TRUE to disable TLS compression. This can help mitigate the CRIME attack vector
+     *
+     * @return boolean
+     */
+    public function getDisableCompression();
+
+    /**
+     * Return's TRUE if self-signed certificates has to be allowed, but requires verify_peer to be FALSE
+     *
+     * @return boolean
+     */
+    public function getAllowSelfSigned();
+
+    /**
+     * Return's TRUE if control cipher ordering preferences during negotiation has to be allowed
+     *
+     * @return boolean
+     */
+    public function getHonorCipherOrder();
+
+    /**
+     * Return's the curve to use with ECDH ciphers, if not specified prime256v1 will be used
+     *
+     * @return string
+     */
+    public function getEcdhCurve();
+
+    /**
+     * Return's TRUE if a new key pair has to be created in scenarios where ECDH cipher suites are negotiated (instead of the preferred ECDHE ciphers)
+     *
+     * @return boolean
+     */
+    public function getSingleEcdhUse();
+
+    /**
+     * Return's TRUE if new key pair has to be created created when using DH parameters (improves forward secrecy)
+     *
+     * @return boolean
+     */
+    public function getSingleDhUse();
 }

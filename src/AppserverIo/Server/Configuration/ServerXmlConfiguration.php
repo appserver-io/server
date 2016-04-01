@@ -96,6 +96,18 @@ class ServerXmlConfiguration implements ServerConfigurationInterface
         $this->errorsPageTemplatePath = (string)array_shift($node->xpath("./params/param[@name='errorsPageTemplatePath']"));
         $this->welcomePageTemplatePath = (string)array_shift($node->xpath("./params/param[@name='welcomePageTemplatePath']"));
         $this->autoIndexTemplatePath = (string)array_shift($node->xpath("./params/param[@name='autoIndexTemplatePath']"));
+        $this->dhParamPath = (string)array_shift($node->xpath("./params/param[@name='dhParamPath']"));
+        $this->privateKeyPath = (string)array_shift($node->xpath("./params/param[@name='privateKeyPath']"));
+        $this->cryptoMethod = (string)array_shift($node->xpath("./params/param[@name='cryptoMethod']"));
+        $this->peerName = (string)array_shift($node->xpath("./params/param[@name='peerName']"));
+        $this->verifyPeer = (boolean)array_shift($node->xpath("./params/param[@name='verifyPeer']"));
+        $this->verifyPeerName = (boolean)array_shift($node->xpath("./params/param[@name='verifyPeerName']"));
+        $this->disableCompression = (boolean)array_shift($node->xpath("./params/param[@name='disableCompression']"));
+        $this->allowSelfSigned = (boolean)array_shift($node->xpath("./params/param[@name='allowSelfSigned']"));
+        $this->honorCipherOrder = (boolean)array_shift($node->xpath("./params/param[@name='honorCipherOrder']"));
+        $this->ecdhCurve = (string)array_shift($node->xpath("./params/param[@name='ecdhCurve']"));
+        $this->singleEcdhUse = (boolean)array_shift($node->xpath("./params/param[@name='singleEcdhUse']"));
+        $this->singleDhUse = (boolean)array_shift($node->xpath("./params/param[@name='singleDhUse']"));
 
         // prepare analytics
         $this->analytics = $this->prepareAnalytics($node);
@@ -861,5 +873,125 @@ class ServerXmlConfiguration implements ServerConfigurationInterface
     public function getRewriteMaps()
     {
         return $this->rewriteMaps;
+    }
+
+    /**
+     * Return's DH param path
+     *
+     * @return string
+     */
+    public function getDhParamPath()
+    {
+        return $this->dhParamPath;
+    }
+
+    /**
+     * Return's private key path
+     *
+     * @return string
+     */
+    public function getPrivateKeyPath()
+    {
+        return $this->privateKeyPath;
+    }
+
+    /**
+     * Return's the crypto method to use
+     *
+     * @return string
+     */
+    public function getCryptoMethod()
+    {
+        return $this->cryptoMethod;
+    }
+
+    /**
+     * Return's the peer name to be used, if this value is not set, then the name is guessed based on the hostname used when opening the stream
+     *
+     * @return string
+     */
+    public function getPeerName()
+    {
+        return $this->peerName;
+    }
+
+    /**
+     * Return's TRUE it the verification of use SSL certificate has to be required
+     *
+     * @return boolean
+     */
+    public function getVerifyPeer()
+    {
+        return $this->verifyPeer;
+    }
+
+    /**
+     * Return's TRUE it the peer name has to be verified
+     *
+     * @return boolean
+     */
+    public function getVerifyPeerName()
+    {
+        return $this->verifyPeerName;
+    }
+
+    /**
+     * Return's TRUE to disable TLS compression. This can help mitigate the CRIME attack vector
+     *
+     * @return boolean
+     */
+    public function getDisableCompression()
+    {
+        return $this->disableCompression;
+    }
+
+    /**
+     * Return's TRUE if self-signed certificates has to be allowed, but requires verify_peer to be FALSE
+     *
+     * @return boolean
+     */
+    public function getAllowSelfSigned()
+    {
+        return $this->allowSelfSigned;
+    }
+
+    /**
+     * Return's TRUE if control cipher ordering preferences during negotiation has to be allowed
+     *
+     * @return boolean
+     */
+    public function getHonorCipherOrder()
+    {
+        return $this->honorCipherOrder;
+    }
+
+    /**
+     * Return's the curve to use with ECDH ciphers, if not specified prime256v1 will be used
+     *
+     * @return string
+     */
+    public function getEcdhCurve()
+    {
+        return $this->ecdhCurve;
+    }
+
+    /**
+     * Return's TRUE if a new key pair has to be created in scenarios where ECDH cipher suites are negotiated (instead of the preferred ECDHE ciphers)
+     *
+     * @return boolean
+     */
+    public function getSingleEcdhUse()
+    {
+        return $this->singleEcdhUse;
+    }
+
+    /**
+     * Return's TRUE if new key pair has to be created created when using DH parameters (improves forward secrecy)
+     *
+     * @return boolean
+     */
+    public function getSingleDhUse()
+    {
+        return $this->singleDhUse;
     }
 }

@@ -154,24 +154,47 @@ class MultiThreadedServer extends \Thread implements ServerInterface
 
             // check if ssl server config
             if ($serverConfig->getTransport() === 'ssl') {
-                // get real cert path
-                $realCertPath = str_replace('/', DIRECTORY_SEPARATOR, $serverConfig->getCertPath());
-                // check if relative or absolute path was given
-                if (strpos($realCertPath, '/') === false) {
-                    $realCertPath = SERVER_BASEDIR . $realCertPath;
-                }
                 // path to local certificate file on filesystem. It must be a PEM encoded file which contains your
                 // certificate and private key. It can optionally contain the certificate chain of issuers.
-                $streamContext->setOption('ssl', 'local_cert', $realCertPath);
-                $streamContext->setOption('ssl', 'passphrase', $serverConfig->getPassphrase());
-                // require verification of SSL certificate used
-                $streamContext->setOption('ssl', 'verify_peer', false);
+                $streamContext->setOption('ssl', 'local_cert', $this->realPath($serverConfig->getCertPath()));
+
+                // query whether or not a passphrase has been set
+                if ($passphrase = $serverConfig->getPassphrase()) {
+                    $streamContext->setOption('ssl', 'passphrase', $passphrase);
+                }
+                // query whether or not DH param as been specified
+                if ($dhParamPath = $serverConfig->getDhParamPath()) {
+                    $streamContext->setOption('ssl', 'dh_param', $this->realPath($dhParamPath));
+                }
+                // query whether or not a private key as been specified
+                if ($privateKeyPath = $serverConfig->getPrivateKeyPath()) {
+                    $streamContext->setOption('ssl', 'local_pk', $this->realPath($privateKeyPath));
+                }
+                // set the passed crypto method
+                if ($cryptoMethod = $serverConfig->getCryptoMethod()) {
+                    $streamContext->setOption('ssl', 'crypto_method', $this->explodeConstants($cryptoMethod));
+                }
+                // set the passed peer name
+                if ($peerName = $serverConfig->getPeerName()) {
+                    $streamContext->setOption('ssl', 'peer_name', $peerName);
+                }
+                // set the ECDH curve to use
+                if ($ecdhCurve = $serverConfig->getEcdhCurve()) {
+                    $streamContext->setOption('ssl', 'ecdh_curve', $ecdhCurve);
+                }
+
+                // require verification of SSL certificate used and peer name
+                $streamContext->setOption('ssl', 'verify_peer', $serverConfig->getVerifyPeer());
+                $streamContext->setOption('ssl', 'verify_peer_name', $serverConfig->getVerifyPeerName());
                 // allow self-signed certificates. requires verify_peer
-                $streamContext->setOption('ssl', 'allow_self_signed', true);
-                // allow TLS 1.0/1.1 + 1.2 protocol only
-                $streamContext->setOption('ssl', 'crypto_method', STREAM_CRYPTO_METHOD_TLSv1_0_SERVER |
-                                                                  STREAM_CRYPTO_METHOD_TLSv1_1_SERVER |
-                                                                  STREAM_CRYPTO_METHOD_TLSv1_2_SERVER);
+                $streamContext->setOption('ssl', 'allow_self_signed', $serverConfig->getAllowSelfSigned());
+                // if set, disable TLS compression this can help mitigate the CRIME attack vector
+                $streamContext->setOption('ssl', 'disable_compression', $serverConfig->getDisableCompression());
+                // optimizations for forward secrecy
+                $streamContext->setOption('ssl', 'honor_cipher_order', $serverConfig->getHonorCipherOrder());
+                $streamContext->setOption('ssl', 'single_ecdh_use', $serverConfig->getSingleEcdhUse());
+                $streamContext->setOption('ssl', 'single_dh_use', $serverConfig->getSingleDhUse());
+
                 // set all domain specific certificates
                 foreach ($serverConfig->getCertificates() as $certificate) {
                     // try to set ssl certificates
@@ -258,13 +281,7 @@ class MultiThreadedServer extends \Thread implements ServerInterface
             );
 
             // prepare the socket flags
-            $flags = null;
-            foreach (explode('|', $serverConfig->getFlags()) as $flag) {
-                $constant = trim($flag);
-                if (empty($constant) === false) {
-                    $flags += constant($constant);
-                }
-            }
+            $flags = $this->explodeConstants($serverConfig->getFlags());
 
             // setup server bound on local adress
             $serverConnection = $socketType::getServerInstance($localSocket, $flags, $streamContext->getResource());
@@ -388,5 +405,52 @@ class MultiThreadedServer extends \Thread implements ServerInterface
 
         // send a debug log message that connection has been closed and server has been shutdown
         $logger->info("Successfully closed connection and shutdown server $serverName");
+    }
+
+    /**
+     * Explodes the constants from the passed string.
+     *
+     * @param string $values The string with the constants to explode
+     *
+     * @return integer The exploded constants
+     */
+    protected function explodeConstants($values)
+    {
+
+        // initialize the constants
+        $constants = null;
+
+        // explode the constants
+        foreach (explode('|', $values) as $value) {
+            $constant = trim($value);
+            if (empty($constant) === false) {
+                $constants += constant($constant);
+            }
+        }
+
+        // return the constants
+        return $constants;
+    }
+
+    /**
+     * Return's the real path, if not already.
+     *
+     * @param string $path The path to return the real path for
+     *
+     * @return string The real path
+     */
+    protected function realPath($path)
+    {
+
+        // take care for the OS
+        $path = str_replace('/', DIRECTORY_SEPARATOR, $path);
+
+        // check if relative or absolute path was given
+        if (strpos($path, '/') === false) {
+            $path = SERVER_BASEDIR . $path;
+        }
+
+        // return the real path
+        return $path;
     }
 }
