@@ -302,7 +302,7 @@ class ServerXmlConfiguration implements ServerConfigurationInterface
     protected $allowSelfSigned = true;
 
     /**
-     *The flag to disable TLS compression. This can help mitigate the CRIME attack vector.
+     * The flag to disable TLS compression. This can help mitigate the CRIME attack vector.
      *
      * @var boolean
      */
