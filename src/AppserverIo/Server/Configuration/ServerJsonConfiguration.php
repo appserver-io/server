@@ -995,4 +995,16 @@ class ServerJsonConfiguration implements ServerConfigurationInterface
     {
         return (boolean)$this->data->singleDhUse;
     }
+
+    /**
+     * Return's the list of available ciphers.
+     *
+     * @return string
+     * @link http://php.net/manual/en/context.ssl.php#context.ssl.ciphers
+     * @link https://www.openssl.org/docs/manmaster/apps/ciphers.html#CIPHER_LIST_FORMAT
+     */
+    public function getCiphers()
+    {
+        return $this->data->ciphers;
+    }
 }

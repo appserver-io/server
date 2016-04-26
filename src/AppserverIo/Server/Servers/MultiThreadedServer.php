@@ -190,10 +190,11 @@ class MultiThreadedServer extends \Thread implements ServerInterface
                 $streamContext->setOption('ssl', 'allow_self_signed', $serverConfig->getAllowSelfSigned());
                 // if set, disable TLS compression this can help mitigate the CRIME attack vector
                 $streamContext->setOption('ssl', 'disable_compression', $serverConfig->getDisableCompression());
-                // optimizations for forward secrecy
+                // optimizations for forward secrecy and ciphers
                 $streamContext->setOption('ssl', 'honor_cipher_order', $serverConfig->getHonorCipherOrder());
                 $streamContext->setOption('ssl', 'single_ecdh_use', $serverConfig->getSingleEcdhUse());
                 $streamContext->setOption('ssl', 'single_dh_use', $serverConfig->getSingleDhUse());
+                $streamContext->setOption('ssl', 'ciphers', $serverConfig->getCiphers());
 
                 // set all domain specific certificates
                 foreach ($serverConfig->getCertificates() as $certificate) {
