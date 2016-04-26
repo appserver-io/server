@@ -1,3 +1,13 @@
+# Version 8.0.0
+
+## Bugfixes
+
+* None
+
+## Features
+
+* Add possibilty to define ciphers to use in SSL context
+
 # Version 7.0.1
 
 ## Bugfixes
