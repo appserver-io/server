@@ -90,6 +90,13 @@ class MainJsonConfiguration implements MainConfigurationInterface
      */
     public function getUpstreamConfigs()
     {
+        $upstreamConfigs = array();
+        if (isset($this->data->upstreams)) {
+            foreach ($this->data->upstreams as $upstreamConfig) {
+                $upstreamConfigs[] = new UpstreamJsonConfiguration($upstreamConfig);
+            }
+        }
 
+        return $upstreamConfigs;
     }
 }
