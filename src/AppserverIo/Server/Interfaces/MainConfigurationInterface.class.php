@@ -57,5 +57,4 @@ interface MainConfigurationInterface
      * @return UpstreamConfigurationInterface[]
      */
     public function getUpstreamConfigs();
-
 }
