@@ -20,6 +20,11 @@
 
 namespace AppserverIo\Server\Configuration;
 
+use AppserverIo\Server\Interfaces\LoggerConfigurationInterface;
+use AppserverIo\Server\Interfaces\MainConfigurationInterface;
+use AppserverIo\Server\Interfaces\ServerConfigurationInterface;
+use AppserverIo\Server\Interfaces\UpstreamConfigurationInterface;
+
 /**
  * Class MainJsonConfiguration
  *
@@ -29,7 +34,7 @@ namespace AppserverIo\Server\Configuration;
  * @link      https://github.com/appserver-io/server
  * @link      http://www.appserver.io
  */
-class MainJsonConfiguration
+class MainJsonConfiguration implements MainConfigurationInterface
 {
     /**
      * Hold's the data instance read by json file
@@ -51,7 +56,7 @@ class MainJsonConfiguration
     /**
      * Return's an array of server configs
      *
-     * @return array
+     * @return ServerConfigurationInterface[]
      */
     public function getServerConfigs()
     {
@@ -59,13 +64,14 @@ class MainJsonConfiguration
         foreach ($this->data->servers as $serverConfig) {
             $serverConfigurations[] = new ServerJsonConfiguration($serverConfig);
         }
+
         return $serverConfigurations;
     }
 
     /**
      * Return's an array of logger configs
      *
-     * @return array
+     * @return LoggerConfigurationInterface[]
      */
     public function getLoggerConfigs()
     {
@@ -73,6 +79,17 @@ class MainJsonConfiguration
         foreach ($this->data->loggers as $loggerConfig) {
             $loggerConfigurations[] = new LoggerJsonConfiguration($loggerConfig);
         }
+
         return $loggerConfigurations;
+    }
+
+    /**
+     * Return's upstream config nodes as array
+     *
+     * @return UpstreamConfigurationInterface[]
+     */
+    public function getUpstreamConfigs()
+    {
+
     }
 }
