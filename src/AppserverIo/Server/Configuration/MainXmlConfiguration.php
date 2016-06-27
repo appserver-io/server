@@ -23,6 +23,7 @@ namespace AppserverIo\Server\Configuration;
 use AppserverIo\Server\Configuration\ServerXmlConfiguration;
 use AppserverIo\Server\Configuration\LoggerXmlConfiguration;
 use AppserverIo\Server\Configuration\UpstreamXmlConfiguration;
+use AppserverIo\Server\Interfaces\MainConfigurationInterface;
 
 /**
  * Class MainXmlConfiguration
@@ -33,7 +34,7 @@ use AppserverIo\Server\Configuration\UpstreamXmlConfiguration;
  * @link      https://github.com/appserver-io/server
  * @link      http://www.appserver.io
  */
-class MainXmlConfiguration
+class MainXmlConfiguration implements MainConfigurationInterface
 {
     /**
      * Hold's the simple xml element read from file
