@@ -467,7 +467,7 @@ class ServerXmlConfiguration implements ServerConfigurationInterface
         $connectionHandlers = array();
         if ($node->connectionHandlers) {
             foreach ($node->connectionHandlers->connectionHandler as $connectionHandlerNode) {
-                $connectionHandlerType = (string)$connectionHandlerNode->attributes()->type;
+                $connectionHandlerType = (string) $connectionHandlerNode->attributes()->type;
                 $connectionHandlers[] = $connectionHandlerType;
             }
         }
@@ -490,11 +490,12 @@ class ServerXmlConfiguration implements ServerConfigurationInterface
                 if ($handlerNode->params->param) {
                     foreach ($handlerNode->params->param as $paramNode) {
                         $paramName = (string)$paramNode->attributes()->name;
-                        $params[$paramName] = (string)array_shift($handlerNode->xpath(".//param[@name='$paramName']"));
+                        $paramNodes = $handlerNode->xpath(".//param[@name='$paramName']");
+                        $params[$paramName] = (string) array_shift($paramNodes);
                     }
                 }
                 $handlers[(string)$handlerNode->attributes()->extension] = array(
-                    'name' => (string)$handlerNode->attributes()->name,
+                    'name' => (string) $handlerNode->attributes()->name,
                     'params' => $params
                 );
             }
@@ -517,8 +518,9 @@ class ServerXmlConfiguration implements ServerConfigurationInterface
                 $virtualHostNames = explode(' ', (string)$virtualHostNode->attributes()->name);
                 $params = array();
                 foreach ($virtualHostNode->params->param as $paramNode) {
-                    $paramName = (string)$paramNode->attributes()->name;
-                    $params[$paramName] = (string)array_shift($virtualHostNode->xpath(".//param[@name='$paramName']"));
+                    $paramName = (string) $paramNode->attributes()->name;
+                    $paramNodes = $virtualHostNode->xpath(".//param[@name='$paramName']");
+                    $params[$paramName] = (string) array_shift($paramNodes);
                 }
                 foreach ($virtualHostNames as $virtualHostName) {
                     // set all virtual hosts params per key for faster matching later on
@@ -554,8 +556,9 @@ class ServerXmlConfiguration implements ServerConfigurationInterface
                 $rewriteMapType = (string)$rewriteMapNode->attributes()->type;
                 $params = array();
                 foreach ($rewriteMapNode->params->param as $paramNode) {
-                    $paramName = (string)$paramNode->attributes()->name;
-                    $params[$paramName] = (string)array_shift($rewriteMapNode->xpath(".//param[@name='$paramName']"));
+                    $paramName = (string) $paramNode->attributes()->name;
+                    $paramNodes = $rewriteMapNode->xpath(".//param[@name='$paramName']");
+                    $params[$paramName] = (string) array_shift($paramNodes);
                 }
                 $rewriteMaps[$rewriteMapType] = $params;
             }
@@ -575,7 +578,7 @@ class ServerXmlConfiguration implements ServerConfigurationInterface
         $rewrites = array();
         if ($node->rewrites) {
             foreach ($node->rewrites->rewrite as $rewriteNode) {
-                // Cut of the SimpleXML attributes wrapper and attach it to our rewrites
+                // cut of the SimpleXML attributes wrapper and attach it to our rewrites
                 $rewrite = (array)$rewriteNode;
                 $rewrites[] = array_shift($rewrite);
             }
@@ -642,8 +645,8 @@ class ServerXmlConfiguration implements ServerConfigurationInterface
         $environmentVariables = array();
         if ($node->environmentVariables) {
             foreach ($node->environmentVariables->environmentVariable as $environmentVariableNode) {
-                // Cut of the SimpleXML attributes wrapper and attach it to our environment variable
-                $environmentVariable = (array)$environmentVariableNode;
+                // cut of the SimpleXML attributes wrapper and attach it to our environment variable
+                $environmentVariable = (array) $environmentVariableNode;
                 $environmentVariables[] = array_shift($environmentVariable);
             }
         }
@@ -664,8 +667,9 @@ class ServerXmlConfiguration implements ServerConfigurationInterface
             foreach ($node->authentications->authentication as $authenticationNode) {
                 $params = array();
                 foreach ($authenticationNode->params->param as $paramNode) {
-                    $paramName = (string)$paramNode->attributes()->name;
-                    $params[$paramName] = (string)array_shift($authenticationNode->xpath(".//param[@name='$paramName']"));
+                    $paramName = (string) $paramNode->attributes()->name;
+                    $paramNodes = $authenticationNode->xpath(".//param[@name='$paramName']");
+                    $params[$paramName] = (string) array_shift($paramNodes);
                 }
                 $authentications[(string)$authenticationNode->attributes()->uri] = $params;
             }
@@ -689,9 +693,10 @@ class ServerXmlConfiguration implements ServerConfigurationInterface
                 $params = array();
                 foreach ($accessNode->params->param as $paramNode) {
                     $paramName = (string)$paramNode->attributes()->name;
-                    $params[$paramName] = (string)array_shift($accessNode->xpath(".//param[@name='$paramName']"));
+                    $paramNodes = $accessNode->xpath(".//param[@name='$paramName']");
+                    $params[$paramName] = (string) array_shift($paramNodes);
                 }
-                $accesses[(string)$accessNode->attributes()->type][] = $params;
+                $accesses[(string) $accessNode->attributes()->type][] = $params;
             }
         }
         return $accesses;
@@ -715,8 +720,9 @@ class ServerXmlConfiguration implements ServerConfigurationInterface
                     $params = array();
                     if ($connectorNode->params) {
                         foreach ($connectorNode->params->param as $paramNode) {
-                            $paramName = (string)$paramNode->attributes()->name;
-                            $params[$paramName] = (string)array_shift($connectorNode->xpath(".//param[@name='$paramName']"));
+                            $paramName = (string) $paramNode->attributes()->name;
+                            $paramNodes = $connectorNode->xpath(".//param[@name='$paramName']");
+                            $params[$paramName] = (string) array_shift($paramNodes);
                         }
                     }
 

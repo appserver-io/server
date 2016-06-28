@@ -1,3 +1,14 @@
+# Version 9.0.0
+
+## Bugfixes
+
+* None
+
+## Features
+
+* Add MainConfigurationInterface
+* Add minor customizations for PHP 7
+
 # Version 8.0.0
 
 ## Bugfixes

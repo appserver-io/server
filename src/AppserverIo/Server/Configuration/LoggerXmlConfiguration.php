@@ -150,8 +150,9 @@ class LoggerXmlConfiguration implements LoggerConfigurationInterface
                 $params = array();
 
                 foreach ($handlerNode->params->param as $paramNode) {
-                    $paramName = (string)$paramNode->attributes()->name;
-                    $params[$paramName] = (string)array_shift($handlerNode->xpath(".//param[@name='$paramName']"));
+                    $paramName = (string) $paramNode->attributes()->name;
+                    $paramNodes = $handlerNode->xpath(".//param[@name='$paramName']");
+                    $params[$paramName] = (string) array_shift($paramNodes);
                 }
                 // build up formatter infos if exists
                 if (isset($handlerNode->formatter)) {
