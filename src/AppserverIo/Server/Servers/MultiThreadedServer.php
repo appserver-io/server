@@ -113,6 +113,13 @@ class MultiThreadedServer extends \Thread implements ServerInterface
      */
     public function run()
     {
+
+        // register shutdown handler
+        register_shutdown_function(array(&$this, "shutdown"));
+
+        // register a custom exception handler
+        set_exception_handler(array(&$this, "handleException"));
+
         // set current dir to base dir for relative dirs
         chdir(SERVER_BASEDIR);
 
@@ -453,5 +460,32 @@ class MultiThreadedServer extends \Thread implements ServerInterface
 
         // return the real path
         return $path;
+    }
+
+    /**
+     * Does shutdown logic for worker if something breaks in process.
+     *
+     * @return void
+     */
+    public function shutdown()
+    {
+        // check if there was a fatal error caused shutdown
+        $lastError = error_get_last();
+        if ($lastError['type'] === E_ERROR || $lastError['type'] === E_USER_ERROR) {
+            // log error
+            $this->getServerContext()->getLogger()->error($lastError['message']);
+        }
+    }
+
+    /**
+     * Writes the passed exception stack trace to the system logger.
+     *
+     * @param \Exception $e The exception to be handled
+     *
+     * @return void
+     */
+    public function handleException(\Exception $e)
+    {
+        $this->getServerContext()->getLogger()->error($e->__toString());
     }
 }
