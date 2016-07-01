@@ -1,3 +1,13 @@
+# Version 10.0.0
+
+## Bugfixes
+
+* None
+
+## Features
+
+* Add shutdown function and exception handler to MultithreadedServer class
+
 # Version 9.0.0
 
 ## Bugfixes
