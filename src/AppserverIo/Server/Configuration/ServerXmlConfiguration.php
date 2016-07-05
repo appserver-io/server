@@ -239,6 +239,20 @@ class ServerXmlConfiguration implements ServerConfigurationInterface
     protected $autoIndexTemplatePath = 'resources/templates/www/auto_index.phtml';
 
     /**
+     * The file handlers.
+     *
+     * @var array
+     */
+    protected $handlers = array();
+
+    /**
+     * The rewrite maps.
+     *
+     * @var array
+     */
+    protected $rewriteMaps = array();
+
+    /**
      * The path to the SSL certificate.
      *
      * @var string
