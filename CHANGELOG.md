@@ -1,3 +1,13 @@
+# Version 10.0.1
+
+## Bugfixes
+
+* None
+
+## Features
+
+* Switch to appserver-io/logger version ~2.0
+
 # Version 10.0.0
 
 ## Bugfixes
